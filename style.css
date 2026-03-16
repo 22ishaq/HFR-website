@@ -1,0 +1,162 @@
+/* Reset basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- NAVIGATION --- */
+header {
+    background-color: #0a0a0a;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #ffc400; 
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #00d2ff;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    /* Using a sleek car/track placeholder image */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+    height: 80vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 60px;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    letter-spacing: 2px;
+    animation: bounce 2s infinite;
+    color: #00d2ff;
+}
+
+/* --- ABOUT SECTION --- */
+.about-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 60px 10%;
+    background-color: white;
+    gap: 40px;
+}
+
+.about-box {
+    flex: 1;
+}
+
+.about-box h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #00d2ff;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.about-box p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* --- PROJECTS SECTION --- */
+.projects-section {
+    padding: 60px 10%;
+    background-color: #121212;
+    color: white;
+    text-align: center;
+}
+
+.projects-section h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.project-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.project-card {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 8px;
+    width: 45%;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    border-top: 4px solid #00d2ff;
+}
+
+.project-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #00d2ff;
+}
+
+.project-card p {
+    margin-bottom: 25px;
+    font-size: 15px;
+    color: #ccc;
+}
+
+.btn {
+    background-color: #00d2ff;
+    color: #0a0a0a;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #c28b00;
+    color: white;
+}
+
+/* --- FOOTER --- */
+footer {
+    background-color: #0a0a0a;
+    color: #888;
+    padding: 40px 10% 20px;
+}
+
