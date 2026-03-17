@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UG Hydrogen Fuel Racing | Monaco 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- BRAND COLORS & RESET --- */
+        :root {
+            --bg-black: #0a0a0a;
+            --accent-orange: #ff5e00;
+            --text-white: #ffffff;
+            --overlay-dark: rgba(10, 10, 10, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text-white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--accent-orange);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent-orange);
+        }
+
+        /* --- HERO SECTION (VIDEO BACKGROUND) --- */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay-dark);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 60px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .btn-orange {
+            background-color: var(--accent-orange);
+            color: var(--text-white);
+            padding: 15px 40px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .btn-orange:hover {
+            background-color: #d14d00;
+            transform: scale(1.05);
+        }
+
+        /* --- ABOUT PILLARS SECTION --- */
+        .section {
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            color: var(--text-white);
+        }
+
+        .section-title span {
+            color: var(--accent-orange);
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pillar-card {
+            background: #1a1a1a;
+            padding: 40px 30px;
+            border-top: 5px solid var(--accent-orange);
+            border-radius: 5px;
+        }
+
+        .pillar-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .pillar-card p {
+            line-height: 1.6;
+            color: #cccccc;
+        }
+
+        /* --- DIVISIONS SECTION --- */
+        .divisions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .division-card {
+            background: #1a1a1a;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #333;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+
+        .division-card:hover {
+            border-color: var(--accent-orange);
+        }
+
+        .division-card h2 {
+            font-size: 32px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .division-card p {
+            color: var(--accent-orange);
+            font-weight: 700;
+        }
+
+        /* --- FOOTER / SPONSORS TEASER --- */
+        footer {
+            background: #050505;
+            padding: 50px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">UG<span>HFR</span></div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#divisions">Divisions</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#sponsors">Sponsors</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <video autoplay loop muted playsinline>
+            <source src="48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay"></div>
+        
+        <div class="hero-content">
+            <h1>Pioneering Hydrogen Racing at UofG</h1>
+            <p>Destination: Monaco. Building the future of sustainable motorsport on land and sea.</p>
+            <a href="#join" class="btn-orange">Join the Team</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">Our <span>Mission</span></h2>
+        <div class="pillars-grid">
+            <div class="pillar-card">
+                <h3>Supporting Sustainability</h3>
+                <p>Developing zero-emission hydrogen fuel cell technology to push the boundaries of green engineering in motorsport.</p>
+            </div>
+            <div class="pillar-card">
+                <h3>Shaping Students</h3>
+                <p>Providing a cross-disciplinary proving ground for engineers, marketers, and business minds to gain real-world industry experience.</p>
+            </div>
+            <div class="pillar-card">
+                <h3>Community Impact</h3>
+                <p>Inspiring the next generation through STEM outreach, university events, and collaborative workshops across Glasgow.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="divisions" class="section" style="background-color: #0f0f0f;">
+        <h2 class="section-title">The <span>Divisions</span></h2>
+        <div class="divisions-grid">
+            <div class="division-card">
+                <h2>Land Division</h2>
+                <p>Shell Eco-Marathon</p>
+            </div>
+            <div class="division-card">
+                <h2>Sea Division</h2>
+                <p>Monaco Energy Boat Challenge</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h2 style="margin-bottom: 20px;">Powered by Our Partners</h2>
+        <p style="color: #666;">(Sponsor Logos Grid Will Go Here)</p>
+        <br>
+        <p style="color: #444; font-size: 12px;">© 2026 UG Hydrogen Fuel Racing. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
