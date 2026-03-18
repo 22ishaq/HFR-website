@@ -228,12 +228,30 @@
             text-align: center;
             border-top: 1px solid #333;
         }
+        .logo-container {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+            }
+
+            .nav-logo {
+                height: 50px; /* Adjust this number to make your logo bigger or smaller */
+                width: auto;
+                max-width: 200px; /* Prevents extremely wide logos from breaking the layout */
+                transition: transform 0.3s;
+            }
+
+            .nav-logo:hover {
+                transform: scale(1.05); /* Adds a slight zoom effect when hovered */
+            }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">UG<span>HFR</span></div>
+        <a href="index.html" class="logo-container">
+        <img src="hfr.jpg" alt="HFR Logo" class="nav-logo">
+        </a>
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#divisions">Divisions</a></li>
@@ -245,8 +263,7 @@
 
     <section class="hero">
         <video autoplay loop muted playsinline>
-            <source src="48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov" type="video/mp4">
-            Your browser does not support the video tag.
+            <source src="hero.mov" type="video/mp4">
         </video>
         <div class="overlay"></div>
         
