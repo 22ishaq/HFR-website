@@ -125,16 +125,6 @@ nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
 .dropdown li:last-child a { border-bottom: none; }
 .dropdown li a:hover { color: var(--orange); background: rgba(255,94,0,0.05); padding-left: 26px; }
 
-/* ── HAMBURGER ── */
-.hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    cursor: pointer; padding: 6px; z-index: 1100;
-}
-.hamburger span { display: block; width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
 /* ── PAGE TOP PADDING ── */
 .page-top {
     padding-top: calc(var(--nav-h) + var(--notif-h));  /* keep this the same */
@@ -296,10 +286,6 @@ nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
     transition: border-color 0.2s, color 0.2s;
 }
 .social-link:hover { border-color: var(--orange); color: var(--orange); }
-
-/* ── CUSTOM CURSOR ── */
-.cursor { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
-.cursor-ring { width: 34px; height: 34px; border: 1.5px solid var(--orange); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; opacity: 0.5; transition: transform 0.15s; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {

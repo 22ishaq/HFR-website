@@ -50,12 +50,8 @@
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-top">
-                <div class="footer-brand">
-                    <div class="logo-text">UG<span>HFR</span></div>
-                    <p>UG Hydrogen Fuel Racing — pioneering zero-emission motorsport at the University of Glasgow. Competing at Shell Eco-Marathon and the Monaco Energy Boat Challenge.</p>
-                </div>
                 <div class="footer-col">
-                    <h5>Navigate</h5>
+                    <h5>Quick Links</h5>
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About</a></li>
@@ -76,19 +72,15 @@
                 <div class="footer-col">
                     <h5>Contact</h5>
                     <ul>
-                        <li><a href="mailto:hfr@glasgow.ac.uk">hfr@glasgow.ac.uk</a></li>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="https://www.gla.ac.uk" target="_blank">University of Glasgow</a></li>
+                        <li><a href="mailto:hydrogen-racing@src.gla.ac.uk">Email</a></li>
+                        <li><a href="https://www.instagram.com/hydrogenfuelracing/">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com/company/hydrogenfuelracing/posts/?feedView=all">LinkedIn</a></li>
+                        <li><a href="https://www.glasgowunisrc.org/organisation/hydrogenfuelracing/" target="_blank">University of Glasgow SRC Website</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>© 2026 UG Hydrogen Fuel Racing · University of Glasgow · All rights reserved.</p>
-                <div class="footer-socials">
-                    <a href="#" class="social-link">in</a>
-                    <a href="#" class="social-link">ig</a>
-                    <a href="#" class="social-link">tw</a>
                 </div>
             </div>
         </div>
