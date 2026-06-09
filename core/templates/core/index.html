@@ -1,0 +1,611 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UG Hydrogen Fuel Racing | Home</title>
+    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
+
+    <style>
+        /*
+            HOME PAGE WIREFRAME STYLING
+            The blue boxes in the PDF wireframe are treated as media placeholders.
+            Replace the contents of .media-frame blocks with your own <img> or <video>.
+        */
+        :root {
+            --black: #050505;
+            --deep: #0b0b0b;
+            --card: #111111;
+            --card2: #181818;
+            --orange: #d6ad37;      /* shared.css accent overridden to wireframe gold */
+            --orange-dim: #b89224;
+            --gold: #d6ad37;
+            --media-blue: #0097a7;  /* fallback only: represents missing media */
+            --line: rgba(255,255,255,0.22);
+        }
+
+        body {
+            background: var(--black);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: #050505;
+        }
+
+        .hero video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.68;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(circle at center, rgba(0,0,0,0.08), rgba(0,0,0,0.76) 72%),
+                linear-gradient(to bottom, rgba(5,5,5,0.25), rgba(5,5,5,0.96));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 980px;
+            padding: 0 30px;
+        }
+
+        .hero-tag {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 22px;
+            animation: fadeUp 0.8s 0.2s both;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(64px, 11vw, 150px);
+            line-height: 0.86;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            animation: fadeUp 0.8s 0.4s both;
+        }
+
+        .hero h1 em {
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        .hero-sub {
+            font-size: clamp(15px, 2vw, 22px);
+            font-weight: 300;
+            color: rgba(255,255,255,0.82);
+            line-height: 1.6;
+            max-width: 680px;
+            margin: 0 auto 42px;
+            animation: fadeUp 0.8s 0.6s both;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s 0.8s both;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+            animation: fadeUp 0.8s 1s both;
+        }
+
+        .scroll-hint span {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--grey);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollPulse 2s infinite;
+        }
+
+        /* SHARED HOME SECTIONS */
+        .wire-section {
+            padding: 95px 80px;
+            background: var(--black);
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .wire-section.alt {
+            background: var(--deep);
+        }
+
+        .wire-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .wire-heading {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 46px;
+        }
+
+        .wire-heading h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(42px, 5vw, 82px);
+            line-height: 0.9;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .wire-heading .heading-line {
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .kicker {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        .display-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(44px, 7vw, 96px);
+            line-height: 0.92;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 26px;
+        }
+
+        .display-title em {
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        .body-copy {
+            font-size: 17px;
+            font-weight: 300;
+            color: var(--grey-light);
+            line-height: 1.8;
+            max-width: 620px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 34px;
+        }
+
+        /* MEDIA PLACEHOLDERS */
+        .media-frame {
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+            background: linear-gradient(135deg, rgba(0,151,167,0.95), rgba(0,64,76,0.92));
+            border: 1px solid rgba(255,255,255,0.12);
+            isolation: isolate;
+        }
+
+        .media-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to top, rgba(5,5,5,0.52), rgba(5,5,5,0.06)),
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.16), transparent 36%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .media-frame img,
+        .media-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            min-height: inherit;
+            filter: saturate(0.96) contrast(1.05);
+        }
+
+        .media-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 28px;
+            z-index: 1;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.78);
+        }
+
+        .media-caption {
+            position: absolute;
+            left: 24px;
+            bottom: 22px;
+            z-index: 3;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .media-caption span {
+            color: var(--gold);
+        }
+
+        /* WHO WE ARE */
+        .who-layout {
+            display: grid;
+            grid-template-columns: 0.95fr 1.15fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .who-media {
+            min-height: 430px;
+        }
+
+        /* EVENTS */
+        .events-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr 0.85fr;
+            gap: 22px;
+        }
+
+        .event-card {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .event-card .media-frame {
+            min-height: 300px;
+        }
+
+        .event-card.featured .media-frame {
+            min-height: 430px;
+        }
+
+        .event-card h3 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 21px;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            transition: color 0.25s;
+        }
+
+        .event-card:hover h3 {
+            color: var(--gold);
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        .event-date {
+            font-size: 13px;
+            color: var(--grey);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* FLEET / DIVISIONS */
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }
+
+        .fleet-card {
+            position: relative;
+            color: var(--white);
+            text-decoration: none;
+            min-height: 420px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .fleet-card .media-frame {
+            position: absolute;
+            inset: 0;
+            min-height: 100%;
+            border: none;
+            transition: transform 0.7s ease;
+        }
+
+        .fleet-card:hover .media-frame {
+            transform: scale(1.06);
+        }
+
+        .fleet-content {
+            position: relative;
+            z-index: 4;
+            padding: 32px;
+        }
+
+        .fleet-content .kicker {
+            margin-bottom: 10px;
+        }
+
+        .fleet-content h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 45px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 0.95;
+            margin-bottom: 12px;
+        }
+
+        .fleet-content p {
+            color: rgba(255,255,255,0.75);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* JOIN */
+        .join-layout {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .join-media {
+            min-height: 400px;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.35; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 1024px) {
+            .wire-section { padding: 80px 40px; }
+            .who-layout,
+            .join-layout { grid-template-columns: 1fr; }
+            .events-grid { grid-template-columns: 1fr 1fr; }
+            .event-card.featured { grid-column: 1 / -1; }
+            .fleet-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 720px) {
+            .wire-section { padding: 64px 24px; }
+            .wire-heading { align-items: flex-start; flex-direction: column; gap: 16px; }
+            .wire-heading h2 { white-space: normal; }
+            .wire-heading .heading-line { width: 100%; flex: none; }
+            .events-grid { grid-template-columns: 1fr; }
+            .media-frame,
+            .who-media,
+            .join-media { min-height: 280px; }
+            .fleet-card { min-height: 340px; }
+            .button-row { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <section class="hero">
+        <video autoplay loop muted playsinline>
+            <source src="48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-tag">Established. 2023</div>
+            <h1>Hydrogen<br><em>Fuel</em> Racing</h1>
+            <p class="hero-sub">Driving the future of sustainable student engineering across land, sea and air.</p>
+            <div class="hero-btns">
+                <a href="divisions.html" class="btn-outline">Our Fleet</a>
+                <a href="register.html" class="btn-primary">Register Interest</a>
+            </div>
+        </div>
+        <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    </section>
+
+    <main>
+        <section class="wire-section alt" id="who-we-are">
+            <div class="wire-inner">
+                <div class="wire-heading reveal">
+                    <h2>Who We Are</h2>
+                    <div class="heading-line"></div>
+                </div>
+
+                <div class="who-layout">
+                    <div class="reveal">
+                        <div class="kicker">Highlighted Text</div>
+                        <h2 class="display-title">Driving <em>the Change</em></h2>
+                        <p class="body-copy">Hydrogen Fuel Racing is a student-led team at the University of Glasgow, building hydrogen-powered vehicles and creating hands-on opportunities across engineering, business, media and outreach.</p>
+                        <p class="body-copy" style="margin-top:18px;">We are composed of divisions across land, sea and air, all working towards cleaner transport and practical experience for students.</p>
+                        <div class="button-row">
+                            <a href="about.html" class="btn-outline">Discover</a>
+                            <a href="register.html" class="btn-primary">Join Us</a>
+                        </div>
+                    </div>
+
+                    <div class="media-frame who-media reveal">
+                        <!-- Replace this with a team photo or a background video when you have one. -->
+                        <video autoplay muted loop playsinline>
+                            <source src="48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov" type="video/mp4">
+                        </video>
+                        <div class="media-placeholder">Media placeholder<br>Team photo / workshop video</div>
+                        <div class="media-caption"><span>Media:</span> Who We Are</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="wire-section" id="events-preview">
+            <div class="wire-inner">
+                <div class="wire-heading reveal">
+                    <h2>Events</h2>
+                    <div class="heading-line"></div>
+                </div>
+
+                <div class="events-grid">
+                    <a href="events.html" class="event-card featured reveal">
+                        <div class="media-frame">
+                            <!-- Replace with a recent event image/video. -->
+                            <div class="media-placeholder">Media placeholder<br>Most recent event</div>
+                            <div class="media-caption"><span>Feature:</span> Event media</div>
+                        </div>
+                        <div>
+                            <h3>Title of the most recent event we held</h3>
+                            <div class="event-date">April 8th 2026</div>
+                        </div>
+                    </a>
+
+                    <a href="events.html" class="event-card reveal">
+                        <div class="media-frame">
+                            <div class="media-placeholder">Media placeholder<br>Event thumbnail</div>
+                            <div class="media-caption"><span>Media:</span> Event X</div>
+                        </div>
+                        <div>
+                            <h3>Title of Event X</h3>
+                            <div class="event-date">April 8th 2026</div>
+                        </div>
+                    </a>
+
+                    <a href="events.html" class="event-card reveal">
+                        <div class="media-frame">
+                            <div class="media-placeholder">Media placeholder<br>Event thumbnail</div>
+                            <div class="media-caption"><span>Media:</span> Event X</div>
+                        </div>
+                        <div>
+                            <h3>Title of Event X</h3>
+                            <div class="event-date">April 8th 2026</div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="button-row reveal" style="justify-content:center;margin-top:48px;">
+                    <a href="events.html" class="btn-outline">See More</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="wire-section alt" id="fleet-preview">
+            <div class="wire-inner">
+                <div class="wire-heading reveal">
+                    <h2>Our Fleet</h2>
+                    <div class="heading-line"></div>
+                </div>
+
+                <div class="fleet-grid">
+                    <a href="divisions.html#sea" class="fleet-card reveal">
+                        <div class="media-frame">
+                            <!-- Replace with Vital Spark boat image/video. -->
+                            <div class="media-placeholder">Media placeholder<br>Vital Spark boat</div>
+                        </div>
+                        <div class="fleet-content">
+                            <div class="kicker">Nautical</div>
+                            <h3>Vital Spark</h3>
+                            <p>Hydrogen-powered race craft for the Monaco Energy Boat Challenge.</p>
+                        </div>
+                    </a>
+
+                    <a href="divisions.html#land" class="fleet-card reveal">
+                        <div class="media-frame">
+                            <!-- Replace with Shell Eco car render/image. -->
+                            <div class="media-placeholder">Media placeholder<br>Shell Eco 27</div>
+                        </div>
+                        <div class="fleet-content">
+                            <div class="kicker">Automotive</div>
+                            <h3>Shell Eco 27</h3>
+                            <p>Ultra-efficient hydrogen land vehicle for Shell Eco-Marathon.</p>
+                        </div>
+                    </a>
+
+                    <a href="divisions.html#air" class="fleet-card reveal">
+                        <div class="media-frame">
+                            <!-- Replace with concept render. -->
+                            <div class="media-placeholder">Media placeholder<br>Aero concept</div>
+                        </div>
+                        <div class="fleet-content">
+                            <div class="kicker">Aeronautical</div>
+                            <h3>Aero Concept</h3>
+                            <p>Future aviation concept work for hydrogen-powered transport.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="wire-section" id="join-us">
+            <div class="wire-inner">
+                <div class="join-layout">
+                    <div class="media-frame join-media reveal">
+                        <!-- Replace with recruitment/team image or promo video. -->
+                        <div class="media-placeholder">Media placeholder<br>Recruitment video / team photo</div>
+                        <div class="media-caption"><span>Media:</span> Join HFR</div>
+                    </div>
+
+                    <div class="reveal">
+                        <div class="kicker">Join Us</div>
+                        <h2 class="display-title">Register <em>Interest</em></h2>
+                        <p class="body-copy">Register interest for the next recruitment window. We look for curiosity, reliability and enthusiasm — not just previous experience.</p>
+                        <div class="button-row">
+                            <a href="register.html" class="btn-primary">Register Interest</a>
+                            <a href="about.html" class="btn-outline">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="shared.js"></script>
+</body>
+</html>

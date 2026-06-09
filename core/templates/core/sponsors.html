@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsors | UG Hydrogen Fuel Racing</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .sponsors-wrap { max-width:1200px; margin:0 auto; }
+        .tier { margin-bottom:60px; }
+        .tier-label { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-bottom:24px; display:flex; align-items:center; gap:16px; }
+        .tier-label::after { content:''; flex:1; height:1px; background:var(--border); }
+        .tier-label.gold   { color:var(--gold); }
+        .tier-label.silver { color:#aaaaaa; }
+        .tier-label.bronze { color:#cd7f32; }
+        .sponsor-logos { display:flex; flex-wrap:wrap; gap:16px; }
+        .sp-box { background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:700; letter-spacing:2px; color:var(--grey); text-transform:uppercase; transition:border-color 0.3s,color 0.3s; cursor:pointer; }
+        .sp-box:hover { border-color:var(--orange); color:var(--white); }
+        .sp-box.lg { width:240px; height:100px; }
+        .sp-box.md { width:190px; height:86px; }
+        .sp-box.sm { width:150px; height:72px; }
+
+        /* WHY SPONSOR */
+        .benefits-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+        .benefit-card { background:var(--card); padding:40px 32px; }
+        .benefit-card .icon { font-size:36px; margin-bottom:20px; }
+        .benefit-card h3 { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+        .benefit-card p { font-size:14px; color:var(--grey); line-height:1.65; }
+
+        /* CONTACT BLOCK */
+        .sponsor-cta { max-width:1200px; margin:0 auto; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:40px; padding:60px; }
+        .sponsor-cta h3 { font-family:'Bebas Neue',sans-serif; font-size:40px; letter-spacing:2px; margin-bottom:12px; }
+        .sponsor-cta p { font-size:15px; color:var(--grey-light); font-weight:300; max-width:500px; line-height:1.7; }
+
+        @media(max-width:900px){.benefits-grid{grid-template-columns:1fr 1fr;}.sponsor-cta{flex-direction:column;align-items:flex-start;}.sponsor-cta{padding:40px 30px;}}
+        @media(max-width:600px){.benefits-grid{grid-template-columns:1fr;}.section{padding:60px 24px;}}
+    </style>
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <div class="page-top">
+        <div class="page-hero" data-title="SPONSORS">
+            <div class="label">Partners & Sponsors</div>
+            <h1>Powered by Our <em>Partners</em></h1>
+            <p>Our sponsors make it possible to design, build, and race hydrogen-powered vehicles at an international level. We're proud to work with organisations who share our vision.</p>
+        </div>
+
+        <!-- CURRENT SPONSORS -->
+        <section class="section dark">
+            <div class="sponsors-wrap reveal">
+                <div class="tier">
+                    <div class="tier-label gold">✦ Title Sponsors</div>
+                    <div class="sponsor-logos">
+                        <div class="sp-box lg">Your Logo</div>
+                        <div class="sp-box lg">Your Logo</div>
+                    </div>
+                </div>
+                <div class="tier">
+                    <div class="tier-label silver">✦ Gold Sponsors</div>
+                    <div class="sponsor-logos">
+                        <div class="sp-box md">Sponsor</div>
+                        <div class="sp-box md">Sponsor</div>
+                        <div class="sp-box md">Sponsor</div>
+                    </div>
+                </div>
+                <div class="tier">
+                    <div class="tier-label bronze">✦ Silver Sponsors</div>
+                    <div class="sponsor-logos">
+                        <div class="sp-box sm">Partner</div>
+                        <div class="sp-box sm">Partner</div>
+                        <div class="sp-box sm">Partner</div>
+                        <div class="sp-box sm">Partner</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY SPONSOR -->
+        <section class="section black">
+            <div class="section-header reveal" style="max-width:1200px;margin:0 auto 60px;">
+                <div class="section-label">Why Partner With Us</div>
+                <h2 class="section-title">Why <em>Sponsor HFR?</em></h2>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card reveal">
+                    <div class="icon">🎓</div>
+                    <h3>Graduate Talent Pipeline</h3>
+                    <p>Access a pool of exceptional engineering, business, and marketing graduates from one of the UK's top universities.</p>
+                </div>
+                <div class="benefit-card reveal">
+                    <div class="icon">🌍</div>
+                    <h3>International Brand Visibility</h3>
+                    <p>Your brand featured on our vehicles, kit, and media at Shell Eco-Marathon and the Monaco Energy Boat Challenge.</p>
+                </div>
+                <div class="benefit-card reveal">
+                    <div class="icon">⚡</div>
+                    <h3>Sustainability Credentials</h3>
+                    <p>Associate your brand with cutting-edge hydrogen technology and demonstrate your commitment to a zero-emission future.</p>
+                </div>
+                <div class="benefit-card reveal">
+                    <div class="icon">📣</div>
+                    <h3>Social Media Reach</h3>
+                    <p>Featured across HFR's social channels, newsletters, and content — reaching students, academics, and industry professionals.</p>
+                </div>
+                <div class="benefit-card reveal">
+                    <div class="icon">🤝</div>
+                    <h3>Community & University Links</h3>
+                    <p>Build lasting relationships with the University of Glasgow and the wider Scottish engineering and technology community.</p>
+                </div>
+                <div class="benefit-card reveal">
+                    <div class="icon">🏆</div>
+                    <h3>Be Part of History</h3>
+                    <p>Support the first University of Glasgow team to compete at Monaco and be part of the hydrogen motorsport revolution.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BECOME A SPONSOR CTA -->
+        <section class="section dark">
+            <div class="sponsor-cta reveal">
+                <div>
+                    <h3>Become a Sponsor</h3>
+                    <p>Interested in partnering with HFR? We offer flexible sponsorship packages tailored to your organisation's goals. Get in touch and let's talk.</p>
+                </div>
+                <a href="mailto:hfr@glasgow.ac.uk" class="btn-primary">Get in Touch</a>
+            </div>
+        </section>
+    </div>
+
+    <script src="shared.js"></script>
+</body>
+</html>

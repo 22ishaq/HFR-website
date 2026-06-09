@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | UG Hydrogen Fuel Racing</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .shop-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+        .shop-item { background:var(--card); overflow:hidden; cursor:pointer; transition:background 0.3s; }
+        .shop-item:hover { background:var(--card2); }
+        .shop-img { aspect-ratio:1; background:var(--card2); display:flex; align-items:center; justify-content:center; font-size:64px; transition:transform 0.4s; overflow:hidden; position:relative; }
+        .shop-item:hover .shop-img { background:#1e1e1e; }
+        .shop-img-label { position:absolute; bottom:14px; right:14px; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--grey); }
+        .shop-info { padding:22px; border-top:1px solid var(--border); }
+        .shop-info h4 { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+        .shop-info .price { font-size:18px; color:var(--orange); font-weight:700; font-family:'Barlow Condensed',sans-serif; }
+        .shop-info .soon { font-size:12px; color:var(--grey); letter-spacing:2px; text-transform:uppercase; font-family:'Barlow Condensed',sans-serif; }
+        .shop-info .add-btn { display:block; margin-top:14px; padding:10px 0; background:var(--orange); color:var(--white); font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase; text-align:center; border:none; cursor:pointer; width:100%; border-radius:2px; transition:background 0.2s; }
+        .shop-info .add-btn:hover { background:var(--orange-dim); }
+        .shop-info .add-btn.disabled { background:var(--card2); color:var(--grey); cursor:default; }
+        .shop-note { max-width:1200px; margin:40px auto 0; padding:28px 36px; background:rgba(255,196,0,0.07); border:1px solid rgba(255,196,0,0.2); display:flex; align-items:center; gap:16px; }
+        .shop-note p { font-size:14px; color:var(--grey-light); }
+        .shop-note strong { color:var(--gold); }
+        @media(max-width:900px){.shop-grid{grid-template-columns:repeat(2,1fr);}}
+        @media(max-width:500px){.shop-grid{grid-template-columns:1fr;}.section{padding:60px 24px;}}
+    </style>
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <div class="page-top">
+        <div class="page-hero" data-title="SHOP">
+            <div class="label">HFR Store</div>
+            <h1>Wear the <em>Future</em></h1>
+            <p>Official HFR merchandise and event tickets. Support the team and represent the hydrogen revolution.</p>
+        </div>
+
+        <section class="section dark">
+            <div class="shop-grid">
+                <div class="shop-item reveal">
+                    <div class="shop-img">👕<div class="shop-img-label">Apparel</div></div>
+                    <div class="shop-info">
+                        <h4>HFR Team Hoodie</h4>
+                        <div class="price">£35.00</div>
+                        <button class="add-btn" onclick="addToCart(this,'HFR Team Hoodie','£35.00')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="shop-item reveal">
+                    <div class="shop-img">🧢<div class="shop-img-label">Headwear</div></div>
+                    <div class="shop-info">
+                        <h4>HFR Cap</h4>
+                        <div class="price">£20.00</div>
+                        <button class="add-btn" onclick="addToCart(this,'HFR Cap','£20.00')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="shop-item reveal">
+                    <div class="shop-img">🎽<div class="shop-img-label">Apparel</div></div>
+                    <div class="shop-info">
+                        <h4>Race Team T-Shirt</h4>
+                        <div class="price">£22.00</div>
+                        <button class="add-btn" onclick="addToCart(this,'Race Team T-Shirt','£22.00')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="shop-item reveal">
+                    <div class="shop-img">🎒<div class="shop-img-label">Accessories</div></div>
+                    <div class="shop-info">
+                        <h4>HFR Backpack</h4>
+                        <div class="price">£45.00</div>
+                        <button class="add-btn" onclick="addToCart(this,'HFR Backpack','£45.00')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="shop-item reveal">
+                    <div class="shop-img">🎟️<div class="shop-img-label">Tickets</div></div>
+                    <div class="shop-info">
+                        <h4>Monaco Supporter Ticket</h4>
+                        <div class="soon">Coming Soon</div>
+                        <button class="add-btn disabled" disabled>Coming Soon</button>
+                    </div>
+                </div>
+                <div class="shop-item reveal">
+                    <div class="shop-img">📓<div class="shop-img-label">Stationery</div></div>
+                    <div class="shop-info">
+                        <h4>HFR Notebook</h4>
+                        <div class="price">£12.00</div>
+                        <button class="add-btn" onclick="addToCart(this,'HFR Notebook','£12.00')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="shop-item reveal">
+                    <div class="shop-img">🔖<div class="shop-img-label">Accessories</div></div>
+                    <div class="shop-info">
+                        <h4>Sticker Pack</h4>
+                        <div class="price">£5.00</div>
+                        <button class="add-btn" onclick="addToCart(this,'Sticker Pack','£5.00')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="shop-item reveal">
+                    <div class="shop-img">🏁<div class="shop-img-label">Events</div></div>
+                    <div class="shop-info">
+                        <h4>HFR Annual Dinner Ticket</h4>
+                        <div class="soon">Coming Soon</div>
+                        <button class="add-btn disabled" disabled>Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="shop-note reveal">
+                <span style="font-size:22px;">ℹ️</span>
+                <p><strong>Note:</strong> The HFR store is in early access. Orders are managed manually — after clicking "Add to Cart" you'll be redirected to our order form. Full e-commerce coming soon.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart toast -->
+    <div id="cart-toast" style="position:fixed;bottom:30px;right:30px;background:var(--orange);color:var(--white);padding:14px 24px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;border-radius:4px;z-index:9999;transform:translateY(100px);opacity:0;transition:all 0.4s;"></div>
+
+    <script>
+    function addToCart(btn, name, price) {
+        const toast = document.getElementById('cart-toast');
+        toast.textContent = `✓ ${name} added!`;
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.transform = 'translateY(100px)'; toast.style.opacity = '0'; }, 2500);
+    }
+    </script>
+    <script src="shared.js"></script>
+</body>
+</html>

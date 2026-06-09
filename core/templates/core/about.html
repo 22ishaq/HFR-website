@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | UG Hydrogen Fuel Racing</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .about-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+        .about-text p { font-size:17px; font-weight:300; color:var(--grey-light); line-height:1.85; margin-bottom:20px; }
+        .pillars { display:flex; flex-direction:column; }
+        .pillar { display:flex; gap:22px; align-items:flex-start; padding:28px 0; border-bottom:1px solid var(--border); }
+        .pillar:first-child { border-top:1px solid var(--border); }
+        .p-icon { width:44px; height:44px; flex-shrink:0; background:rgba(255,94,0,0.1); border:1px solid rgba(255,94,0,0.3); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+        .p-body h4 { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:7px; }
+        .p-body p { font-size:14px; color:var(--grey); line-height:1.6; }
+
+        /* ACHIEVEMENTS */
+        .ach-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+        .ach-card { background:var(--card); padding:50px 40px; position:relative; overflow:hidden; }
+        .ach-card::before { content:attr(data-n); position:absolute; top:-10px; right:16px; font-family:'Bebas Neue',sans-serif; font-size:130px; color:rgba(255,94,0,0.05); line-height:1; pointer-events:none; }
+        .ach-card h3 { font-family:'Bebas Neue',sans-serif; font-size:56px; color:var(--orange); line-height:1; margin-bottom:8px; }
+        .ach-card h4 { font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+        .ach-card p { font-size:14px; color:var(--grey); line-height:1.6; }
+
+        /* TEAM */
+        .team-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+        .team-card { background:var(--card); padding:32px 28px; border-bottom:3px solid transparent; transition:border-color 0.3s; }
+        .team-card:hover { border-color:var(--orange); }
+        .t-top { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+        .t-avatar { width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,var(--orange),var(--gold)); display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--black); flex-shrink:0; }
+        .team-card h4 { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; }
+        .team-card .role { font-size:12px; color:var(--orange); font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+        .team-card .bio { font-size:13px; color:var(--grey); line-height:1.6; }
+
+        /* ORG CHART */
+        .org-wrap { max-width:900px; margin:0 auto; }
+        .org { display:flex; flex-direction:column; align-items:center; }
+        .org-level { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+        .org-line { width:1px; height:40px; background:var(--border); }
+        .org-h-line { height:1px; background:var(--border); }
+        .org-node { background:var(--card); border:1px solid var(--border); border-top:3px solid var(--orange); padding:14px 22px; text-align:center; min-width:150px; margin:8px 0; }
+        .org-node.top-node { border-top-color:var(--gold); min-width:200px; }
+        .org-node h5 { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+        .org-node span { font-size:12px; color:var(--grey); }
+
+        /* TIMELINE */
+        .tl-wrap { max-width:860px; margin:0 auto; position:relative; }
+        .tl-line { position:absolute; left:50%; top:0; bottom:0; width:1px; background:linear-gradient(to bottom, transparent, var(--orange) 8%, var(--border) 92%, transparent); transform:translateX(-50%); }
+        .tl-item { display:grid; grid-template-columns:1fr 40px 1fr; margin-bottom:60px; align-items:center; }
+        .tl-dot { width:14px; height:14px; border-radius:50%; background:var(--orange); border:3px solid var(--black); outline:1px solid var(--orange); margin:0 auto; }
+        .tl-content { padding:0 36px; }
+        .tl-content.right { text-align:left; }
+        .tl-content.left { text-align:right; }
+        .tl-year { font-family:'Bebas Neue',sans-serif; font-size:38px; color:var(--orange); line-height:1; margin-bottom:6px; }
+        .tl-content h4 { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+        .tl-content p { font-size:13px; color:var(--grey); line-height:1.6; }
+
+        @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:50px;}.ach-grid{grid-template-columns:1fr;}.team-grid{grid-template-columns:repeat(2,1fr);}.tl-line{left:16px;}.tl-item{grid-template-columns:1fr;gap:10px;}.tl-dot{display:none;}.tl-content{padding:0;text-align:left !important;}}
+        @media(max-width:600px){.team-grid{grid-template-columns:1fr;}}
+    </style>
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <div class="page-top">
+        <div class="page-hero" data-title="ABOUT">
+            <div class="label">About HFR</div>
+            <h1>Who <em>We Are</em></h1>
+            <p>Glasgow's student-led hydrogen fuel racing team — engineering the zero-emission vehicles of tomorrow, competing on the world stage today.</p>
+        </div>
+
+        <!-- MISSION -->
+        <section id="mission" class="section dark">
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <div class="section-label">Our Mission</div>
+                    <h2 class="section-title">Racing Towards a <em>Hydrogen</em> Future</h2>
+                    <p>UG Hydrogen Fuel Racing (HFR) is the University of Glasgow's pioneering motorsport society, developing hydrogen fuel cell vehicles for competition on both land and sea.</p>
+                    <p>Founded by a passionate group of engineers and entrepreneurs, we exist to prove that performance and sustainability aren't opposites — they're the same destination.</p>
+                    <p>We compete at the highest levels of student motorsport while giving members real-world engineering, business, and marketing experience that sets them apart in industry.</p>
+                    <a href="register.html" class="btn-primary" style="margin-top:20px;">Join the Team</a>
+                </div>
+                <div class="pillars reveal">
+                    <div class="pillar"><div class="p-icon">⚡</div><div class="p-body"><h4>Supporting Sustainability</h4><p>Developing zero-emission hydrogen fuel cell technology to push the boundaries of green engineering in motorsport.</p></div></div>
+                    <div class="pillar"><div class="p-icon">🎓</div><div class="p-body"><h4>Shaping Students</h4><p>A cross-disciplinary proving ground for engineers, marketers, and business minds to gain real-world industry experience.</p></div></div>
+                    <div class="pillar"><div class="p-icon">🌍</div><div class="p-body"><h4>Community Impact</h4><p>Inspiring the next generation through STEM outreach, university events, and collaborative workshops across Glasgow.</p></div></div>
+                    <div class="pillar"><div class="p-icon">🏆</div><div class="p-body"><h4>Competing at the Top</h4><p>Taking on Shell Eco-Marathon and the Monaco Energy Boat Challenge — some of the most prestigious green engineering competitions in the world.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACHIEVEMENTS -->
+        <section id="achievements" class="section black">
+            <div class="section-header reveal" style="max-width:1200px;margin:0 auto 60px;">
+                <div class="section-label">Track Record</div>
+                <h2 class="section-title">Built on <em>Achievement</em></h2>
+            </div>
+            <div class="ach-grid">
+                <div class="ach-card reveal" data-n="01"><h3>[YEAR]</h3><h4>Society Founded</h4><p>HFR established at the University of Glasgow with a mission to compete at the top of sustainable motorsport.</p></div>
+                <div class="ach-card reveal" data-n="02"><h3>[#]</h3><h4>Competitions Entered</h4><p>Successfully entered and competed in prestigious international hydrogen fuel competitions — update with your number.</p></div>
+                <div class="ach-card reveal" data-n="03"><h3>[AWARD]</h3><h4>Your Achievement Here</h4><p>Placeholder — add your team's real achievements, awards, and milestones here.</p></div>
+            </div>
+        </section>
+
+        <!-- TEAM STRUCTURE -->
+        <section id="team" class="section dark">
+            <div class="section-header reveal" style="max-width:1200px;margin:0 auto 60px;">
+                <div class="section-label">The People</div>
+                <h2 class="section-title">Meet the <em>Team</em></h2>
+                <p class="section-sub">A multidisciplinary team of engineers, marketers, business students, and motorsport enthusiasts — united by a shared mission.</p>
+            </div>
+
+            <div class="org-wrap reveal" style="margin-bottom:70px;">
+                <div class="section-label" style="text-align:center;margin-bottom:36px;">Management Structure</div>
+                <div class="org">
+                    <div class="org-level"><div class="org-node top-node"><h5>President</h5><span>[Name]</span></div></div>
+                    <div class="org-line"></div>
+                    <div class="org-level">
+                        <div class="org-node"><h5>VP Engineering</h5><span>[Name]</span></div>
+                        <div class="org-node"><h5>VP Business</h5><span>[Name]</span></div>
+                        <div class="org-node"><h5>VP Marketing</h5><span>[Name]</span></div>
+                    </div>
+                    <div class="org-line"></div>
+                    <div class="org-level">
+                        <div class="org-node" style="min-width:130px;"><h5>Land Lead</h5><span>Engineering</span></div>
+                        <div class="org-node" style="min-width:130px;"><h5>Sea Lead</h5><span>Engineering</span></div>
+                        <div class="org-node" style="min-width:130px;"><h5>Sponsorship</h5><span>Business</span></div>
+                        <div class="org-node" style="min-width:130px;"><h5>Social Media</h5><span>Marketing</span></div>
+                        <div class="org-node" style="min-width:130px;"><h5>Events</h5><span>Operations</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card reveal"><div class="t-top"><div class="t-avatar">P</div><div><h4>[President]</h4><div class="role">President</div></div></div><p class="bio">Add a bio for your President — degree, background, what drives them in HFR.</p></div>
+                <div class="team-card reveal"><div class="t-top"><div class="t-avatar">E</div><div><h4>[VP Engineering]</h4><div class="role">VP Engineering</div></div></div><p class="bio">Add a bio for your VP of Engineering — specialisation and technical focus.</p></div>
+                <div class="team-card reveal"><div class="t-top"><div class="t-avatar">B</div><div><h4>[VP Business]</h4><div class="role">VP Business</div></div></div><p class="bio">Add a bio for your VP of Business — sponsorship, partnerships, commercial strategy.</p></div>
+                <div class="team-card reveal"><div class="t-top"><div class="t-avatar">M</div><div><h4>[VP Marketing]</h4><div class="role">VP Marketing</div></div></div><p class="bio">Add a bio for your VP of Marketing — brand, social, and communications.</p></div>
+            </div>
+        </section>
+
+        <!-- TIMELINE -->
+        <section id="timeline" class="section black">
+            <div class="section-header reveal" style="max-width:1200px;margin:0 auto 70px;">
+                <div class="section-label">Our Journey</div>
+                <h2 class="section-title">From Zero to <em>Monaco</em></h2>
+            </div>
+            <div class="tl-wrap">
+                <div class="tl-line"></div>
+                <div class="tl-item reveal">
+                    <div class="tl-content left"><div class="tl-year">[YEAR]</div><h4>HFR Founded</h4><p>A group of passionate engineering students at the University of Glasgow come together with a shared vision: hydrogen-powered motorsport.</p></div>
+                    <div class="tl-dot"></div>
+                    <div></div>
+                </div>
+                <div class="tl-item reveal">
+                    <div></div>
+                    <div class="tl-dot"></div>
+                    <div class="tl-content right"><div class="tl-year">[YEAR]</div><h4>First Vehicle Built</h4><p>The team designs and builds their first hydrogen fuel cell vehicle, entering their first Shell Eco-Marathon competition.</p></div>
+                </div>
+                <div class="tl-item reveal">
+                    <div class="tl-content left"><div class="tl-year">[YEAR]</div><h4>Sea Division Launched</h4><p>Expanding beyond land, HFR launches its Sea Division with the goal of competing in the Monaco Energy Boat Challenge.</p></div>
+                    <div class="tl-dot"></div>
+                    <div></div>
+                </div>
+                <div class="tl-item reveal">
+                    <div></div>
+                    <div class="tl-dot"></div>
+                    <div class="tl-content right"><div class="tl-year">2026</div><h4>Monaco — Here We Come</h4><p>Both divisions prepare to compete on the international stage. The team is larger, more capable, and ready to make history.</p></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | UG Hydrogen Fuel Racing</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .events-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+        .event-card { background:var(--card); padding:40px 32px; border-top:3px solid transparent; transition:border-color 0.3s,background 0.3s; }
+        .event-card:hover { border-color:var(--orange); background:var(--card2); }
+        .event-type { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--orange); margin-bottom:14px; }
+        .event-card h3 { font-family:'Barlow Condensed',sans-serif; font-size:23px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+        .event-card p { font-size:14px; color:var(--grey); line-height:1.65; margin-bottom:20px; }
+        .event-meta { display:flex; flex-direction:column; gap:6px; }
+        .event-date,.event-loc { font-size:12px; color:var(--grey); letter-spacing:1px; display:flex; align-items:center; gap:8px; }
+        .dot { width:6px; height:6px; background:var(--orange); border-radius:50%; flex-shrink:0; }
+
+        /* FEATURED */
+        .featured-event { max-width:1200px; margin:0 auto 60px; background:var(--card); display:grid; grid-template-columns:1fr 1fr; overflow:hidden; }
+        .feat-visual { background:linear-gradient(135deg,#1a0a00,#2d1200,#0a0a0a); display:flex; align-items:center; justify-content:center; min-height:300px; position:relative; overflow:hidden; }
+        .feat-visual::before { content:'NEXT'; position:absolute; font-family:'Bebas Neue',sans-serif; font-size:160px; color:rgba(255,94,0,0.06); letter-spacing:4px; }
+        .feat-visual-text { position:relative; z-index:2; text-align:center; }
+        .feat-visual-text .big { font-family:'Bebas Neue',sans-serif; font-size:72px; color:var(--orange); line-height:1; }
+        .feat-visual-text .small { font-size:13px; color:var(--grey); letter-spacing:3px; text-transform:uppercase; margin-top:6px; }
+        .feat-content { padding:50px; }
+        .feat-content .event-type { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--orange); margin-bottom:16px; }
+        .feat-content h2 { font-family:'Bebas Neue',sans-serif; font-size:44px; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+        .feat-content p { font-size:15px; color:var(--grey-light); font-weight:300; line-height:1.75; margin-bottom:28px; }
+
+        @media(max-width:900px){.events-grid{grid-template-columns:repeat(2,1fr);}.featured-event{grid-template-columns:1fr;}}
+        @media(max-width:600px){.events-grid{grid-template-columns:1fr;}.section{padding:60px 24px;}}
+    </style>
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <div class="page-top">
+        <div class="page-hero" data-title="EVENTS">
+            <div class="label">Events & Activities</div>
+            <h1>More Than <em>Racing</em></h1>
+            <p>HFR runs a full programme of events throughout the year — from technical lecture series to industry site tours, conferences, and community outreach.</p>
+        </div>
+
+        <!-- FEATURED NEXT EVENT -->
+        <section id="lectures" class="section dark">
+            <div class="section-header reveal" style="max-width:1200px;margin:0 auto 50px;">
+                <div class="section-label">Next Up</div>
+                <h2 class="section-title">Featured <em>Event</em></h2>
+            </div>
+            <div class="featured-event reveal">
+                <div class="feat-visual">
+                    <div class="feat-visual-text">
+                        <div class="big">[DATE]</div>
+                        <div class="small">Coming Soon</div>
+                    </div>
+                </div>
+                <div class="feat-content">
+                    <div class="event-type">Featured Event</div>
+                    <h2>[Event Name Here]</h2>
+                    <p>Add your next big event here — a lecture, conference, social, or competition. Update the date, title, and description to keep this section current.</p>
+                    <a href="register.html" class="btn-primary">Register Interest</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALL EVENTS -->
+        <section id="outreach" class="section black">
+            <div class="section-header reveal" style="max-width:1200px;margin:0 auto 60px;">
+                <div class="section-label">Full Programme</div>
+                <h2 class="section-title">What We <em>Run</em></h2>
+            </div>
+            <div class="events-grid">
+                <div class="event-card reveal">
+                    <div class="event-type">Lecture Series</div>
+                    <h3>HFR Technical Talks</h3>
+                    <p>Monthly talks from industry professionals, academics, and alumni covering hydrogen technology, motorsport engineering, and sustainability careers.</p>
+                    <div class="event-meta">
+                        <div class="event-date"><div class="dot"></div>Monthly</div>
+                        <div class="event-loc"><div class="dot"></div>[Venue TBC] · University of Glasgow</div>
+                    </div>
+                </div>
+                <div class="event-card reveal">
+                    <div class="event-type">Outreach</div>
+                    <h3>STEM Outreach Programme</h3>
+                    <p>Visiting schools across Glasgow to inspire the next generation of hydrogen engineers. Hands-on workshops, vehicle demos, and careers talks.</p>
+                    <div class="event-meta">
+                        <div class="event-date"><div class="dot"></div>Termly</div>
+                        <div class="event-loc"><div class="dot"></div>Glasgow Schools</div>
+                    </div>
+                </div>
+                <div class="event-card reveal">
+                    <div class="event-type">Conference</div>
+                    <h3>Hydrogen Innovation Forum</h3>
+                    <p>Our annual conference bringing together students, industry, and academics to discuss the future of hydrogen as a clean energy solution in transport.</p>
+                    <div class="event-meta">
+                        <div class="event-date"><div class="dot"></div>Annual</div>
+                        <div class="event-loc"><div class="dot"></div>University of Glasgow</div>
+                    </div>
+                </div>
+                <div id="tours" class="event-card reveal">
+                    <div class="event-type">Industry Visit</div>
+                    <h3>Site Tours</h3>
+                    <p>Exclusive visits to hydrogen production facilities, motorsport manufacturers, and clean energy companies across the UK and Europe.</p>
+                    <div class="event-meta">
+                        <div class="event-date"><div class="dot"></div>Seasonal</div>
+                        <div class="event-loc"><div class="dot"></div>Various Locations</div>
+                    </div>
+                </div>
+                <div id="socials" class="event-card reveal">
+                    <div class="event-type">Social</div>
+                    <h3>Team Socials & Networking</h3>
+                    <p>Regular socials, team-building events, and networking evenings to connect HFR members with industry professionals and alumni.</p>
+                    <div class="event-meta">
+                        <div class="event-date"><div class="dot"></div>Fortnightly</div>
+                        <div class="event-loc"><div class="dot"></div>Glasgow</div>
+                    </div>
+                </div>
+                <div class="event-card reveal">
+                    <div class="event-type">Workshop</div>
+                    <h3>Engineering Workshops</h3>
+                    <p>Hands-on build sessions, design reviews, and technical workshops where members work directly on HFR's competition vehicles.</p>
+                    <div class="event-meta">
+                        <div class="event-date"><div class="dot"></div>Weekly</div>
+                        <div class="event-loc"><div class="dot"></div>UofG Engineering Labs</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section dark" style="text-align:center;">
+            <div style="max-width:660px;margin:0 auto;" class="reveal">
+                <div class="section-label">Stay Updated</div>
+                <h2 class="section-title">Never Miss an <em>Event</em></h2>
+                <p style="font-size:16px;font-weight:300;color:var(--grey-light);line-height:1.7;margin-bottom:36px;">Join HFR to get notified about upcoming events, talks, and socials. Members get first access to all events.</p>
+                <a href="register.html" class="btn-primary">Join HFR</a>
+            </div>
+        </section>
+    </div>
+
+    <script src="shared.js"></script>
+</body>
+</html>

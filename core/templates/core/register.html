@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Us | UG Hydrogen Fuel Racing</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        /* Toggle this variable to open/close applications */
+        :root { --apps-open: 1; } /* 1 = open, 0 = closed */
+
+        .reg-layout { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1.4fr; gap:80px; align-items:start; }
+        .reg-sidebar h2 { font-family:'Bebas Neue',sans-serif; font-size:44px; letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+        .reg-sidebar h2 em { color:var(--orange); font-style:normal; }
+        .reg-sidebar p { font-size:16px; font-weight:300; color:var(--grey-light); line-height:1.75; margin-bottom:20px; }
+        .reg-roles { display:flex; flex-direction:column; gap:0; margin-top:30px; }
+        .reg-role { padding:20px 0; border-bottom:1px solid var(--border); display:flex; gap:14px; align-items:flex-start; }
+        .reg-role:first-child { border-top:1px solid var(--border); }
+        .reg-role-icon { width:36px; height:36px; flex-shrink:0; background:rgba(255,94,0,0.1); border:1px solid rgba(255,94,0,0.3); border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+        .reg-role h5 { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+        .reg-role p { font-size:13px; color:var(--grey); line-height:1.5; margin:0; }
+
+        /* Status banner */
+        .status-open, .status-closed {
+            display:flex; align-items:center; gap:12px; padding:16px 24px;
+            border-radius:4px; margin-bottom:40px;
+        }
+        .status-open   { background:rgba(255,94,0,0.08); border:1px solid rgba(255,94,0,0.3); }
+        .status-closed { background:rgba(255,255,255,0.04); border:1px solid var(--border); }
+        .status-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+        .status-open   .status-dot { background:var(--orange); animation:pulse 2s infinite; }
+        .status-closed .status-dot { background:var(--grey); }
+        .status-open   p { font-size:14px; color:var(--grey-light); }
+        .status-open   strong { color:var(--orange); }
+        .status-closed p { font-size:14px; color:var(--grey); }
+
+        /* FORM */
+        .form-wrap { background:var(--card); padding:50px; }
+        .form-title { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:2px; text-transform:uppercase; margin-bottom:36px; }
+        .form-title em { color:var(--orange); font-style:normal; }
+        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+        .ff { display:flex; flex-direction:column; gap:8px; }
+        .ff.full { grid-column:1/-1; }
+        .ff label { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--grey); }
+        .ff input, .ff select, .ff textarea {
+            background:var(--card2); border:1px solid var(--border); color:var(--white);
+            padding:14px 16px; font-family:'Barlow',sans-serif; font-size:15px;
+            border-radius:2px; outline:none; transition:border-color 0.2s;
+        }
+        .ff input:focus, .ff select:focus, .ff textarea:focus { border-color:var(--orange); }
+        .ff select option { background:var(--card2); }
+        .ff textarea { min-height:110px; resize:vertical; }
+        .form-submit { margin-top:28px; }
+
+        /* Success */
+        .form-success { display:none; text-align:center; padding:60px 40px; }
+        .form-success .big { font-family:'Bebas Neue',sans-serif; font-size:72px; color:var(--orange); line-height:1; margin-bottom:14px; }
+        .form-success p { font-size:16px; color:var(--grey-light); line-height:1.7; }
+
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);} }
+        @media(max-width:900px){.reg-layout{grid-template-columns:1fr;gap:50px;}.form-grid{grid-template-columns:1fr;}.form-wrap{padding:36px 28px;}}
+        @media(max-width:600px){.section{padding:60px 24px;}}
+    </style>
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <div class="page-top">
+        <div class="page-hero" data-title="JOIN">
+            <div class="label">Join HFR</div>
+            <h1>Become Part of <em>History</em></h1>
+            <p>We're looking for engineers, designers, marketers, business students, and anyone passionate about sustainable motorsport.</p>
+        </div>
+
+        <section class="section dark">
+            <div class="reg-layout">
+                <div class="reg-sidebar reveal">
+                    <h2>Why Join <em>HFR?</em></h2>
+                    <p>HFR is more than a society — it's a launchpad. You'll work on real engineering challenges, compete internationally, and build skills that employers actually care about.</p>
+                    <p>Whether you want to engineer the vehicles, lead commercial strategy, or manage our brand — there's a role for you.</p>
+                    <div class="reg-roles">
+                        <div class="reg-role"><div class="reg-role-icon">⚙️</div><div><h5>Engineering</h5><p>Mechanical, electrical, systems, and software — design and build the vehicles that compete at Monaco.</p></div></div>
+                        <div class="reg-role"><div class="reg-role-icon">💼</div><div><h5>Business & Sponsorship</h5><p>Manage partnerships, sponsorship, and the commercial strategy that keeps HFR running.</p></div></div>
+                        <div class="reg-role"><div class="reg-role-icon">📣</div><div><h5>Marketing & Media</h5><p>Brand, social media, photography, video, and comms — tell the HFR story to the world.</p></div></div>
+                        <div class="reg-role"><div class="reg-role-icon">🎪</div><div><h5>Events & Outreach</h5><p>Organise lectures, site tours, socials, and our STEM outreach programme across Glasgow.</p></div></div>
+                    </div>
+                </div>
+
+                <div class="form-wrap reveal" id="form-section">
+                    <!-- Change data-open="true" to data-open="false" to close applications -->
+                    <div id="app-status" data-open="true">
+                        <!-- Status banner injected by JS -->
+                    </div>
+                    <div id="form-container">
+                        <div class="form-title">Your <em>Application</em></div>
+                        <form onsubmit="handleSubmit(event)" id="apply-form">
+                            <div class="form-grid">
+                                <div class="ff"><label>First Name</label><input type="text" placeholder="John" required></div>
+                                <div class="ff"><label>Last Name</label><input type="text" placeholder="Smith" required></div>
+                                <div class="ff"><label>University Email</label><input type="email" placeholder="j.smith@student.gla.ac.uk" required></div>
+                                <div class="ff"><label>Degree Programme</label><input type="text" placeholder="MEng Mechanical Engineering"></div>
+                                <div class="ff">
+                                    <label>Year of Study</label>
+                                    <select>
+                                        <option>Year 1</option><option>Year 2</option><option>Year 3</option>
+                                        <option>Year 4</option><option>Year 5</option><option>Postgraduate</option>
+                                    </select>
+                                </div>
+                                <div class="ff">
+                                    <label>Area of Interest</label>
+                                    <select>
+                                        <option>Engineering — Land Division</option>
+                                        <option>Engineering — Sea Division</option>
+                                        <option>Engineering — Both</option>
+                                        <option>Business & Sponsorship</option>
+                                        <option>Marketing & Media</option>
+                                        <option>Events & Outreach</option>
+                                        <option>Not Sure Yet</option>
+                                    </select>
+                                </div>
+                                <div class="ff full"><label>LinkedIn / Portfolio (optional)</label><input type="url" placeholder="https://linkedin.com/in/yourname"></div>
+                                <div class="ff full"><label>Why do you want to join HFR?</label><textarea placeholder="Tell us what drives your passion for hydrogen and sustainable motorsport..."></textarea></div>
+                            </div>
+                            <div class="form-submit">
+                                <button type="submit" class="btn-primary" id="submit-btn">Submit Application →</button>
+                            </div>
+                        </form>
+                        <div class="form-success" id="form-success">
+                            <div class="big">✓</div>
+                            <h3 style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;margin-bottom:14px;">Application Received!</h3>
+                            <p>Thanks for applying to HFR. We'll review your application and be in touch soon. Welcome to the future of motorsport.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+    // ── Application open/close ──
+    const statusEl = document.getElementById('app-status');
+    const isOpen = statusEl.dataset.open === 'true';
+    if (isOpen) {
+        statusEl.innerHTML = `<div class="status-open"><div class="status-dot"></div><p><strong>Applications Open</strong> — We are currently accepting applications for the 2026 season.</p></div>`;
+    } else {
+        statusEl.innerHTML = `<div class="status-closed"><div class="status-dot"></div><p>Applications are currently closed. Check back soon or follow us on social media for updates.</p></div>`;
+        document.querySelectorAll('#apply-form input, #apply-form select, #apply-form textarea, #submit-btn').forEach(el => el.disabled = true);
+        document.getElementById('submit-btn').textContent = 'Applications Closed';
+        document.getElementById('submit-btn').style.background = 'var(--card2)';
+        document.getElementById('submit-btn').style.color = 'var(--grey)';
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        document.getElementById('apply-form').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+    }
+    </script>
+    <script src="shared.js"></script>
+</body>
+</html>

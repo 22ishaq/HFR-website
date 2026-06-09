@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divisions | UG Hydrogen Fuel Racing</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .division-section { padding:100px 80px; }
+        .division-section.alt { background:var(--deep); }
+        .div-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+        .div-inner.flipped { direction:rtl; }
+        .div-inner.flipped > * { direction:ltr; }
+        .div-visual { position:relative; height:480px; background:var(--card); overflow:hidden; }
+        .div-visual-bg { position:absolute; inset:0; }
+        .land-bg { background:linear-gradient(135deg,#1e0600 0%,#3d1a00 40%,#0f0f0f 100%); }
+        .sea-bg  { background:linear-gradient(135deg,#001020 0%,#002040 40%,#0f0f0f 100%); }
+        .div-visual-label { position:absolute; top:30px; left:30px; font-family:'Bebas Neue',sans-serif; font-size:120px; color:rgba(255,255,255,0.04); line-height:1; letter-spacing:4px; pointer-events:none; }
+        .div-visual-icon { position:absolute; bottom:30px; right:30px; font-size:80px; opacity:0.15; }
+        .div-badge-large { display:inline-block; font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:var(--orange); border:1px solid rgba(255,94,0,0.4); padding:6px 18px; border-radius:2px; margin-bottom:18px; }
+        .div-text h2 { font-family:'Bebas Neue',sans-serif; font-size:clamp(44px,5vw,72px); letter-spacing:3px; text-transform:uppercase; line-height:0.95; margin-bottom:20px; }
+        .div-text h2 em { color:var(--orange); font-style:normal; }
+        .div-text p { font-size:16px; font-weight:300; color:var(--grey-light); line-height:1.75; margin-bottom:16px; }
+        .div-specs { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:30px 0; }
+        .spec-box { background:var(--card2); padding:18px 20px; border-left:3px solid var(--orange); }
+        .spec-box .spec-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--grey); margin-bottom:4px; }
+        .spec-box .spec-val { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; color:var(--white); }
+        @media(max-width:900px){.div-inner{grid-template-columns:1fr;gap:40px;}.div-inner.flipped{direction:ltr;}.division-section{padding:70px 40px;}.div-visual{height:280px;}}
+        @media(max-width:600px){.division-section{padding:60px 24px;}}
+    </style>
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <div class="page-top">
+        <div class="page-hero" data-title="DIVISIONS">
+            <div class="label">Our Divisions</div>
+            <h1>Land. Sea. <em>Both.</em></h1>
+            <p>HFR operates two competitive divisions, each pushing hydrogen fuel cell technology to its limits in radically different environments.</p>
+        </div>
+
+        <!-- LAND -->
+        <section id="land" class="division-section">
+            <div class="div-inner">
+                <div class="div-visual reveal">
+                    <div class="div-visual-bg land-bg"></div>
+                    <div class="div-visual-label">LAND</div>
+                    <div class="div-visual-icon">🏎️</div>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                        <div style="text-align:center;z-index:2;">
+                            <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--orange);letter-spacing:4px;">SHELL ECO-MARATHON</div>
+                            <div style="font-size:13px;color:var(--grey);letter-spacing:2px;margin-top:8px;">LAND DIVISION</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="div-text reveal">
+                    <div class="div-badge-large">Land Division</div>
+                    <h2>Shell <em>Eco-Marathon</em></h2>
+                    <p>Our land team designs and builds an ultra-efficient hydrogen-powered vehicle to compete in Shell's world-famous Eco-Marathon — a global challenge to see which student team can travel the furthest distance on the least amount of energy.</p>
+                    <p>The vehicle combines lightweight chassis design, advanced hydrogen fuel cell systems, and aerodynamic optimisation to achieve extraordinary energy efficiency figures.</p>
+                    <div class="div-specs">
+                        <div class="spec-box"><div class="spec-label">Fuel Type</div><div class="spec-val">H₂ Fuel Cell</div></div>
+                        <div class="spec-box"><div class="spec-label">Emissions</div><div class="spec-val">Zero CO₂</div></div>
+                        <div class="spec-box"><div class="spec-label">Competition</div><div class="spec-val">Shell Eco-Marathon</div></div>
+                        <div class="spec-box"><div class="spec-label">Category</div><div class="spec-val">Urban Concept</div></div>
+                    </div>
+                    <a href="competitions.html" class="btn-primary">View Competitions</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEA -->
+        <section id="sea" class="division-section alt">
+            <div class="div-inner flipped">
+                <div class="div-visual reveal">
+                    <div class="div-visual-bg sea-bg"></div>
+                    <div class="div-visual-label">SEA</div>
+                    <div class="div-visual-icon">⛵</div>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                        <div style="text-align:center;z-index:2;">
+                            <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--orange);letter-spacing:3px;">MONACO ENERGY BOAT</div>
+                            <div style="font-size:13px;color:var(--grey);letter-spacing:2px;margin-top:8px;">SEA DIVISION</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="div-text reveal">
+                    <div class="div-badge-large">Sea Division</div>
+                    <h2>Monaco <em>Energy Boat</em></h2>
+                    <p>Our sea team builds a hydrogen fuel cell-powered boat to compete in the prestigious Monaco Energy Boat Challenge — racing on the sparkling waters of the Mediterranean in one of the world's most iconic locations.</p>
+                    <p>Teams are judged on speed, energy efficiency, technical innovation, and sustainability. This is engineering at its most spectacular.</p>
+                    <div class="div-specs">
+                        <div class="spec-box"><div class="spec-label">Fuel Type</div><div class="spec-val">H₂ Fuel Cell</div></div>
+                        <div class="spec-box"><div class="spec-label">Location</div><div class="spec-val">Monaco 🇲🇨</div></div>
+                        <div class="spec-box"><div class="spec-label">Competition</div><div class="spec-val">Energy Boat Challenge</div></div>
+                        <div class="spec-box"><div class="spec-label">Category</div><div class="spec-val">Hydrogen Class</div></div>
+                    </div>
+                    <a href="competitions.html" class="btn-primary">View Competitions</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN CTA -->
+        <section class="section black" style="text-align:center;">
+            <div style="max-width:660px;margin:0 auto;" class="reveal">
+                <div class="section-label">Get Involved</div>
+                <h2 class="section-title">Which Division <em>Calls You?</em></h2>
+                <p style="font-size:16px;font-weight:300;color:var(--grey-light);line-height:1.7;margin-bottom:36px;">Whether you're drawn to land or sea, there's a home for you at HFR. Engineers, designers, strategists and storytellers — all welcome.</p>
+                <a href="register.html" class="btn-primary">Apply Now</a>
+            </div>
+        </section>
+    </div>
+
+    <script src="shared.js"></script>
+</body>
+</html>

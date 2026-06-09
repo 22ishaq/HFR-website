@@ -1,0 +1,18 @@
+# Python / Django
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database / local files
+db.sqlite3
+.env
+
+# Static build output
+staticfiles/
+
+# VS Code / OS
+.vscode/
+.DS_Store
+Thumbs.db

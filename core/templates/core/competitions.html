@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competitions | UG Hydrogen Fuel Racing</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .comp-list { max-width:1100px; margin:0 auto; }
+        .comp-item { display:grid; grid-template-columns:110px 1fr auto; gap:40px; align-items:center; padding:40px 0; border-bottom:1px solid var(--border); }
+        .comp-item:first-child { border-top:1px solid var(--border); }
+        .comp-year { font-family:'Bebas Neue',sans-serif; font-size:48px; color:var(--border); line-height:1; }
+        .comp-info h3 { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+        .comp-info p { font-size:14px; color:var(--grey); line-height:1.65; max-width:560px; }
+        .comp-tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+        .comp-tag { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border:1px solid var(--border); color:var(--grey); border-radius:2px; }
+        .comp-meta { text-align:right; flex-shrink:0; }
+        .comp-loc { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--orange); margin-bottom:10px; }
+        .badge { display:inline-block; padding:5px 16px; font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border-radius:20px; }
+        .badge.upcoming  { background:rgba(255,196,0,0.12); color:var(--gold); border:1px solid rgba(255,196,0,0.3); }
+        .badge.active    { background:rgba(255,94,0,0.12); color:var(--orange); border:1px solid rgba(255,94,0,0.3); }
+        .badge.past      { background:rgba(255,255,255,0.05); color:var(--grey); border:1px solid var(--border); }
+        .badge.exploring { background:rgba(0,200,255,0.08); color:#44ccff; border:1px solid rgba(0,200,255,0.25); }
+        @media(max-width:800px){.comp-item{grid-template-columns:1fr;gap:14px;}.comp-year{font-size:32px;}.comp-meta{text-align:left;}}
+        @media(max-width:600px){.section{padding:60px 24px;}}
+    </style>
+</head>
+<body>
+    <script src="nav.js"></script>
+
+    <div class="page-top">
+        <div class="page-hero" data-title="COMPETE">
+            <div class="label">Competitions</div>
+            <h1>Where We <em>Compete</em></h1>
+            <p>From the streets of Europe to the harbour of Monaco — we take on the world's most prestigious green energy competitions.</p>
+        </div>
+
+        <section class="section dark">
+            <div class="comp-list">
+                <div class="comp-item reveal">
+                    <div class="comp-year">2026</div>
+                    <div class="comp-info">
+                        <h3>Monaco Energy Boat Challenge</h3>
+                        <p>The world's premier competition for zero-emission boats. Teams race hydrogen, solar, and electric vessels in Monaco's legendary harbour, judged on speed, efficiency, and technical innovation. HFR's Sea Division is training hard for this iconic event.</p>
+                        <div class="comp-tags"><span class="comp-tag">Sea Division</span><span class="comp-tag">Hydrogen Class</span><span class="comp-tag">International</span></div>
+                    </div>
+                    <div class="comp-meta">
+                        <div class="comp-loc">🇲🇨 Monaco</div>
+                        <span class="badge upcoming">Upcoming 2026</span>
+                    </div>
+                </div>
+                <div class="comp-item reveal">
+                    <div class="comp-year">2026</div>
+                    <div class="comp-info">
+                        <h3>Shell Eco-Marathon Europe</h3>
+                        <p>Students design, build, and drive energy-efficient vehicles. Our hydrogen fuel cell land car aims to travel the furthest distance on the least energy possible — the ultimate engineering efficiency challenge. Held annually at a European circuit venue.</p>
+                        <div class="comp-tags"><span class="comp-tag">Land Division</span><span class="comp-tag">Fuel Cell</span><span class="comp-tag">Urban Concept</span></div>
+                    </div>
+                    <div class="comp-meta">
+                        <div class="comp-loc">🇪🇺 Europe</div>
+                        <span class="badge active">In Preparation</span>
+                    </div>
+                </div>
+                <div class="comp-item reveal">
+                    <div class="comp-year">TBC</div>
+                    <div class="comp-info">
+                        <h3>Future Competitions</h3>
+                        <p>As HFR grows, we're actively researching additional hydrogen and clean energy competitions across Europe and beyond. If you know of a competition we should enter, get in touch.</p>
+                        <div class="comp-tags"><span class="comp-tag">Both Divisions</span><span class="comp-tag">TBC</span></div>
+                    </div>
+                    <div class="comp-meta">
+                        <div class="comp-loc">🌍 Global</div>
+                        <span class="badge exploring">Exploring</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section black" style="text-align:center;">
+            <div style="max-width:660px;margin:0 auto;" class="reveal">
+                <div class="section-label">Get Involved</div>
+                <h2 class="section-title">Be Part of <em>Our Team</em></h2>
+                <p style="font-size:16px;font-weight:300;color:var(--grey-light);line-height:1.7;margin-bottom:36px;">Want to race at Monaco? Join HFR and help us build the vehicles that will compete on the world stage.</p>
+                <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+                    <a href="register.html" class="btn-primary">Join the Team</a>
+                    <a href="divisions.html" class="btn-outline">Our Divisions</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="shared.js"></script>
+</body>
+</html>
