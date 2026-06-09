@@ -63,7 +63,7 @@
     </div>
 
     <a href="index.html" class="nav-home-logo" aria-label="Hydrogen Fuel Racing home">
-      <img src="hfr.jpg" alt="HFR">
+      <img src="/static/core/hfr.jpg" alt="HFR">
     </a>
 
     <div class="nav-link-row nav-right-links" aria-label="Main navigation right">
