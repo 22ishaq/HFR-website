@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
     <style>
         .about-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
         .about-text p { font-size:17px; font-weight:300; color:var(--grey-light); line-height:1.85; margin-bottom:20px; }
@@ -61,7 +62,7 @@
     </style>
 </head>
 <body>
-    <script src="nav.js"></script>
+    <script src="{% static 'core/nav.js' %}"></script>
 
     <div class="page-top">
         <div class="page-hero" data-title="ABOUT">
@@ -172,6 +173,6 @@
         </section>
     </div>
 
-    <script src="shared.js"></script>
+    <script src="{% static 'core/shared.js' %}"></script>
 </body>
 </html>

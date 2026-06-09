@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Competitions | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
     <style>
         .comp-list { max-width:1100px; margin:0 auto; }
         .comp-item { display:grid; grid-template-columns:110px 1fr auto; gap:40px; align-items:center; padding:40px 0; border-bottom:1px solid var(--border); }
@@ -26,7 +27,7 @@
     </style>
 </head>
 <body>
-    <script src="nav.js"></script>
+    <script src="{% static 'core/nav.js' %}"></script>
 
     <div class="page-top">
         <div class="page-hero" data-title="COMPETE">
@@ -89,6 +90,6 @@
         </section>
     </div>
 
-    <script src="shared.js"></script>
+    <script src="{% static 'core/shared.js' %}"></script>
 </body>
 </html>

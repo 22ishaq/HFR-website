@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Us | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
     <style>
         /* Toggle this variable to open/close applications */
         :root { --apps-open: 1; } /* 1 = open, 0 = closed */
@@ -63,7 +64,7 @@
     </style>
 </head>
 <body>
-    <script src="nav.js"></script>
+    <script src="{% static 'core/nav.js' %}"></script>
 
     <div class="page-top">
         <div class="page-hero" data-title="JOIN">
@@ -156,6 +157,6 @@
         document.getElementById('form-success').style.display = 'block';
     }
     </script>
-    <script src="shared.js"></script>
+    <script src="{% static 'core/shared.js' %}"></script>
 </body>
 </html>

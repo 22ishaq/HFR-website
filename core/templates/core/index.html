@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UG Hydrogen Fuel Racing | Home</title>
     <link rel="stylesheet" href="{% static 'core/shared.css' %}">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
 
     <style>
         /*
@@ -436,11 +437,10 @@
     </style>
 </head>
 <body>
-    <script src="nav.js"></script>
 
     <section class="hero">
         <video autoplay loop muted playsinline>
-            <source src="48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov" type="video/mp4">
+            <source src="{% static 'core/48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov' %}" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -448,8 +448,8 @@
             <h1>Hydrogen<br><em>Fuel</em> Racing</h1>
             <p class="hero-sub">Driving the future of sustainable student engineering across land, sea and air.</p>
             <div class="hero-btns">
-                <a href="divisions.html" class="btn-outline">Our Fleet</a>
-                <a href="register.html" class="btn-primary">Register Interest</a>
+                <a href="{% url 'divisions' %}" class="btn-outline">Our Fleet</a>
+                <a href="{% url 'register' %}" class="btn-primary">Register Interest</a>
             </div>
         </div>
         <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
@@ -470,15 +470,15 @@
                         <p class="body-copy">Hydrogen Fuel Racing is a student-led team at the University of Glasgow, building hydrogen-powered vehicles and creating hands-on opportunities across engineering, business, media and outreach.</p>
                         <p class="body-copy" style="margin-top:18px;">We are composed of divisions across land, sea and air, all working towards cleaner transport and practical experience for students.</p>
                         <div class="button-row">
-                            <a href="about.html" class="btn-outline">Discover</a>
-                            <a href="register.html" class="btn-primary">Join Us</a>
+                            <a href="{% url 'about' %}" class="btn-outline">Discover</a>
+                            <a href="{% url 'register' %}" class="btn-primary">Join Us</a>
                         </div>
                     </div>
 
                     <div class="media-frame who-media reveal">
                         <!-- Replace this with a team photo or a background video when you have one. -->
                         <video autoplay muted loop playsinline>
-                            <source src="48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov" type="video/mp4">
+                            <source src="{% static 'core/48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov' %}" type="video/mp4">
                         </video>
                         <div class="media-placeholder">Media placeholder<br>Team photo / workshop video</div>
                         <div class="media-caption"><span>Media:</span> Who We Are</div>
@@ -495,7 +495,7 @@
                 </div>
 
                 <div class="events-grid">
-                    <a href="events.html" class="event-card featured reveal">
+                    <a href="{% url 'events' %}" class="event-card featured reveal">
                         <div class="media-frame">
                             <!-- Replace with a recent event image/video. -->
                             <div class="media-placeholder">Media placeholder<br>Most recent event</div>
@@ -507,7 +507,7 @@
                         </div>
                     </a>
 
-                    <a href="events.html" class="event-card reveal">
+                    <a href="{% url 'events' %}" class="event-card reveal">
                         <div class="media-frame">
                             <div class="media-placeholder">Media placeholder<br>Event thumbnail</div>
                             <div class="media-caption"><span>Media:</span> Event X</div>
@@ -518,7 +518,7 @@
                         </div>
                     </a>
 
-                    <a href="events.html" class="event-card reveal">
+                    <a href="{% url 'events' %}" class="event-card reveal">
                         <div class="media-frame">
                             <div class="media-placeholder">Media placeholder<br>Event thumbnail</div>
                             <div class="media-caption"><span>Media:</span> Event X</div>
@@ -531,7 +531,7 @@
                 </div>
 
                 <div class="button-row reveal" style="justify-content:center;margin-top:48px;">
-                    <a href="events.html" class="btn-outline">See More</a>
+                    <a href="{% url 'events' %}" class="btn-outline">See More</a>
                 </div>
             </div>
         </section>
@@ -544,7 +544,7 @@
                 </div>
 
                 <div class="fleet-grid">
-                    <a href="divisions.html#sea" class="fleet-card reveal">
+                    <a href="{% url 'divisions' %}#sea" class="fleet-card reveal">
                         <div class="media-frame">
                             <!-- Replace with Vital Spark boat image/video. -->
                             <div class="media-placeholder">Media placeholder<br>Vital Spark boat</div>
@@ -556,7 +556,7 @@
                         </div>
                     </a>
 
-                    <a href="divisions.html#land" class="fleet-card reveal">
+                    <a href="{% url 'divisions' %}#land" class="fleet-card reveal">
                         <div class="media-frame">
                             <!-- Replace with Shell Eco car render/image. -->
                             <div class="media-placeholder">Media placeholder<br>Shell Eco 27</div>
@@ -568,7 +568,7 @@
                         </div>
                     </a>
 
-                    <a href="divisions.html#air" class="fleet-card reveal">
+                    <a href="{% url 'divisions' %}#air" class="fleet-card reveal">
                         <div class="media-frame">
                             <!-- Replace with concept render. -->
                             <div class="media-placeholder">Media placeholder<br>Aero concept</div>
@@ -597,8 +597,8 @@
                         <h2 class="display-title">Register <em>Interest</em></h2>
                         <p class="body-copy">Register interest for the next recruitment window. We look for curiosity, reliability and enthusiasm — not just previous experience.</p>
                         <div class="button-row">
-                            <a href="register.html" class="btn-primary">Register Interest</a>
-                            <a href="about.html" class="btn-outline">Learn More</a>
+                            <a href="{% url 'register' %}" class="btn-primary">Register Interest</a>
+                            <a href="{% url 'about' %}" class="btn-outline">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -606,6 +606,7 @@
         </section>
     </main>
 
-    <script src="shared.js"></script>
+    <script src="{% static 'core/nav.js' %}"></script>
+    <script src="{% static 'core/shared.js' %}"></script>
 </body>
 </html>
