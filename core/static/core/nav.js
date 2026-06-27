@@ -57,20 +57,13 @@
       <span></span><span></span><span></span>
     </button>
 
-    <div class="nav-link-row nav-left-links" aria-label="Main navigation left">
-      <a href="divisions.html">Divisions</a>
-      <a href="sponsors.html">Partners</a>
-    </div>
-
     <a href="index.html" class="nav-home-logo" aria-label="Hydrogen Fuel Racing home">
       <img src="/static/core/hfr.jpg" alt="HFR">
     </a>
 
-    <div class="nav-link-row nav-right-links" aria-label="Main navigation right">
-      <a href="shop.html">Store</a>
-      <a href="about.html">Discover</a>
-      <a href="register.html" class="nav-join-link">Join Us</a>
-    </div>
+    <a href="register.html" class="nav-avatar-link" aria-label="Register">
+      <img src="/static/core/avatar.jpg" alt="Register">
+    </a>
   `;
 
   const overlay = document.createElement('div');
