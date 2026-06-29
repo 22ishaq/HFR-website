@@ -13,15 +13,15 @@
         .pillar { display:flex; gap:22px; align-items:flex-start; padding:28px 0; border-bottom:1px solid var(--border); }
         .pillar:first-child { border-top:1px solid var(--border); }
         .p-icon { width:44px; height:44px; flex-shrink:0; background:rgba(255,94,0,0.1); border:1px solid rgba(255,94,0,0.3); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:20px; }
-        .p-body h4 { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:7px; }
+        .p-body h4 { font-family: 'IBM Plex Serif', serif; font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:7px; }
         .p-body p { font-size:14px; color:var(--grey); line-height:1.6; }
 
         /* ACHIEVEMENTS */
         .ach-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
         .ach-card { background:var(--card); padding:50px 40px; position:relative; overflow:hidden; }
-        .ach-card::before { content:attr(data-n); position:absolute; top:-10px; right:16px; font-family:'Bebas Neue',sans-serif; font-size:130px; color:rgba(255,94,0,0.05); line-height:1; pointer-events:none; }
-        .ach-card h3 { font-family:'Bebas Neue',sans-serif; font-size:56px; color:var(--orange); line-height:1; margin-bottom:8px; }
-        .ach-card h4 { font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+        .ach-card::before { content:attr(data-n); position:absolute; top:-10px; right:16px; font-family: 'IBM Plex Serif', serif; font-size:130px; color:rgba(255,94,0,0.05); line-height:1; pointer-events:none; }
+        .ach-card h3 { font-family: 'IBM Plex Serif', serif; font-size:56px; color:var(--orange); line-height:1; margin-bottom:8px; }
+        .ach-card h4 { font-family: 'IBM Plex Serif', serif; font-size:19px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
         .ach-card p { font-size:14px; color:var(--grey); line-height:1.6; }
 
         /* TEAM */
@@ -29,8 +29,8 @@
         .team-card { background:var(--card); padding:32px 28px; border-bottom:3px solid transparent; transition:border-color 0.3s; }
         .team-card:hover { border-color:var(--orange); }
         .t-top { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
-        .t-avatar { width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,var(--orange),var(--gold)); display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--black); flex-shrink:0; }
-        .team-card h4 { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; text-transform:uppercase; }
+        .t-avatar { width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,var(--orange),var(--gold)); display:flex; align-items:center; justify-content:center; font-family: 'IBM Plex Serif', serif; font-size:22px; color:var(--black); flex-shrink:0; }
+        .team-card h4 { font-family: 'IBM Plex Serif', serif; font-size:18px; font-weight:700; text-transform:uppercase; }
         .team-card .role { font-size:12px; color:var(--orange); font-weight:700; letter-spacing:2px; text-transform:uppercase; }
         .team-card .bio { font-size:13px; color:var(--grey); line-height:1.6; }
 
@@ -42,7 +42,7 @@
         .org-h-line { height:1px; background:var(--border); }
         .org-node { background:var(--card); border:1px solid var(--border); border-top:3px solid var(--orange); padding:14px 22px; text-align:center; min-width:150px; margin:8px 0; }
         .org-node.top-node { border-top-color:var(--gold); min-width:200px; }
-        .org-node h5 { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+        .org-node h5 { font-family: 'IBM Plex Serif', serif; font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
         .org-node span { font-size:12px; color:var(--grey); }
 
         /* TIMELINE */
@@ -53,8 +53,8 @@
         .tl-content { padding:0 36px; }
         .tl-content.right { text-align:left; }
         .tl-content.left { text-align:right; }
-        .tl-year { font-family:'Bebas Neue',sans-serif; font-size:38px; color:var(--orange); line-height:1; margin-bottom:6px; }
-        .tl-content h4 { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+        .tl-year { font-family: 'IBM Plex Serif', serif; font-size:38px; color:var(--orange); line-height:1; margin-bottom:6px; }
+        .tl-content h4 { font-family: 'IBM Plex Serif', serif; font-size:20px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
         .tl-content p { font-size:13px; color:var(--grey); line-height:1.6; }
 
         @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:50px;}.ach-grid{grid-template-columns:1fr;}.team-grid{grid-template-columns:repeat(2,1fr);}.tl-line{left:16px;}.tl-item{grid-template-columns:1fr;gap:10px;}.tl-dot{display:none;}.tl-content{padding:0;text-align:left !important;}}
