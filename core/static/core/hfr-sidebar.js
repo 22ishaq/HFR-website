@@ -18,7 +18,9 @@
     ]},
     join: { label: 'Join Us', cards: [
       { title: 'JOINING THE TEAM', href: '/register/#why' },
-      { title: 'CREATE ACCOUNT',   href: '/register/' }
+      { title: 'CREATE ACCOUNT',   href: '/accounts/signup/' },
+      { title: 'LOG IN',           href: '/accounts/login/' },
+      { title: 'MY APPLICATION',   href: '/apply/' }
     ]}
   };
   const rail = document.createElement('aside');

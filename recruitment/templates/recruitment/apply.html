@@ -1,0 +1,289 @@
+{% extends 'recruitment/base.html' %}
+{% block title %}Your Application{% endblock %}
+
+{% block extra_style %}
+        .step-head { display: flex; align-items: center; gap: 16px; margin: 50px 0 24px; }
+        .step-num {
+            font-family: 'IBM Plex Serif', serif; font-size: 26px; color: var(--orange);
+            width: 46px; height: 46px; border: 1px solid var(--orange); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .step-head h2 { font-family: 'IBM Plex Serif', serif; font-size: 34px; letter-spacing: 2px; text-transform: uppercase; }
+        .step-head p { font-size: 14px; color: var(--grey); margin-top: 2px; }
+
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+        /* Team Choice: division columns on the left, draft board panel on the right */
+        .choice-intro { text-align: center; max-width: 640px; margin: 0 auto 34px; }
+        .choice-intro h3 { font-family: 'IBM Plex Serif', serif; font-size: 34px; font-weight: 600; margin-bottom: 14px; }
+        .choice-intro p { font-size: 15px; color: var(--grey-light); line-height: 1.7; }
+        .choice-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 22px; align-items: stretch; }
+        .division-panel {
+            border: 2px solid var(--orange); border-radius: 6px; padding: 30px 26px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-content: start;
+        }
+        .division-col { display: flex; flex-direction: column; gap: 12px; }
+        .division-title {
+            background: var(--card2); border: 1px solid var(--border); border-radius: 8px;
+            min-height: 96px; display: flex; align-items: center; justify-content: center;
+            font-family: 'IBM Plex Serif', serif; font-size: 14px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; text-align: center; padding: 10px;
+        }
+        .team-card {
+            position: relative; background: var(--card2); border: 1px solid var(--border);
+            border-radius: 8px; padding: 12px 10px; cursor: pointer; text-align: center;
+            font-size: 13.5px; color: var(--grey-light); line-height: 1.35;
+            transition: border-color 0.2s, color 0.2s, transform 0.15s; user-select: none;
+        }
+        .team-card:hover { border-color: var(--grey-light); color: var(--white); transform: translateY(-1px); }
+        .team-card .pick-badge {
+            display: none; position: absolute; top: -9px; right: -6px;
+            font-size: 10px; font-weight: 700; letter-spacing: 1px;
+            padding: 2px 8px; border-radius: 10px;
+        }
+        .team-card.pick-1 { border-color: var(--orange); color: var(--white); }
+        .team-card.pick-1 .pick-badge { display: block; background: var(--orange); color: var(--white); }
+        .team-card.pick-2 { border-color: var(--gold); color: var(--white); }
+        .team-card.pick-2 .pick-badge { display: block; background: var(--gold); color: var(--black); }
+        .team-card.pick-3 { border-color: var(--grey-light); color: var(--white); }
+        .team-card.pick-3 .pick-badge { display: block; background: var(--grey-light); color: var(--black); }
+
+        .board-panel {
+            background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+            padding: 40px 34px; display: flex; flex-direction: column; gap: 30px;
+        }
+        .board-panel h3 {
+            font-family: 'IBM Plex Serif', serif; font-size: 30px; font-weight: 600;
+            text-align: center; margin-bottom: 8px;
+        }
+        .board-row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 14px; align-items: center; }
+        .board-row .slot-label { font-family: 'IBM Plex Serif', serif; font-size: 21px; font-weight: 500; }
+        .draft-slot {
+            border: 1px dashed var(--border); border-radius: 10px; background: var(--card2);
+            min-height: 52px; display: flex; align-items: center; justify-content: center;
+            padding: 8px 14px; font-size: 14px; color: var(--grey); text-align: center;
+        }
+        .draft-slot.filled { border-style: solid; color: var(--white); }
+        .draft-slot[data-slot="1"].filled { border-color: var(--orange); }
+        .draft-slot[data-slot="2"].filled { border-color: var(--gold); }
+        .draft-slot[data-slot="3"].filled { border-color: var(--grey-light); }
+        .board-note { font-size: 12.5px; color: var(--grey); text-align: center; margin-top: auto; }
+
+        @media (max-width: 1024px) { .choice-layout { grid-template-columns: 1fr; } }
+        @media (max-width: 720px) { .division-panel { grid-template-columns: repeat(2, 1fr); } }
+
+        /* Guidance */
+        .guidance {
+            border-left: 3px solid var(--gold); background: rgba(255,196,0,0.05);
+            padding: 26px 30px; margin: 50px 0 30px;
+        }
+        .guidance h3 { font-family: 'IBM Plex Serif', serif; font-size: 28px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; color: var(--gold); }
+        .guidance p { font-size: 15px; color: var(--grey-light); line-height: 1.8; }
+        .guidance p + p { margin-top: 10px; }
+{% endblock %}
+
+{% block content %}
+<div class="rec-kicker">Recruitment Application</div>
+<h1 class="rec-title">Your <em>Application</em></h1>
+<p class="rec-sub">Three short steps: who you are, which teams you want, and your CV. You can only submit once, so give it a read-through before you hit the button.</p>
+
+{% if form.non_field_errors %}
+<div class="form-errors">{{ form.non_field_errors|striptags }}</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="step-head">
+        <div class="step-num">1</div>
+        <div>
+            <h2>About You</h2>
+            <p>Your year and what you study. Any degree is welcome.</p>
+        </div>
+    </div>
+    <div class="rec-card">
+        <div class="two-col">
+            <div class="ff">
+                <label for="{{ form.year_of_study.id_for_label }}">Year of study</label>
+                {{ form.year_of_study }}
+                {% if form.year_of_study.errors %}<span class="errors">{{ form.year_of_study.errors|striptags }}</span>{% endif %}
+            </div>
+            <div class="ff">
+                <label for="{{ form.major.id_for_label }}">Major / degree programme</label>
+                {{ form.major }}
+                <datalist id="degree-suggestions">
+                    {% for degree in degree_suggestions %}<option value="{{ degree }}">{% endfor %}
+                </datalist>
+                <span class="help">Common degrees will pop up as you type. If yours isn't there, just type it out.</span>
+                {% if form.major.errors %}<span class="errors">{{ form.major.errors|striptags }}</span>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="step-head">
+        <div class="step-num">2</div>
+        <div>
+            <h2>Team Choice</h2>
+            <p>If your first pick can't take you, your application automatically moves to the next one.</p>
+        </div>
+    </div>
+    <div class="choice-intro">
+        <p>Please pick 3 teams to your draft board. Select a division and then a sub team within the project. Choose your first pick, alternative and a wildcard.</p>
+    </div>
+    <div class="choice-layout">
+        <div class="division-panel">
+            {% for division in divisions %}
+            <div class="division-col">
+                <div class="division-title">{{ division.label }}</div>
+                {% for team in division.teams %}
+                <div class="team-card" data-team-id="{{ team.pk }}" data-team-name="{{ team.name }} ({{ division.label }})" tabindex="0" role="button">
+                    <span class="pick-badge"></span>{{ team.name }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="board-panel">
+            <h3>The Draft Board</h3>
+            <div class="board-row">
+                <div class="slot-label">First Pick</div>
+                <div class="draft-slot" data-slot="1"><span>None yet</span></div>
+            </div>
+            <div class="board-row">
+                <div class="slot-label">Alternative</div>
+                <div class="draft-slot" data-slot="2"><span>None yet</span></div>
+            </div>
+            <div class="board-row">
+                <div class="slot-label">WildCard</div>
+                <div class="draft-slot" data-slot="3"><span>None yet</span></div>
+            </div>
+            <div class="board-note">Click a sub team to add it to the next open slot. Click it again to remove it.</div>
+        </div>
+    </div>
+    <div style="display:none;">
+        {{ form.first_pick }}
+        {{ form.alternative }}
+        {{ form.wildcard }}
+    </div>
+    {% if form.first_pick.errors or form.alternative.errors or form.wildcard.errors %}
+    <span class="errors" style="display:block;margin-top:12px;">Please pick three different teams.</span>
+    {% endif %}
+
+    <div class="step-head">
+        <div class="step-num">3</div>
+        <div>
+            <h2>CV &amp; Questions</h2>
+            <p>All of this goes straight to your first pick's team lead.</p>
+        </div>
+    </div>
+    <div class="rec-card">
+        <div class="ff">
+            <label for="{{ form.cv.id_for_label }}">Upload your CV (PDF preferred, max 5MB)</label>
+            {{ form.cv }}
+            {% if form.cv.errors %}<span class="errors">{{ form.cv.errors|striptags }}</span>{% endif %}
+        </div>
+        <div class="ff">
+            <label for="{{ form.why_society.id_for_label }}">Why this society?</label>
+            {{ form.why_society }}
+            {% if form.why_society.errors %}<span class="errors">{{ form.why_society.errors|striptags }}</span>{% endif %}
+        </div>
+        <div class="ff">
+            <label for="{{ form.why_division.id_for_label }}">Why this division?</label>
+            {{ form.why_division }}
+            {% if form.why_division.errors %}<span class="errors">{{ form.why_division.errors|striptags }}</span>{% endif %}
+        </div>
+        <div class="ff">
+            <label for="{{ form.what_makes_you.id_for_label }}">What makes you you?</label>
+            {{ form.what_makes_you }}
+            {% if form.what_makes_you.errors %}<span class="errors">{{ form.what_makes_you.errors|striptags }}</span>{% endif %}
+        </div>
+        <div class="ff" style="margin-bottom:0;">
+            <label for="{{ form.what_to_learn.id_for_label }}">What do you want to learn?</label>
+            {{ form.what_to_learn }}
+            {% if form.what_to_learn.errors %}<span class="errors">{{ form.what_to_learn.errors|striptags }}</span>{% endif %}
+        </div>
+    </div>
+
+    <div class="guidance">
+        <h3>Before you submit: who we look for</h3>
+        <p>Most of our members joined with <b style="color:var(--white);">zero engineering projects</b> behind them. We don't expect experience. We expect <b style="color:var(--white);">curiosity, reliability and enthusiasm</b>.</p>
+        <p><b style="color:var(--white);">A bad answer looks like:</b> "I want to join because it will look good on my CV."</p>
+        <p><b style="color:var(--white);">A good answer looks like:</b> "I've never built anything before, but I've always wanted to know how a fuel cell actually works, and I'll show up every week to find out."</p>
+        <p>If that second one sounds like you, you're exactly who we want. Give your answers one last read, then send it in.</p>
+    </div>
+
+    <button type="submit" class="btn-primary" style="font-size:16px;padding:18px 44px;">Submit Application →</button>
+</form>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+(function () {
+    const selects = {
+        1: document.getElementById('id_first_pick'),
+        2: document.getElementById('id_alternative'),
+        3: document.getElementById('id_wildcard'),
+    };
+    const cards = Array.from(document.querySelectorAll('.team-card'));
+    const slots = Array.from(document.querySelectorAll('.draft-slot'));
+    const badgeText = { 1: '1st', 2: '2nd', 3: '3rd' };
+    // picks[slot] = teamId
+    const picks = { 1: null, 2: null, 3: null };
+
+    // Restore any server-side values (e.g. after a validation error)
+    for (const slot of [1, 2, 3]) {
+        if (selects[slot].value) picks[slot] = selects[slot].value;
+    }
+
+    function teamName(id) {
+        const card = cards.find(c => c.dataset.teamId === String(id));
+        if (!card) return 'None yet';
+        return card.dataset.teamName || card.textContent.trim();
+    }
+
+    function render() {
+        cards.forEach(card => {
+            card.classList.remove('pick-1', 'pick-2', 'pick-3');
+            card.querySelector('.pick-badge').textContent = '';
+        });
+        for (const slot of [1, 2, 3]) {
+            selects[slot].value = picks[slot] || '';
+            const slotEl = slots.find(s => s.dataset.slot === String(slot));
+            slotEl.classList.toggle('filled', !!picks[slot]);
+            slotEl.querySelector('span').textContent = picks[slot] ? teamName(picks[slot]) : 'None yet';
+            if (picks[slot]) {
+                const card = cards.find(c => c.dataset.teamId === String(picks[slot]));
+                if (card) {
+                    card.classList.add('pick-' + slot);
+                    card.querySelector('.pick-badge').textContent = badgeText[slot];
+                }
+            }
+        }
+    }
+
+    function toggle(teamId) {
+        // Already picked? Remove it and shift later picks up.
+        const existing = Object.keys(picks).find(s => picks[s] === teamId);
+        if (existing) {
+            for (let s = Number(existing); s < 3; s++) picks[s] = picks[s + 1];
+            picks[3] = null;
+        } else {
+            const free = [1, 2, 3].find(s => !picks[s]);
+            if (!free) return; // board full, remove one first
+            picks[free] = teamId;
+        }
+        render();
+    }
+
+    cards.forEach(card => {
+        card.addEventListener('click', () => toggle(card.dataset.teamId));
+        card.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(card.dataset.teamId); }
+        });
+    });
+
+    render();
+})();
+</script>
+{% endblock %}

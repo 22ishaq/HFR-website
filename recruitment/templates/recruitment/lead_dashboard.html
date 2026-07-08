@@ -1,0 +1,135 @@
+{% extends 'recruitment/base.html' %}
+{% block title %}Recruitment Dashboard{% endblock %}
+
+{% block extra_style %}
+        .board-title { font-family: 'IBM Plex Serif', serif; font-size: 36px; letter-spacing: 2px; text-transform: uppercase; margin: 46px 0 18px; }
+        .board-title span { color: var(--orange); }
+        .app-row {
+            background: var(--card); border: 1px solid var(--border); border-radius: 3px;
+            padding: 24px 26px; margin-bottom: 14px;
+        }
+        .app-row-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+        .app-name { font-family: 'IBM Plex Serif', serif; font-size: 20px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .app-meta { font-size: 13px; color: var(--grey); margin-top: 4px; }
+        .app-status {
+            font-family: 'IBM Plex Serif', serif; font-size: 11px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; padding: 6px 12px; border-radius: 3px;
+        }
+        .app-status.submitted { background: rgba(255,196,0,0.12); color: var(--gold); }
+        .app-status.interview { background: rgba(0,151,167,0.18); color: #6fd8e6; }
+        .app-status.accepted  { background: rgba(80,200,120,0.15); color: #7dd89b; }
+        .pick-context { font-size: 12px; color: var(--grey); margin-top: 2px; }
+        .pick-context b { color: var(--grey-light); }
+        details.app-answers { margin-top: 16px; }
+        details.app-answers summary {
+            cursor: pointer; font-family: 'IBM Plex Serif', serif; font-size: 12px;
+            font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange);
+        }
+        .answer-block { margin-top: 14px; }
+        .answer-block h5 { font-family: 'IBM Plex Serif', serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--grey); margin-bottom: 6px; }
+        .answer-block p { font-size: 14px; color: var(--grey-light); line-height: 1.7; white-space: pre-line; }
+        .app-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+        .app-actions form { display: inline; }
+        .btn-small {
+            padding: 10px 18px; font-size: 12px; font-family: 'IBM Plex Serif', serif;
+            font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 3px;
+            border: 1px solid var(--border); background: transparent; color: var(--grey-light);
+            cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block;
+        }
+        .btn-small:hover { border-color: var(--orange); color: var(--orange); }
+        .btn-small.accept:hover { border-color: #7dd89b; color: #7dd89b; }
+        .btn-small.reject:hover { border-color: #ff8a8a; color: #ff8a8a; }
+        .code-box {
+            margin-top: 14px; padding: 12px 16px; background: rgba(80,200,120,0.07);
+            border: 1px solid rgba(80,200,120,0.35); border-radius: 3px; font-size: 14px; color: #9be0b3;
+        }
+        .code-box code { font-size: 16px; letter-spacing: 2px; color: var(--white); }
+        .empty-board { padding: 30px; border: 1px dashed var(--border); border-radius: 3px; color: var(--grey); font-size: 14px; }
+{% endblock %}
+
+{% block content %}
+<div class="rec-kicker">Team Lead Area</div>
+<h1 class="rec-title">Recruitment <em>Dashboard</em></h1>
+<p class="rec-sub">Applicants who drafted your team, in submission order. Rejecting an applicant automatically passes them to their next pick. They only get a final rejection after their wildcard.</p>
+
+{% for board in boards %}
+<div class="board-title">{{ board.team }} <span>Draft Board</span></div>
+{% if board.applications %}
+    {% for app in board.applications %}
+    <div class="app-row">
+        <div class="app-row-top">
+            <div>
+                <div class="app-name">{{ app.applicant.get_full_name|default:app.applicant.username }}</div>
+                <div class="app-meta">
+                    {{ app.get_year_of_study_display }} · {{ app.major }} · {{ app.applicant.email }}
+                </div>
+                <div class="pick-context">
+                    You are their <b>
+                    {% if app.current_choice == 1 %}first pick{% elif app.current_choice == 2 %}alternative (passed on by {{ app.first_pick }}){% else %}wildcard (last stop){% endif %}
+                    </b>
+                </div>
+            </div>
+            <span class="app-status {{ app.status }}">{{ app.get_status_display }}</span>
+        </div>
+
+        <details class="app-answers">
+            <summary>View application</summary>
+            <div class="answer-block">
+                <h5>CV</h5>
+                <p><a href="{{ app.cv.url }}" target="_blank" style="color:var(--orange);">Download CV ↗</a></p>
+            </div>
+            <div class="answer-block">
+                <h5>Why this society?</h5>
+                <p>{{ app.why_society }}</p>
+            </div>
+            <div class="answer-block">
+                <h5>Why this division?</h5>
+                <p>{{ app.why_division }}</p>
+            </div>
+            <div class="answer-block">
+                <h5>What makes you you?</h5>
+                <p>{{ app.what_makes_you }}</p>
+            </div>
+            <div class="answer-block">
+                <h5>What do you want to learn?</h5>
+                <p>{{ app.what_to_learn }}</p>
+            </div>
+            <div class="answer-block">
+                <h5>Draft picks</h5>
+                <p>1. {{ app.first_pick }} &nbsp; 2. {{ app.alternative }} &nbsp; 3. {{ app.wildcard }}</p>
+            </div>
+        </details>
+
+        {% if app.status == 'accepted' %}
+        <div class="code-box">
+            Accepted ✓. Once they confirm SRC membership, give them the code
+            <code>{{ app.promotion_code.code }}</code>
+            {% if app.promotion_code.is_used %}(already redeemed){% endif %}
+        </div>
+        {% else %}
+        <div class="app-actions">
+            {% if app.status == 'submitted' %}
+            <form method="post" action="{% url 'lead_action' app.pk 'interview' %}">
+                {% csrf_token %}<button type="submit" class="btn-small">Invite to Interview</button>
+            </form>
+            {% endif %}
+            <form method="post" action="{% url 'lead_action' app.pk 'accept' %}">
+                {% csrf_token %}<button type="submit" class="btn-small accept">Accept</button>
+            </form>
+            <form method="post" action="{% url 'lead_action' app.pk 'reject' %}"
+                  onsubmit="return confirm('Reject this applicant? They will be passed to their next pick{% if app.current_choice == 3 %}. This is their last pick, so this is a final rejection{% endif %}.');">
+                {% csrf_token %}<button type="submit" class="btn-small reject">
+                    {% if app.current_choice == 3 %}Reject (final){% else %}Pass to Next Pick{% endif %}
+                </button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="empty-board">No applications on this board right now.</div>
+{% endif %}
+{% empty %}
+<div class="empty-board">You aren't listed as a lead of any team yet. Ask an admin to add you in the admin panel.</div>
+{% endfor %}
+{% endblock %}

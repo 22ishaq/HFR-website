@@ -1,4 +1,4 @@
-// nav.js — wireframe-style top hamburger + centred HFR home logo + two-panel overlay menu
+// nav.js: wireframe-style top hamburger + centred HFR home logo + two-panel overlay menu
 (function () {
   if (document.getElementById('navbar')) return;
 

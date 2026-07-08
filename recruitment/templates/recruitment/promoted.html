@@ -1,0 +1,21 @@
+{% extends 'recruitment/base.html' %}
+{% block title %}Account Promoted{% endblock %}
+{% block shell_class %}narrow{% endblock %}
+
+{% block content %}
+<div class="rec-kicker">Promotion successful</div>
+<h1 class="rec-title">You're <em>In</em> 🏁</h1>
+<div class="rec-card" style="text-align:center;">
+    <p style="font-size:16px;color:var(--grey-light);line-height:1.8;">
+        Your account is now an <b style="color:var(--orange);">onboarding HFR member</b> and
+        you've been logged out to make it official.
+    </p>
+    <p style="font-size:16px;color:var(--grey-light);line-height:1.8;margin-top:14px;">
+        Log back in with the <b style="color:var(--white);">same details</b> and we'll take you
+        straight to onboarding. It's quick, we promise.
+    </p>
+    <div style="margin-top:32px;">
+        <a href="{% url 'login' %}" class="btn-primary">Log Back In →</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'recruitment/base.html' %}
+{% block title %}Applicant Dashboard{% endblock %}
+
+{% block extra_style %}
+        .tracker { display: flex; align-items: center; margin: 40px 0 50px; }
+        .tracker-step { flex: 1; text-align: center; position: relative; }
+        .tracker-dot {
+            width: 22px; height: 22px; border-radius: 50%; margin: 0 auto 12px;
+            background: var(--card2); border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: var(--white); position: relative; z-index: 2;
+        }
+        .tracker-step.done .tracker-dot { background: var(--orange); border-color: var(--orange); }
+        .tracker-step.active .tracker-dot {
+            border-color: var(--orange); background: var(--card);
+            box-shadow: 0 0 0 5px rgba(255,94,0,0.15);
+        }
+        .tracker-step .tracker-label {
+            font-family: 'IBM Plex Serif', serif; font-size: 12px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--grey);
+        }
+        .tracker-step.done .tracker-label, .tracker-step.active .tracker-label { color: var(--white); }
+        .tracker-line { flex: 1; height: 2px; background: var(--border); margin: 0 -30px; transform: translateY(-16px); }
+        .tracker-line.filled { background: var(--orange); }
+
+        .status-banner { padding: 22px 26px; border-radius: 4px; margin-bottom: 34px; font-size: 15px; line-height: 1.7; }
+        .status-banner strong { display: block; font-family: 'IBM Plex Serif', serif; font-size: 17px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+        .status-banner.pending  { background: rgba(255,196,0,0.06); border: 1px solid rgba(255,196,0,0.3); color: var(--grey-light); }
+        .status-banner.pending strong { color: var(--gold); }
+        .status-banner.good     { background: rgba(80,200,120,0.07); border: 1px solid rgba(80,200,120,0.35); color: var(--grey-light); }
+        .status-banner.good strong { color: #7dd89b; }
+        .status-banner.bad      { background: rgba(255,60,60,0.06); border: 1px solid rgba(255,60,60,0.3); color: var(--grey-light); }
+        .status-banner.bad strong { color: #ff8a8a; }
+
+        .picks-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+        .pick-tag {
+            font-family: 'IBM Plex Serif', serif; font-size: 12px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase; padding: 8px 14px;
+            border: 1px solid var(--border); border-radius: 3px; color: var(--grey-light);
+        }
+        .pick-tag.current { border-color: var(--orange); color: var(--orange); }
+        .pick-tag span { display: block; font-size: 10px; color: var(--grey); letter-spacing: 2px; }
+{% endblock %}
+
+{% block content %}
+<div class="rec-kicker">Applicant Dashboard</div>
+<h1 class="rec-title">Hey, <em>{{ user.username }}</em></h1>
+
+{% if not application %}
+    <p class="rec-sub">You haven't started your application yet. It takes about ten minutes. You'll tell us about yourself, draft your top three team picks, and upload your CV.</p>
+    <div class="rec-card" style="text-align:center;padding:60px 40px;">
+        <div style="font-family:'IBM Plex Serif',sans-serif;font-size:40px;letter-spacing:2px;margin-bottom:12px;">Ready when you are</div>
+        <p style="color:var(--grey-light);font-size:15px;margin-bottom:30px;">One application per person, per season. You can't edit it after submitting, so take your time.</p>
+        <a href="{% url 'apply' %}" class="btn-primary">Start My Application →</a>
+    </div>
+{% else %}
+    <p class="rec-sub">Here's where your application stands. We'll update this page at every stage, so there's no need to chase anyone.</p>
+
+    <div class="tracker">
+        {% for stage in stages %}
+            {% if not forloop.first %}<div class="tracker-line {% if stage.done or stage.active %}filled{% endif %}"></div>{% endif %}
+            <div class="tracker-step {% if stage.done %}done{% elif stage.active %}active{% endif %}">
+                <div class="tracker-dot">{% if stage.done %}✓{% endif %}</div>
+                <div class="tracker-label">{{ stage.label }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if application.status == 'submitted' %}
+    <div class="status-banner pending">
+        <strong>Application received</strong>
+        Your application is on the {{ application.current_team }} draft board waiting for review.
+        Nearly everyone gets an interview, so keep an eye on this page and your email.
+    </div>
+    {% elif application.status == 'interview' %}
+    <div class="status-banner pending">
+        <strong>Interview stage</strong>
+        {{ application.current_team }} wants to talk to you! Their team lead will be in touch
+        to arrange a time. It's informal, so come as you are.
+    </div>
+    {% elif application.status == 'accepted' %}
+    <div class="status-banner good">
+        <strong>Accepted! Welcome to {{ application.current_team }} 🎉</strong>
+        Two steps left: get your <b>SRC membership</b>, then confirm it with your team lead.
+        They'll give you a promotion code. Enter it below to unlock your HFR member account.
+    </div>
+    <div class="rec-card">
+        <div style="font-family:'IBM Plex Serif',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:18px;">Enter Your <span style="color:var(--orange);">Promotion Code</span></div>
+        <form method="post" action="{% url 'redeem_code' %}">
+            {% csrf_token %}
+            <div class="ff">
+                <label for="id_code">Code from your team lead</label>
+                {{ redeem_form.code }}
+            </div>
+            <button type="submit" class="btn-primary">Promote My Account →</button>
+            <p style="margin-top:14px;font-size:13px;color:var(--grey);">You'll be logged out after this. Log back in with the same details to start onboarding.</p>
+        </form>
+    </div>
+    {% elif application.status == 'rejected' %}
+    <div class="status-banner bad">
+        <strong>Not this time</strong>
+        We couldn't find you a spot this season; competition was tough. Thank you for applying,
+        and we'd genuinely love to see you again next recruitment window.
+    </div>
+    {% endif %}
+
+    <div class="rec-card" style="margin-top:30px;">
+        <div style="font-family:'IBM Plex Serif',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--grey);margin-bottom:14px;">Your Draft Picks</div>
+        <div class="picks-row">
+            <div class="pick-tag {% if application.current_choice == 1 and not application.is_final %}current{% endif %}"><span>First pick</span>{{ application.first_pick }}</div>
+            <div class="pick-tag {% if application.current_choice == 2 and not application.is_final %}current{% endif %}"><span>Alternative</span>{{ application.alternative }}</div>
+            <div class="pick-tag {% if application.current_choice == 3 and not application.is_final %}current{% endif %}"><span>Wildcard</span>{{ application.wildcard }}</div>
+        </div>
+        <p style="margin-top:18px;font-size:13px;color:var(--grey);">
+            Submitted {{ application.submitted_at|date:"j F Y" }} · CV: {{ application.cv.name|cut:"cvs/" }}
+        </p>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'recruitment/base.html' %}
+{% block title %}Log In{% endblock %}
+{% block shell_class %}narrow{% endblock %}
+
+{% block content %}
+<div class="rec-kicker">Members &amp; Applicants</div>
+<h1 class="rec-title">Log <em>In</em></h1>
+<p class="rec-sub">Log in with your username, nickname or email and your password.</p>
+
+<div class="rec-card">
+    {% if form.non_field_errors %}
+    <div class="form-errors">Your username and password didn't match. Try again.</div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="ff">
+            <label for="id_username">Username, display name or email</label>
+            <input type="text" name="username" id="id_username" autofocus required
+                   placeholder="Your username, display name or email">
+        </div>
+        <div class="ff">
+            <label for="id_password">Password</label>
+            <input type="password" name="password" id="id_password" required
+                   placeholder="Your password">
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="btn-primary" style="width:100%;">Log In →</button>
+    </form>
+    <p style="margin-top:24px;font-size:14px;color:var(--grey);text-align:center;">
+        No account yet?
+        <a href="{% url 'signup' %}" style="color:var(--orange);">Create one here</a>.
+    </p>
+</div>
+{% endblock %}

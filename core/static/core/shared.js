@@ -1,4 +1,4 @@
-// shared.js — footer injection, cursor, reveal animations
+// shared.js: footer injection, cursor, reveal animations
 
 (function() {
     // ── CURSOR ──
