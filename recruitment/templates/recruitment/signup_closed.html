@@ -1,0 +1,15 @@
+{% extends 'recruitment/base.html' %}
+{% block title %}Recruitment Closed{% endblock %}
+{% block shell_class %}narrow{% endblock %}
+
+{% block content %}
+<div class="rec-kicker">Recruitment</div>
+<h1 class="rec-title">Season <em>Closed</em></h1>
+<div class="rec-card" style="text-align:center;">
+    <div style="font-family:'IBM Plex Serif',sans-serif;font-size:64px;color:var(--orange);line-height:1;margin-bottom:16px;">⏸</div>
+    <p style="font-size:16px;color:var(--grey-light);line-height:1.8;">{{ season.closed_message }}</p>
+    <div style="margin-top:30px;">
+        <a href="{% url 'home' %}" class="btn-outline">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

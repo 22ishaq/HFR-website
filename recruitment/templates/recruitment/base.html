@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Recruitment{% endblock %} | UG Hydrogen Fuel Racing</title>
+    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
+    <link rel="stylesheet" href="{% static 'core/hfr-sidebar.css' %}">
+    <style>
+        body { background: var(--black); min-height: 100vh; }
+
+        /* Top-right account button */
+        .account-chip {
+            position: fixed; top: 22px; right: 26px; z-index: 1200;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .account-chip a {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 13px; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; text-decoration: none;
+            padding: 10px 18px; border-radius: 3px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .account-chip .chip-primary { background: var(--orange); color: var(--white); }
+        .account-chip .chip-primary:hover { background: var(--orange-dim); }
+        .account-chip .chip-ghost {
+            color: var(--grey-light); border: 1px solid var(--border);
+            background: rgba(8,8,8,0.7); backdrop-filter: blur(10px);
+        }
+        .account-chip .chip-ghost:hover { color: var(--white); border-color: var(--orange); }
+
+        /* Page shell */
+        .rec-shell { max-width: 1100px; margin: 0 auto; padding: 130px 30px 90px; }
+        .rec-shell.narrow { max-width: 560px; }
+        .rec-kicker {
+            font-family: 'IBM Plex Serif', serif; font-size: 12px; font-weight: 700;
+            letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+        }
+        .rec-title {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(44px, 6vw, 72px);
+            line-height: 0.95; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;
+        }
+        .rec-title em { color: var(--orange); font-style: normal; }
+        .rec-sub { font-size: 16px; font-weight: 300; color: var(--grey-light); line-height: 1.7; max-width: 640px; margin-bottom: 40px; }
+
+        /* Cards & forms */
+        .rec-card { background: var(--card); border: 1px solid var(--border); padding: 40px; }
+        .ff { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .ff label {
+            font-family: 'IBM Plex Serif', serif; font-size: 11px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--grey);
+        }
+        .ff input, .ff select, .ff textarea {
+            background: var(--card2); border: 1px solid var(--border); color: var(--white);
+            padding: 14px 16px; font-family: 'IBM Plex Serif', serif; font-size: 15px;
+            border-radius: 2px; outline: none; transition: border-color 0.2s; width: 100%;
+        }
+        .ff input:focus, .ff select:focus, .ff textarea:focus { border-color: var(--orange); }
+        .ff select option { background: var(--card2); }
+        .ff textarea { resize: vertical; }
+        .ff .help { font-size: 12px; color: var(--grey); }
+        .ff .errors { font-size: 13px; color: #ff6b6b; }
+        .form-errors {
+            background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.35);
+            color: #ff9b9b; font-size: 14px; padding: 14px 18px; margin-bottom: 24px; border-radius: 3px;
+        }
+        .btn-primary, .btn-outline {
+            display: inline-block; padding: 14px 30px; font-family: 'IBM Plex Serif', serif;
+            font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            text-decoration: none; border-radius: 3px; cursor: pointer; transition: all 0.2s; border: none;
+        }
+        .btn-primary { background: var(--orange); color: var(--white); }
+        .btn-primary:hover { background: var(--orange-dim); }
+        .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--border); }
+        .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+        /* Flash messages */
+        .flash-stack { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+        .flash {
+            padding: 14px 20px; border-radius: 3px; font-size: 14px;
+            border: 1px solid var(--border); background: var(--card); color: var(--grey-light);
+        }
+        .flash.success { border-color: rgba(80,200,120,0.4); background: rgba(80,200,120,0.08); color: #9be0b3; }
+        .flash.error   { border-color: rgba(255,60,60,0.4);  background: rgba(255,60,60,0.08);  color: #ff9b9b; }
+        .flash.info    { border-color: rgba(255,196,0,0.35); background: rgba(255,196,0,0.06);  color: #ffd966; }
+
+        @media (max-width: 760px) {
+            /* Sidebar rail becomes a 64px top bar, so sit the chip just below it */
+            .rec-shell { padding: 90px 20px 70px; }
+            .rec-card { padding: 28px 22px; }
+            .account-chip { position: absolute; top: 76px; right: 16px; }
+        }
+        {% block extra_style %}{% endblock %}
+    </style>
+</head>
+<body>
+    <div class="account-chip">
+        {% if user.is_authenticated %}
+            <a class="chip-ghost" href="{% url 'account_router' %}">{{ user.username }}</a>
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="chip-primary btn-primary" style="padding:10px 18px;font-size:13px;">Log out</button>
+            </form>
+        {% else %}
+            <a class="chip-ghost" href="{% url 'signup' %}">Create account</a>
+            <a class="chip-primary" href="{% url 'login' %}">Log in</a>
+        {% endif %}
+    </div>
+
+    <div class="rec-shell {% block shell_class %}{% endblock %}">
+        {% if messages %}
+        <div class="flash-stack">
+            {% for message in messages %}
+            <div class="flash {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{% static 'core/hfr-sidebar.js' %}"></script>
+    <script src="{% static 'core/shared.js' %}"></script>
+    {% block extra_script %}{% endblock %}
+</body>
+</html>
