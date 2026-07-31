@@ -1,11 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
+{% extends 'core/base.html' %}
+
+{% block title %}Shop | UG Hydrogen Fuel Racing{% endblock %}
+{% block extra_head %}
     <style>
         .shop-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
         .shop-item { background:var(--card); overflow:hidden; cursor:pointer; transition:background 0.3s; }
@@ -26,9 +22,9 @@
         @media(max-width:900px){.shop-grid{grid-template-columns:repeat(2,1fr);}}
         @media(max-width:500px){.shop-grid{grid-template-columns:1fr;}.section{padding:60px 24px;}}
     </style>
-</head>
-<body>
-    <script src="{% static 'core/nav.js' %}"></script>
+{% endblock %}
+
+{% block body %}
 
     <div class="page-top">
         <div class="page-hero" data-title="SHOP">
@@ -123,6 +119,4 @@
         setTimeout(() => { toast.style.transform = 'translateY(100px)'; toast.style.opacity = '0'; }, 2500);
     }
     </script>
-    <script src="{% static 'core/shared.js' %}"></script>
-</body>
-</html>
+{% endblock %}
