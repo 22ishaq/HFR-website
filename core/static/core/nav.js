@@ -6,46 +6,46 @@
     fleet: {
       label: 'OUR FLEET',
       items: [
-        { text: 'SHELL ECO 27', href: 'divisions.html#land', align: 'left', type: 'media' },
-        { text: 'VITAL SPARK', href: 'divisions.html#sea', align: 'right', type: 'media' },
-        { text: 'AERO DIVISION CONCEPT', href: 'divisions.html#air', align: 'left', type: 'media' }
+        { text: 'SHELL ECO 27', href: '/divisions/#land', align: 'left', type: 'media' },
+        { text: 'VITAL SPARK', href: '/divisions/#sea', align: 'right', type: 'media' },
+        { text: 'AERO DIVISION CONCEPT', href: '/divisions/#air', align: 'left', type: 'media' }
       ]
     },
     divisions: {
       label: 'DIVISIONS',
       items: [
-        { text: 'AUTOMOTIVE', href: 'divisions.html#automotive', align: 'left', type: 'media' },
-        { text: 'AERONAUTICAL', href: 'divisions.html#aeronautical', align: 'right', type: 'media' },
-        { text: 'NAUTICAL', href: 'divisions.html#nautical', align: 'left', type: 'media' }
+        { text: 'AUTOMOTIVE', href: '/divisions/#automotive', align: 'left', type: 'media' },
+        { text: 'AERONAUTICAL', href: '/divisions/#aeronautical', align: 'right', type: 'media' },
+        { text: 'NAUTICAL', href: '/divisions/#nautical', align: 'left', type: 'media' }
       ]
     },
     partners: {
       label: 'PARTNERS',
       items: [
-        { text: '2026 PARTNERS', href: 'sponsors.html', align: 'left', type: 'media' },
-        { text: 'SUPPORT US', href: 'sponsors.html#support', align: 'right', type: 'media' }
+        { text: '2026 PARTNERS', href: '/sponsors/', align: 'left', type: 'media' },
+        { text: 'SUPPORT US', href: '/sponsors/#support', align: 'right', type: 'media' }
       ]
     },
     store: {
       label: 'STORE',
       items: [
-        { text: '2026 COMPETITION DROP', href: 'shop.html#drop', align: 'left', type: 'media' },
-        { text: 'HFR STORE', href: 'shop.html', align: 'right', type: 'media' }
+        { text: '2026 COMPETITION DROP', href: '/shop/#drop', align: 'left', type: 'media' },
+        { text: 'HFR STORE', href: '/shop/', align: 'right', type: 'media' }
       ]
     },
     discover: {
       label: 'DISCOVER',
       items: [
-        { text: 'MISSION', href: 'about.html#mission', align: 'left', type: 'media' },
-        { text: 'HISTORY', href: 'about.html#history', align: 'right', type: 'media' },
-        { text: 'EVENTS', href: 'events.html', align: 'left', type: 'media' }
+        { text: 'MISSION', href: '/about/#mission', align: 'left', type: 'media' },
+        { text: 'HISTORY', href: '/about/#history', align: 'right', type: 'media' },
+        { text: 'EVENTS', href: '/events/', align: 'left', type: 'media' }
       ]
     },
     join: {
       label: 'JOIN US',
       items: [
-        { text: 'WHY JOIN HFR?', href: 'register.html#why', align: 'left', type: 'outline' },
-        { text: 'REGISTER INTEREST', href: 'register.html', align: 'left', type: 'outline gold' }
+        { text: 'WHY JOIN HFR?', href: '/register/#why', align: 'left', type: 'outline' },
+        { text: 'REGISTER INTEREST', href: '/register/', align: 'left', type: 'outline gold' }
       ]
     }
   };
@@ -57,11 +57,11 @@
       <span></span><span></span><span></span>
     </button>
 
-    <a href="index.html" class="nav-home-logo" aria-label="Hydrogen Fuel Racing home">
+    <a href="/" class="nav-home-logo" aria-label="Hydrogen Fuel Racing home">
       <img src="/static/core/hfr.jpg" alt="HFR">
     </a>
 
-    <a href="register.html" class="nav-avatar-link" aria-label="Register">
+    <a href="/register/" class="nav-avatar-link" aria-label="Register">
       <img src="/static/core/avatar.jpg" alt="Register">
     </a>
   `;

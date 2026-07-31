@@ -53,20 +53,20 @@
                 <div class="footer-col">
                     <h5>Quick Links</h5>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="divisions.html">Divisions</a></li>
-                        <li><a href="competitions.html">Competitions</a></li>
-                        <li><a href="events.html">Events</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/divisions/">Divisions</a></li>
+                        <li><a href="/competitions/">Competitions</a></li>
+                        <li><a href="/events/">Events</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h5>Team</h5>
                     <ul>
-                        <li><a href="about.html#team">Meet the Team</a></li>
-                        <li><a href="register.html">Join Us</a></li>
-                        <li><a href="sponsors.html">Sponsors</a></li>
-                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="/about/#team">Meet the Team</a></li>
+                        <li><a href="/register/">Join Us</a></li>
+                        <li><a href="/sponsors/">Sponsors</a></li>
+                        <li><a href="/shop/">Shop</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
