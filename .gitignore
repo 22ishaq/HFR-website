@@ -12,6 +12,9 @@ db.sqlite3
 # Static build output
 staticfiles/
 
+# Uploaded files (applicant CVs, profile pictures)
+media/
+
 # VS Code / OS
 .vscode/
 .DS_Store

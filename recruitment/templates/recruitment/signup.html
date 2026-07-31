@@ -1,0 +1,32 @@
+{% extends 'recruitment/base.html' %}
+{% block title %}Create Account{% endblock %}
+{% block shell_class %}narrow{% endblock %}
+
+{% block content %}
+<div class="rec-kicker">Recruitment is open</div>
+<h1 class="rec-title">Create Your <em>Account</em></h1>
+<p class="rec-sub">Your account tracks your application from submission to interview to decision. Everything happens right here on the site.</p>
+{% if season.close_date %}<p class="rec-sub">Applications close {{ season.close_date|date:"j F Y, g:i A" }}.</p>{% endif %}
+
+<div class="rec-card">
+    {% if form.non_field_errors %}
+    <div class="form-errors">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="ff">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<span class="help">{{ field.help_text|safe }}</span>{% endif %}
+            {% if field.errors %}<span class="errors">{{ field.errors|striptags }}</span>{% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary" style="width:100%;">Create Account →</button>
+    </form>
+    <p style="margin-top:24px;font-size:14px;color:var(--grey);text-align:center;">
+        Already have an account?
+        <a href="{% url 'login' %}" style="color:var(--orange);">Log in here</a>.
+    </p>
+</div>
+{% endblock %}
