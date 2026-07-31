@@ -1,0 +1,12 @@
+{% load static %}
+<nav id="navbar" aria-label="Primary navigation">
+    <button id="hfr-sidebar-toggle" class="nav-sidebar-toggle" type="button" aria-label="Open navigation menu" aria-controls="hfr-rail" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
+    <a href="{% url 'home' %}" class="nav-home-logo" aria-label="Hydrogen Fuel Racing home">
+        <img src="{% static 'core/hfr.jpg' %}" alt="HFR">
+    </a>
+    <a href="{% url 'register' %}" class="nav-avatar-link" aria-label="Register">
+        <img src="{% static 'core/avatar.jpg' %}" alt="Register">
+    </a>
+</nav>

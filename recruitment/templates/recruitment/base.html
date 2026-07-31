@@ -1,18 +1,12 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Recruitment{% endblock %} | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
-    <link rel="stylesheet" href="{% static 'core/hfr-sidebar.css' %}">
+{% extends 'core/base.html' %}
+
+{% block extra_head %}
     <style>
         body { background: var(--black); min-height: 100vh; }
 
         /* Top-right account button */
         .account-chip {
-            position: fixed; top: 22px; right: 26px; z-index: 1200;
+            position: fixed; top: calc(var(--nav-h) + 14px); right: 26px; z-index: 1100;
             display: flex; align-items: center; gap: 10px;
         }
         .account-chip a {
@@ -86,15 +80,16 @@
         .flash.info    { border-color: rgba(255,196,0,0.35); background: rgba(255,196,0,0.06);  color: #ffd966; }
 
         @media (max-width: 760px) {
-            /* Sidebar rail becomes a 64px top bar, so sit the chip just below it */
-            .rec-shell { padding: 90px 20px 70px; }
+            /* The rail and navbar stack above the account controls on small screens. */
+            .rec-shell { padding: 200px 20px 70px; }
             .rec-card { padding: 28px 22px; }
-            .account-chip { position: absolute; top: 76px; right: 16px; }
+            .account-chip { position: absolute; top: calc((var(--nav-h) * 2) + 12px); right: 16px; }
         }
         {% block extra_style %}{% endblock %}
     </style>
-</head>
-<body>
+{% endblock %}
+
+{% block body %}
     <div class="account-chip">
         {% if user.is_authenticated %}
             <a class="chip-ghost" href="{% url 'account_router' %}">{{ user.username }}</a>
@@ -119,8 +114,9 @@
         {% block content %}{% endblock %}
     </div>
 
-    <script src="{% static 'core/hfr-sidebar.js' %}"></script>
-    <script src="{% static 'core/shared.js' %}"></script>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
     {% block extra_script %}{% endblock %}
-</body>
-</html>
+{% endblock %}
