@@ -1,11 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
+{% extends 'core/base.html' %}
+
+{% block title %}Events | UG Hydrogen Fuel Racing{% endblock %}
+{% block extra_head %}
     <style>
         .events-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
         .event-card { background:var(--card); padding:40px 32px; border-top:3px solid transparent; transition:border-color 0.3s,background 0.3s; }
@@ -32,9 +28,9 @@
         @media(max-width:900px){.events-grid{grid-template-columns:repeat(2,1fr);}.featured-event{grid-template-columns:1fr;}}
         @media(max-width:600px){.events-grid{grid-template-columns:1fr;}.section{padding:60px 24px;}}
     </style>
-</head>
-<body>
-    <script src="{% static 'core/nav.js' %}"></script>
+{% endblock %}
+
+{% block body %}
 
     <div class="page-top">
         <div class="page-hero" data-title="EVENTS">
@@ -141,6 +137,4 @@
         </section>
     </div>
 
-    <script src="{% static 'core/shared.js' %}"></script>
-</body>
-</html>
+{% endblock %}
