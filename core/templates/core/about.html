@@ -1,11 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
+{% extends 'core/base.html' %}
+
+{% block title %}About | UG Hydrogen Fuel Racing{% endblock %}
+{% block extra_head %}
     <style>
         .about-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
         .about-text p { font-size:17px; font-weight:300; color:var(--grey-light); line-height:1.85; margin-bottom:20px; }
@@ -60,9 +56,9 @@
         @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:50px;}.ach-grid{grid-template-columns:1fr;}.team-grid{grid-template-columns:repeat(2,1fr);}.tl-line{left:16px;}.tl-item{grid-template-columns:1fr;gap:10px;}.tl-dot{display:none;}.tl-content{padding:0;text-align:left !important;}}
         @media(max-width:600px){.team-grid{grid-template-columns:1fr;}}
     </style>
-</head>
-<body>
-    <script src="{% static 'core/nav.js' %}"></script>
+{% endblock %}
+
+{% block body %}
 
     <div class="page-top">
         <div class="page-hero" data-title="ABOUT">
@@ -173,6 +169,4 @@
         </section>
     </div>
 
-    <script src="{% static 'core/shared.js' %}"></script>
-</body>
-</html>
+{% endblock %}

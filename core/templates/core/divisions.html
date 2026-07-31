@@ -1,11 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divisions | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
+{% extends 'core/base.html' %}
+
+{% block title %}Divisions | UG Hydrogen Fuel Racing{% endblock %}
+{% block extra_head %}
     <style>
         .division-section { padding:100px 80px; }
         .division-section.alt { background:var(--deep); }
@@ -29,9 +25,9 @@
         @media(max-width:900px){.div-inner{grid-template-columns:1fr;gap:40px;}.div-inner.flipped{direction:ltr;}.division-section{padding:70px 40px;}.div-visual{height:280px;}}
         @media(max-width:600px){.division-section{padding:60px 24px;}}
     </style>
-</head>
-<body>
-    <script src="{% static 'core/nav.js' %}"></script>
+{% endblock %}
+
+{% block body %}
 
     <div class="page-top">
         <div class="page-hero" data-title="DIVISIONS">
@@ -113,6 +109,4 @@
         </section>
     </div>
 
-    <script src="{% static 'core/shared.js' %}"></script>
-</body>
-</html>
+{% endblock %}

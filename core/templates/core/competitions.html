@@ -1,11 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Competitions | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
+{% extends 'core/base.html' %}
+
+{% block title %}Competitions | UG Hydrogen Fuel Racing{% endblock %}
+{% block extra_head %}
     <style>
         .comp-list { max-width:1100px; margin:0 auto; }
         .comp-item { display:grid; grid-template-columns:110px 1fr auto; gap:40px; align-items:center; padding:40px 0; border-bottom:1px solid var(--border); }
@@ -25,9 +21,9 @@
         @media(max-width:800px){.comp-item{grid-template-columns:1fr;gap:14px;}.comp-year{font-size:32px;}.comp-meta{text-align:left;}}
         @media(max-width:600px){.section{padding:60px 24px;}}
     </style>
-</head>
-<body>
-    <script src="{% static 'core/nav.js' %}"></script>
+{% endblock %}
+
+{% block body %}
 
     <div class="page-top">
         <div class="page-hero" data-title="COMPETE">
@@ -90,6 +86,4 @@
         </section>
     </div>
 
-    <script src="{% static 'core/shared.js' %}"></script>
-</body>
-</html>
+{% endblock %}

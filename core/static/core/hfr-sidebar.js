@@ -26,10 +26,8 @@
   const rail = document.createElement('aside');
   rail.id = 'hfr-rail';
   rail.className = 'hfr-rail';
+  rail.setAttribute('aria-hidden', 'true');
   rail.innerHTML = `
-    <button class="hfr-burger" type="button" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
     <nav class="hfr-rail-nav">
       ${Object.entries(sections).map(([key, s]) =>
         `<a href="#" data-key="${key}">${s.label}</a>`).join('')}
@@ -51,12 +49,19 @@
   document.body.classList.add('hfr-has-rail');
 
   const navLinks = rail.querySelectorAll('.hfr-rail-nav a');
-  const burger   = rail.querySelector('.hfr-burger');
+  const toggle   = document.getElementById('hfr-sidebar-toggle');
   const closeBtn = panel.querySelector('.hfr-panel-close');
   const cardsBox = panel.querySelector('#hfr-cards');
   const wash     = panel.querySelector('.hfr-wash');
   const washText = panel.querySelector('.hfr-wash-text');
   let washTimer  = null;
+
+  function setRailOpen(isOpen) {
+    rail.classList.toggle('open', isOpen);
+    rail.setAttribute('aria-hidden', String(!isOpen));
+    document.body.classList.toggle('hfr-sidebar-open', isOpen);
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  }
 
   function renderCards(key) {
     cardsBox.innerHTML = sections[key].cards.map(c =>
@@ -95,11 +100,16 @@
     selectSection(a.dataset.key);
   }));
 
-  burger.addEventListener('click', () => {
-    if (panel.classList.contains('open')) closePanel();
+  toggle.addEventListener('click', () => {
+    const shouldOpen = !rail.classList.contains('open');
+    if (!shouldOpen) closePanel();
+    setRailOpen(shouldOpen);
   });
   closeBtn.addEventListener('click', closePanel);
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+    if (e.key === 'Escape') {
+      closePanel();
+      setRailOpen(false);
+    }
   });
 })();

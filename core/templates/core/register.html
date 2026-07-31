@@ -1,12 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Us | UG Hydrogen Fuel Racing</title>
-    <link rel="stylesheet" href="{% static 'core/shared.css' %}">
-    <link rel="stylesheet" href="{% static 'core/hfr-sidebar.css' %}">
+{% extends 'core/base.html' %}
+
+{% block title %}Join Us | UG Hydrogen Fuel Racing{% endblock %}
+{% block extra_head %}
     <style>
         body { background: var(--black); }
         .join-hero {
@@ -80,8 +75,9 @@
         @media (max-width: 1024px) { .div-grid { grid-template-columns: 1fr; } .apps-layout { grid-template-columns: 1fr; gap: 40px; } }
         @media (max-width: 720px) { .join-section { padding: 64px 24px; } .training-list { grid-template-columns: 1fr; } }
     </style>
-</head>
-<body>
+{% endblock %}
+
+{% block body %}
 
     <section class="join-hero">
         <h1>Why Join the<br><em>HFR Team?</em></h1>
@@ -167,7 +163,4 @@
         </section>
     </main>
 
-    <script src="{% static 'core/hfr-sidebar.js' %}"></script>
-    <script src="{% static 'core/shared.js' %}"></script>
-</body>
-</html>
+{% endblock %}
