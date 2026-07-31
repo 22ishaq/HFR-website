@@ -1,0 +1,236 @@
+{% extends 'recruitment/base.html' %}
+{% load static %}
+{% block title %}Account Set Up{% endblock %}
+
+{% block extra_style %}
+        .ob-shell { max-width: 640px; margin: 0 auto; text-align: center; }
+        .ob-badge {
+            font-family: 'IBM Plex Serif', serif; font-size: 22px; letter-spacing: 3px;
+            color: var(--orange); border: 2px solid var(--orange); border-radius: 50%;
+            width: 54px; height: 54px; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 34px;
+        }
+        .ob-step { display: none; animation: obFade 0.45s ease; }
+        .ob-step.active { display: block; }
+        @keyframes obFade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+        .ob-title {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(40px, 7vw, 64px);
+            letter-spacing: 3px; text-transform: uppercase; line-height: 1; margin-bottom: 20px;
+            overflow-wrap: break-word;
+        }
+        .ob-title em { color: var(--orange); font-style: normal; }
+        .ob-q { font-size: 17px; color: var(--grey-light); line-height: 1.75; margin-bottom: 34px; }
+        .ob-field input[type=text] {
+            background: var(--card2); border: 1px solid var(--border); color: var(--white);
+            padding: 16px 18px; font-size: 17px; text-align: center; border-radius: 3px;
+            outline: none; width: 100%; max-width: 380px; transition: border-color 0.2s;
+        }
+        .ob-field input[type=text]:focus { border-color: var(--orange); }
+        .ob-err { color: #ff8a8a; font-size: 13px; margin-top: 12px; min-height: 18px; }
+        .ob-next { margin-top: 36px; }
+        .ob-note { font-size: 12px; color: var(--grey); margin-top: 16px; letter-spacing: 1px; text-transform: uppercase; font-family: 'IBM Plex Serif', serif; }
+
+        /* dots */
+        .ob-dots { display: flex; gap: 10px; justify-content: center; margin-top: 54px; }
+        .ob-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--border); transition: background 0.3s; }
+        .ob-dots span.on { background: var(--orange); }
+
+        /* avatars */
+        .avatar-row { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+        .avatar-opt { cursor: pointer; }
+        .avatar-opt input { display: none; }
+        .avatar-opt img, .avatar-upload-circle {
+            width: 84px; height: 84px; border-radius: 50%; border: 3px solid transparent;
+            transition: border-color 0.2s, transform 0.15s; display: block;
+        }
+        .avatar-opt:hover img { transform: scale(1.06); }
+        .avatar-opt input:checked + img { border-color: var(--orange); }
+        .avatar-upload-circle {
+            background: var(--card2); border: 3px dashed var(--border); color: var(--grey);
+            display: flex; align-items: center; justify-content: center; font-size: 30px;
+        }
+        .avatar-upload-circle.has-file { border-style: solid; border-color: var(--orange); color: var(--orange); }
+
+        /* choice pills */
+        .pill-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .pill-row label { cursor: pointer; }
+        .pill-row input { display: none; }
+        .pill-row .pill {
+            display: inline-block; padding: 14px 30px; border: 1px solid var(--border); border-radius: 3px;
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--grey-light); transition: all 0.2s;
+        }
+        .pill-row input:checked + .pill { background: var(--orange); border-color: var(--orange); color: var(--white); }
+        .ob-subq { font-size: 15px; color: var(--grey-light); margin: 34px 0 18px; }
+        #phone-wrap { display: none; margin-top: 22px; }
+{% endblock %}
+
+{% block content %}
+<div class="ob-shell">
+    <div class="ob-badge">H2</div>
+
+    {% if form.errors %}
+    <div class="form-errors" style="text-align:left;">
+        {% for field in form %}{% for e in field.errors %}<div>{{ field.label }}: {{ e }}</div>{% endfor %}{% endfor %}
+        {% for e in form.non_field_errors %}<div>{{ e }}</div>{% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" id="ob-form">
+        {% csrf_token %}
+
+        <!-- Step 1 · Welcome -->
+        <div class="ob-step active" data-step="0">
+            <h1 class="ob-title">Welcome <em>{{ user.username }}</em></h1>
+            <p class="ob-q">Thank you for choosing to join Hydrogen Fuel Racing. We need to know a few things about you to better your experience.</p>
+            <button type="button" class="btn-primary ob-next">Next →</button>
+        </div>
+
+        <!-- Step 2 · Display name -->
+        <div class="ob-step" data-step="1">
+            <h1 class="ob-title">Pick a <em>Display Name</em></h1>
+            <p class="ob-q">Please enter a display name. You can also log in with this.</p>
+            <div class="ob-field">{{ form.display_name }}</div>
+            <div class="ob-err" data-err="1"></div>
+            <button type="button" class="btn-primary ob-next">Next →</button>
+            <div class="ob-note">All of the form is mandatory</div>
+        </div>
+
+        <!-- Step 3 · Profile picture -->
+        <div class="ob-step" data-step="2">
+            <h1 class="ob-title">Your <em>Profile Picture</em></h1>
+            <p class="ob-q">Please upload your own profile picture or choose a premade one!</p>
+            <div class="avatar-row">
+                <label class="avatar-opt" title="Upload your own">
+                    {{ form.avatar }}
+                    <span class="avatar-upload-circle" id="upload-circle">+</span>
+                </label>
+                {% for radio in form.avatar_preset %}
+                <label class="avatar-opt">
+                    {{ radio.tag }}
+                    <img src="{% static 'recruitment/avatars/' %}{{ radio.data.value }}.svg" alt="{{ radio.choice_label }}">
+                </label>
+                {% endfor %}
+            </div>
+            <div class="ob-err" data-err="2"></div>
+            <button type="button" class="btn-primary ob-next">Next →</button>
+            <div class="ob-note">All of the form is mandatory</div>
+        </div>
+
+        <!-- Step 4 · Contact -->
+        <div class="ob-step" data-step="3">
+            <h1 class="ob-title">How do we <em>Reach You?</em></h1>
+            <p class="ob-q">What is your preferred way of contact?</p>
+            <div class="pill-row" id="contact-method">
+                {% for radio in form.contact_method %}
+                <label>{{ radio.tag }}<span class="pill">{{ radio.choice_label }}</span></label>
+                {% endfor %}
+            </div>
+            <div class="ob-field" id="phone-wrap">{{ form.phone }}</div>
+            <p class="ob-subq">What is your preferred contact time?</p>
+            <div class="pill-row">
+                {% for radio in form.contact_time %}
+                <label>{{ radio.tag }}<span class="pill">{{ radio.choice_label }}</span></label>
+                {% endfor %}
+            </div>
+            <div class="ob-err" data-err="3"></div>
+            <button type="submit" class="btn-primary ob-next">Complete Account Set Up</button>
+        </div>
+    </form>
+
+    <div class="ob-dots" id="ob-dots">
+        <span class="on"></span><span></span><span></span><span></span>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+(function () {
+    const steps = Array.from(document.querySelectorAll('.ob-step'));
+    const dots  = Array.from(document.querySelectorAll('#ob-dots span'));
+    let current = 0;
+
+    function show(i) {
+        current = i;
+        steps.forEach((s, n) => s.classList.toggle('active', n === i));
+        dots.forEach((d, n) => d.classList.toggle('on', n <= i));
+    }
+
+    function err(step, msg) {
+        const el = document.querySelector(`.ob-err[data-err="${step}"]`);
+        if (el) el.textContent = msg || '';
+    }
+
+    function validate(step) {
+        if (step === 1) {
+            const name = document.getElementById('id_display_name').value.trim();
+            if (!name) { err(1, 'Pick a display name to continue.'); return false; }
+            err(1);
+        }
+        if (step === 2) {
+            const upload = document.getElementById('id_avatar');
+            const preset = document.querySelector('input[name="avatar_preset"]:checked');
+            if (!upload.files.length && !preset) { err(2, 'Upload a photo or pick a premade one.'); return false; }
+            err(2);
+        }
+        return true;
+    }
+
+    document.querySelectorAll('.ob-next[type=button]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (validate(current)) show(current + 1);
+        });
+    });
+
+    // Upload circle: uploading clears any preset; picking a preset clears the upload
+    const upload = document.getElementById('id_avatar');
+    const circle = document.getElementById('upload-circle');
+    upload.addEventListener('change', () => {
+        circle.classList.toggle('has-file', upload.files.length > 0);
+        circle.textContent = upload.files.length ? '✓' : '+';
+        if (upload.files.length) {
+            document.querySelectorAll('input[name="avatar_preset"]').forEach(r => r.checked = false);
+        }
+    });
+    document.querySelectorAll('input[name="avatar_preset"]').forEach(r => {
+        r.addEventListener('change', () => {
+            upload.value = '';
+            circle.classList.remove('has-file');
+            circle.textContent = '+';
+        });
+    });
+
+    // Phone only matters for WhatsApp
+    const phoneWrap = document.getElementById('phone-wrap');
+    document.querySelectorAll('input[name="contact_method"]').forEach(r => {
+        r.addEventListener('change', () => {
+            phoneWrap.style.display = r.value === 'whatsapp' && r.checked ? 'block' : 'none';
+        });
+    });
+
+    // Last step: require both choices before submitting
+    document.getElementById('ob-form').addEventListener('submit', e => {
+        const method = document.querySelector('input[name="contact_method"]:checked');
+        const time = document.querySelector('input[name="contact_time"]:checked');
+        if (!method || !time) {
+            e.preventDefault();
+            err(3, 'Choose a contact method and a contact time.');
+            return;
+        }
+        if (method.value === 'whatsapp' && !document.getElementById('id_phone').value.trim()) {
+            e.preventDefault();
+            err(3, 'Add your number so we can reach you on WhatsApp.');
+            return;
+        }
+        err(3);
+    });
+
+    // If the server bounced the form back with errors, land on the first broken step
+    {% if form.errors %}
+    show({% if form.display_name.errors %}1{% elif form.avatar.errors or form.avatar_preset.errors %}2{% else %}3{% endif %});
+    {% endif %}
+})();
+</script>
+{% endblock %}

@@ -742,7 +742,7 @@
                     <div class="reveal">
                         <div class="kicker">Join Us</div>
                         <h2 class="display-title">Register <em>Interest</em></h2>
-                        <p class="body-copy">Register interest for the next recruitment window. We look for curiosity, reliability and enthusiasm — not just previous experience.</p>
+                        <p class="body-copy">Register interest for the next recruitment window. We look for curiosity, reliability and enthusiasm, not just previous experience.</p>
                         <div class="button-row">
                             <a href="{% url 'register' %}" class="btn-primary">Register Interest</a>
                             <a href="{% url 'about' %}" class="btn-outline">Learn More</a>
@@ -753,7 +753,9 @@
         </section>
     </main>
 
-    <script src="{% static 'core/nav.js' %}"></script>
+    {% comment %}<script src="{% static 'core/nav.js' %}"></script>{% endcomment %}
+    <link rel="stylesheet" href="{% static 'core/hfr-sidebar.css' %}">
+    <script src="{% static 'core/hfr-sidebar.js' %}"></script>
     <script src="{% static 'core/shared.js' %}"></script>
     <script>
         (function () {

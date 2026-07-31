@@ -1,4 +1,4 @@
-// nav.js — wireframe-style top hamburger + centred HFR home logo + two-panel overlay menu
+// nav.js: wireframe-style top hamburger + centred HFR home logo + two-panel overlay menu
 (function () {
   if (document.getElementById('navbar')) return;
 
@@ -83,6 +83,7 @@
       </ul>
     </aside>
     <main class="menu-sub-panel" aria-live="polite">
+      <div class="menu-wash" aria-hidden="true"><span class="menu-wash-text"></span></div>
       <div class="menu-sub-inner" id="menu-sub-inner"></div>
     </main>
   `;
@@ -94,6 +95,9 @@
   const closeBtn = overlay.querySelector('.menu-close');
   const optionBtns = overlay.querySelectorAll('.menu-main-option');
   const subInner = overlay.querySelector('#menu-sub-inner');
+  const wash = overlay.querySelector('.menu-wash');
+  const washText = overlay.querySelector('.menu-wash-text');
+  let washTimer = null;
 
   function renderSubMenu(key) {
     const group = menuData[key];
@@ -112,9 +116,19 @@
     `;
   }
 
-  function setActive(key) {
+  function setActive(key, animate) {
     optionBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.menuKey === key));
-    renderSubMenu(key);
+    if (!animate) {
+      renderSubMenu(key);
+      return;
+    }
+    washText.textContent = menuData[key].label;
+    wash.classList.add('show');
+    window.clearTimeout(washTimer);
+    washTimer = window.setTimeout(() => {
+      renderSubMenu(key);
+      wash.classList.remove('show');
+    }, 420);
   }
 
   function openMenu() {
@@ -122,7 +136,7 @@
     overlay.setAttribute('aria-hidden', 'false');
     openBtn.setAttribute('aria-expanded', 'true');
     document.body.classList.add('menu-is-open');
-    setActive('fleet');
+    setActive('fleet', false);
     closeBtn.focus();
   }
 
@@ -134,7 +148,7 @@
     openBtn.focus();
   }
 
-  optionBtns.forEach(btn => btn.addEventListener('click', () => setActive(btn.dataset.menuKey)));
+  optionBtns.forEach(btn => btn.addEventListener('click', () => setActive(btn.dataset.menuKey, true)));
   openBtn.addEventListener('click', openMenu);
   closeBtn.addEventListener('click', closeMenu);
 
