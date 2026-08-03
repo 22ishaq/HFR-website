@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('index.html', views.home),
     path('about/', views.page, {'template_name': 'core/about.html'}, name='about'),
+    path('history/', views.page, {'template_name': 'core/history.html'}, name='history'),
     path('divisions/', views.page, {'template_name': 'core/divisions.html'}, name='divisions'),
     path('competitions/', views.page, {'template_name': 'core/competitions.html'}, name='competitions'),
     path('events/', views.page, {'template_name': 'core/events.html'}, name='events'),

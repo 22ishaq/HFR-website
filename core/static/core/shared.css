@@ -9,8 +9,8 @@
     --deep:   #0d0d0d;
     --card:   #141414;
     --card2:  #1c1c1c;
-    --orange: #ff5e00;
-    --orange-dim: #cc4a00;
+    --orange: #FFDD55;
+    --orange-dim: #FFDD55;
     --gold:   #ffc400;
     --white:  #ffffff;
     --grey:   #888888;
@@ -21,13 +21,16 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
 body {
     background: var(--black);
     color: var(--white);
     font-family: 'IBM Plex Serif', serif;
     overflow-x: hidden;
 }
+
+/* Native form controls do not inherit the page font by default. */
+button, input, select, textarea { font: inherit; }
 
 /* ── NOTIFICATION BAR ── */
 
@@ -43,7 +46,7 @@ nav#navbar {
     display: flex; align-items: center; justify-content: center;
     background: rgba(8,8,8,0.85);
     backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255,94,0,0.15);
+    border-bottom: 1px solid rgba(255,221,85,0.15);
     transition: background 0.3s;
 }
 nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
@@ -57,6 +60,18 @@ nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
 .nav-sidebar-toggle span:nth-child(1), .nav-sidebar-toggle span:nth-child(3) { width: 34px; }
 .nav-sidebar-toggle span:nth-child(2) { width: 26px; }
 .nav-sidebar-toggle:hover span { background: var(--gold); }
+
+/* The full-screen sidebar replaces the navbar but retains its toggle as a close control. */
+body.hfr-sidebar-open nav#navbar {
+    z-index: 1300;
+    background: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+}
+body.hfr-sidebar-open .nav-home-logo,
+body.hfr-sidebar-open .nav-avatar-link { opacity: 0; pointer-events: none; }
+body.hfr-sidebar-open .nav-sidebar-toggle span { background: var(--black); }
+body.hfr-sidebar-open .nav-sidebar-toggle:hover span { background: var(--orange); }
 
 .nav-home-logo {
     position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
@@ -90,7 +105,7 @@ nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
     content: attr(data-title);
     position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
     font-family: 'IBM Plex Serif', serif;
-    font-size: 180px; color: rgba(255,94,0,0.04);
+    font-size: 180px; color: rgba(255,221,85,0.04);
     letter-spacing: 4px; pointer-events: none; white-space: nowrap;
 }
 .page-hero .label {
