@@ -2,33 +2,72 @@
 {% block title %}Log In{% endblock %}
 {% block shell_class %}narrow{% endblock %}
 
-{% block content %}
-<div class="rec-kicker">Members &amp; Applicants</div>
-<h1 class="rec-title">Log <em>In</em></h1>
-<p class="rec-sub">Log in with your username, nickname or email and your password.</p>
+{% block extra_style %}
+        .login-title {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(32px, 4.4vw, 46px);
+            font-weight: 700; text-align: center; margin-bottom: 42px;
+        }
 
-<div class="rec-card">
-    {% if form.non_field_errors %}
-    <div class="form-errors">Your username and password didn't match. Try again.</div>
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        <div class="ff">
-            <label for="id_username">Username, display name or email</label>
-            <input type="text" name="username" id="id_username" autofocus required
-                   placeholder="Your username, display name or email">
-        </div>
-        <div class="ff">
-            <label for="id_password">Password</label>
-            <input type="password" name="password" id="id_password" required
-                   placeholder="Your password">
-        </div>
-        <input type="hidden" name="next" value="{{ next }}">
-        <button type="submit" class="btn-primary" style="width:100%;">Log In →</button>
-    </form>
-    <p style="margin-top:24px;font-size:14px;color:var(--grey);text-align:center;">
-        No account yet?
-        <a href="{% url 'signup' %}" style="color:var(--orange);">Create one here</a>.
-    </p>
-</div>
+        /* Same white rounded fields as account creation, so the pair match */
+        .login-form .ff { margin-bottom: 18px; }
+        .login-form input {
+            background: #ffffff; border: 2px solid #ffffff; color: #111;
+            padding: 15px 18px; font-family: 'IBM Plex Serif', serif; font-size: 17px;
+            font-style: italic; text-align: center; border-radius: 6px; width: 100%;
+            outline: none; transition: border-color 0.2s;
+        }
+        .login-form input::placeholder { color: #555; font-style: italic; opacity: 1; }
+        .login-form input:focus { border-color: var(--orange); }
+        .login-form input.has-error { border-color: #e04a4a; }
+
+        .login-btn {
+            width: 100%; margin-top: 12px; padding: 17px 20px; border: none; cursor: pointer;
+            background: #3a3a3a; color: var(--white);
+            font-family: 'IBM Plex Serif', serif; font-size: 17px; font-style: italic;
+            letter-spacing: 2px; text-transform: uppercase; border-radius: 6px;
+            transition: background 0.25s, color 0.25s;
+        }
+        .login-btn:hover, .login-btn:focus-visible {
+            background: linear-gradient(90deg, var(--gold), var(--orange));
+            color: #111;
+        }
+
+        .login-error {
+            display: block; font-size: 13.5px; color: #ff8a8a;
+            margin-bottom: 18px; text-align: center;
+        }
+        .signup-route { margin-top: 26px; font-size: 15px; color: var(--grey); text-align: center; }
+        .signup-route a { color: var(--gold); text-decoration: none; }
+        .signup-route a:hover { text-decoration: underline; }
+{% endblock %}
+
+{% block content %}
+<h1 class="login-title">Log in</h1>
+
+{% if form.errors %}
+<span class="login-error">Those details did not match an account. Check them and try again.</span>
+{% endif %}
+
+<form method="post" class="login-form" novalidate>
+    {% csrf_token %}
+
+    <div class="ff">
+        <input type="text" name="username" id="id_username" autofocus required
+               autocomplete="username" placeholder="GUID Email Address"
+               {% if form.errors %}class="has-error"{% endif %}>
+    </div>
+
+    <div class="ff">
+        <input type="password" name="password" id="id_password" required
+               autocomplete="current-password" placeholder="Password"
+               {% if form.errors %}class="has-error"{% endif %}>
+    </div>
+
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="login-btn">Log In</button>
+</form>
+
+<p class="signup-route">
+    Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
+</p>
 {% endblock %}

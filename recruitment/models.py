@@ -117,14 +117,28 @@ class Profile(models.Model):
 
 class Application(models.Model):
     STATUS_SUBMITTED = 'submitted'
+    STATUS_UNDER_REVIEW = 'under_review'
     STATUS_INTERVIEW = 'interview'
+    STATUS_DECISION_PENDING = 'decision_pending'
     STATUS_ACCEPTED = 'accepted'
     STATUS_REJECTED = 'rejected'
     STATUS_CHOICES = [
-        (STATUS_SUBMITTED, 'Application submitted'),
+        (STATUS_SUBMITTED, 'Application sent'),
+        (STATUS_UNDER_REVIEW, 'Application under review'),
         (STATUS_INTERVIEW, 'Interview stage'),
+        (STATUS_DECISION_PENDING, 'Decision pending'),
         (STATUS_ACCEPTED, 'Accepted'),
         (STATUS_REJECTED, 'Rejected'),
+    ]
+
+    # The five stages on the applicant's progress bar. Accepted and rejected
+    # share the last one.
+    STAGE_LABELS = [
+        'Application sent',
+        'Under review',
+        'Interview',
+        'Decision pending',
+        'Decision',
     ]
 
     YEAR_CHOICES = [
@@ -194,6 +208,35 @@ class Application(models.Model):
     @property
     def is_final(self):
         return self.status in (self.STATUS_ACCEPTED, self.STATUS_REJECTED)
+
+    @property
+    def stage_number(self):
+        """Which of the five progress bar stages they are currently on."""
+        return {
+            self.STATUS_SUBMITTED: 1,
+            self.STATUS_UNDER_REVIEW: 2,
+            self.STATUS_INTERVIEW: 3,
+            self.STATUS_DECISION_PENDING: 4,
+            self.STATUS_ACCEPTED: 5,
+            self.STATUS_REJECTED: 5,
+        }[self.status]
+
+    @property
+    def stages(self):
+        """The progress bar, one entry per stage."""
+        reached = self.stage_number
+        out = []
+        for i, label in enumerate(self.STAGE_LABELS, start=1):
+            if i == 5 and self.is_final:
+                label = 'Accepted' if self.status == self.STATUS_ACCEPTED else 'Rejected'
+            out.append({
+                'number': i,
+                'label': label,
+                'done': i < reached or (i == reached and self.is_final),
+                'active': i == reached and not self.is_final,
+                'rejected': i == 5 and self.status == self.STATUS_REJECTED,
+            })
+        return out
 
 
 class PromotionCode(models.Model):

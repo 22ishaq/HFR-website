@@ -3,5 +3,5 @@
     <stop offset="0" stop-color="#5a5a5a"/><stop offset="1" stop-color="#242424"/>
   </linearGradient></defs>
   <circle cx="60" cy="60" r="60" fill="url(#g)"/>
-  <text x="60" y="76" text-anchor="middle" font-family="IBM Plex Serif, serif" font-size="44" font-weight="900" fill="#FFDD55">H2</text>
+  <text x="60" y="76" text-anchor="middle" font-family="IBM Plex Serif, serif" font-size="44" font-weight="900" fill="#ffd000">H2</text>
 </svg>

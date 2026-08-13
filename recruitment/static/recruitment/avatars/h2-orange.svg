@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
   <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#FFDD55"/><stop offset="1" stop-color="#FFDD55"/>
+    <stop offset="0" stop-color="#ffd000"/><stop offset="1" stop-color="#d1a907"/>
   </linearGradient></defs>
   <circle cx="60" cy="60" r="60" fill="url(#g)"/>
-  <text x="60" y="76" text-anchor="middle" font-family="IBM Plex Serif, serif" font-size="44" font-weight="900" fill="#ffffff">H2</text>
+  <text x="60" y="76" text-anchor="middle" font-family="IBM Plex Serif, serif" font-size="44" font-weight="900" fill="#111111">H2</text>
 </svg>

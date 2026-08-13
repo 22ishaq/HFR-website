@@ -5,17 +5,17 @@
     <style>
         /* About page accent theme */
         :root {
-            --orange: #FFDD55;
-            --orange-dim: #FFDD55;
+            --orange: #ffd000;
+            --orange-dim: #ffd000;
         }
-        nav#navbar { border-bottom-color:rgba(255,221,85,0.15); }
-        .page-hero::before { color:rgba(255,221,85,0.04); }
+        nav#navbar { border-bottom-color:rgba(255,208,0,0.15); }
+        .page-hero::before { color:rgba(255,208,0,0.04); }
         .about-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
         .about-text p { font-size:17px; font-weight:300; color:var(--grey-light); line-height:1.85; margin-bottom:20px; }
         .pillars { display:flex; flex-direction:column; }
         .pillar { display:flex; gap:22px; align-items:flex-start; padding:28px 0; border-bottom:1px solid var(--border); }
         .pillar:first-child { border-top:1px solid var(--border); }
-        .p-icon { width:44px; height:44px; flex-shrink:0; background:rgba(255,221,85,0.1); border:1px solid rgba(255,221,85,0.3); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+        .p-icon { width:44px; height:44px; flex-shrink:0; background:rgba(255,208,0,0.1); border:1px solid rgba(255,208,0,0.3); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:20px; }
         .p-body h4 { font-family: 'IBM Plex Serif', serif; font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:7px; }
         .p-body p { font-size:14px; color:var(--grey); line-height:1.6; }
 
@@ -24,7 +24,7 @@
         .constitution h2 { font-size:clamp(34px,4vw,60px); font-weight:700; letter-spacing:4px; line-height:1; margin-bottom:60px; }
         .constitution-list { display:flex; flex-direction:column; gap:24px; list-style-position:inside; padding:0; margin:0; }
         .constitution-list li { color:var(--white); font-size:clamp(17px,2vw,21px); font-weight:300; line-height:1.7; }
-        .constitution-list .highlight { color:#FFDD55; }
+        .constitution-list .highlight { color:#ffd000; }
         .constitution-founder { margin-top:70px; }
         .constitution-founder .name { color:var(--white); font-size:24px; font-weight:400; letter-spacing:2px; text-transform:uppercase; }
         .constitution-founder .role { color:var(--white); font-size:13px; font-weight:700; letter-spacing:4px; text-transform:uppercase; margin-top:8px; }
@@ -32,7 +32,7 @@
         /* ACHIEVEMENTS */
         .ach-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
         .ach-card { background:var(--card); padding:50px 40px; position:relative; overflow:hidden; }
-        .ach-card::before { content:attr(data-n); position:absolute; top:-10px; right:16px; font-family: 'IBM Plex Serif', serif; font-size:130px; color:rgba(255,221,85,0.05); line-height:1; pointer-events:none; }
+        .ach-card::before { content:attr(data-n); position:absolute; top:-10px; right:16px; font-family: 'IBM Plex Serif', serif; font-size:130px; color:rgba(255,208,0,0.05); line-height:1; pointer-events:none; }
         .ach-card h3 { font-family: 'IBM Plex Serif', serif; font-size:56px; color:var(--orange); line-height:1; margin-bottom:8px; }
         .ach-card h4 { font-family: 'IBM Plex Serif', serif; font-size:19px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
         .ach-card p { font-size:14px; color:var(--grey); line-height:1.6; }

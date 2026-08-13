@@ -61,7 +61,7 @@
             font-family: 'IBM Plex Serif', serif; font-size: 15px; font-weight: 700;
             letter-spacing: 2px; text-transform: uppercase; color: var(--grey-light); transition: all 0.2s;
         }
-        .pill-row input:checked + .pill { background: var(--orange); border-color: var(--orange); color: var(--white); }
+        .pill-row input:checked + .pill { background: var(--orange); border-color: var(--orange); color: var(--black); }
         .ob-subq { font-size: 15px; color: var(--grey-light); margin: 34px 0 18px; }
         #phone-wrap { display: none; margin-top: 22px; }
 {% endblock %}
@@ -82,7 +82,7 @@
 
         <!-- Step 1 · Welcome -->
         <div class="ob-step active" data-step="0">
-            <h1 class="ob-title">Welcome <em>{{ user.username }}</em></h1>
+            <h1 class="ob-title">Welcome <em>{{ user.first_name|default:user.username }}</em></h1>
             <p class="ob-q">Thank you for choosing to join Hydrogen Fuel Racing. We need to know a few things about you to better your experience.</p>
             <button type="button" class="btn-primary ob-next">Next →</button>
         </div>
