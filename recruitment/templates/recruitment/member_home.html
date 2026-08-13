@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="rec-kicker">HFR Members</div>
-<h1 class="rec-title">Welcome back, <em>{{ profile.display_name|default:user.username }}</em></h1>
+<h1 class="rec-title">Welcome back, <em>{{ profile.display_name|default:user.first_name|default:user.username }}</em></h1>
 <p class="rec-sub">You're a fully onboarded HFR member. The whole site is open to you.</p>
 
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
