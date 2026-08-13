@@ -23,12 +23,13 @@ class RecruitmentFlowTests(TestCase):
         Profile.objects.create(user=self.lead, role=Profile.ROLE_MEMBER)
         self.teams[0].leads.add(self.lead)
 
-    def signup(self, username='fresher'):
+    def signup(self, username='fresher', name='Fresh Fresher'):
+        # The GUID is the username, so the local part of the email becomes it
         return self.client.post(reverse('signup'), {
-            'username': username,
+            'name': name,
             'email': f'{username}@student.gla.ac.uk',
-            'password1': 'sup3r-secret-pw',
-            'password2': 'sup3r-secret-pw',
+            'password': 'sup3r-secret-pw',
+            'password_confirm': 'sup3r-secret-pw',
         })
 
     def submit_application(self):
@@ -47,11 +48,53 @@ class RecruitmentFlowTests(TestCase):
 
     # ── Accounts ──
 
-    def test_signup_creates_applicant_and_logs_in(self):
+    def test_signup_creates_applicant_and_shows_welcome(self):
         resp = self.signup()
-        self.assertRedirects(resp, reverse('applicant_dashboard'))
+        self.assertEqual(resp.status_code, 200)
+        # The welcome overlay appears over the form, then a timer moves them on
+        self.assertContains(resp, 'Welcome')
+        self.assertContains(resp, 'start your application')
         user = User.objects.get(username='fresher')
         self.assertEqual(user.profile.role, Profile.ROLE_APPLICANT)
+        self.assertEqual(user.first_name, 'Fresh')
+        self.assertIn('_auth_user_id', self.client.session)
+
+    def test_signup_rejects_non_glasgow_email(self):
+        resp = self.client.post(reverse('signup'), {
+            'name': 'Outside Person',
+            'email': 'someone@gmail.com',
+            'password': 'sup3r-secret-pw',
+            'password_confirm': 'sup3r-secret-pw',
+        })
+        self.assertContains(resp, 'not a University of Glasgow address')
+        self.assertFalse(User.objects.filter(email='someone@gmail.com').exists())
+
+    def test_signup_accepts_the_staff_domain_too(self):
+        resp = self.client.post(reverse('signup'), {
+            'name': 'Post Grad',
+            'email': 'p.grad@glasgow.ac.uk',
+            'password': 'sup3r-secret-pw',
+            'password_confirm': 'sup3r-secret-pw',
+        })
+        self.assertContains(resp, 'Welcome')
+        self.assertTrue(User.objects.filter(email='p.grad@glasgow.ac.uk').exists())
+
+    def test_signup_rejects_mismatched_passwords(self):
+        resp = self.client.post(reverse('signup'), {
+            'name': 'Typo Person',
+            'email': 'typo@student.gla.ac.uk',
+            'password': 'sup3r-secret-pw',
+            'password_confirm': 'different-password',
+        })
+        self.assertContains(resp, 'do not match')
+        self.assertFalse(User.objects.filter(username='typo').exists())
+
+    def test_circle_logs_out_and_returns_home(self):
+        self.signup()
+        self.assertIn('_auth_user_id', self.client.session)
+        resp = self.client.post(reverse('logout'))
+        self.assertRedirects(resp, reverse('home'))
+        self.assertNotIn('_auth_user_id', self.client.session)
 
     def test_signup_closed_when_recruitment_over(self):
         self.season.is_open = False
@@ -74,9 +117,48 @@ class RecruitmentFlowTests(TestCase):
         app = Application.objects.get(applicant__username='fresher')
         self.assertEqual(app.status, Application.STATUS_SUBMITTED)
         self.assertEqual(app.current_team, self.teams[0])
-        # Dashboard shows the tracker
+        # The dashboard shows the five stage progress bar
         resp = self.client.get(reverse('applicant_dashboard'))
-        self.assertContains(resp, 'Application received')
+        for label in ('Application sent', 'Under review', 'Interview',
+                      'Decision pending', 'Decision'):
+            self.assertContains(resp, label)
+        self.assertContains(resp, app.submitted_at.strftime('%d/%m/%Y'))
+
+    def test_progress_bar_advances_with_status(self):
+        self.signup()
+        self.submit_application()
+        app = Application.objects.get()
+
+        for status, stage in [
+            (Application.STATUS_SUBMITTED, 1),
+            (Application.STATUS_UNDER_REVIEW, 2),
+            (Application.STATUS_INTERVIEW, 3),
+            (Application.STATUS_DECISION_PENDING, 4),
+            (Application.STATUS_ACCEPTED, 5),
+        ]:
+            app.status = status
+            app.save()
+            self.assertEqual(app.stage_number, stage)
+            done = [s for s in app.stages if s['done']]
+            self.assertEqual(len(done), stage if app.is_final else stage - 1)
+
+    def test_empty_dashboard_prompts_an_application(self):
+        self.signup()
+        resp = self.client.get(reverse('applicant_dashboard'))
+        self.assertContains(resp, 'Looks quite empty')
+        self.assertContains(resp, 'Apply Now')
+
+    def test_accepted_shows_join_then_code_screen(self):
+        self.signup()
+        self.submit_application()
+        app = Application.objects.get()
+        app.status = Application.STATUS_ACCEPTED
+        app.save()
+
+        resp = self.client.get(reverse('applicant_dashboard'))
+        self.assertContains(resp, 'Join HFR')
+        resp = self.client.get(reverse('applicant_dashboard') + '?join=1')
+        self.assertContains(resp, 'Congratulations for completing')
 
     def test_duplicate_picks_rejected(self):
         self.signup()

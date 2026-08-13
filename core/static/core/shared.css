@@ -9,9 +9,11 @@
     --deep:   #0d0d0d;
     --card:   #141414;
     --card2:  #1c1c1c;
-    --orange: #ff5e00;
-    --orange-dim: #cc4a00;
-    --gold:   #ffc400;
+    /* Accent yellows sampled from the HFR logo. The variables keep their old
+       names so every existing rule picks the new colour up. */
+    --orange: #ffd000;
+    --orange-dim: #d1a907;
+    --gold:   #ffd000;
     --white:  #ffffff;
     --grey:   #888888;
     --grey-light: #cccccc;
@@ -43,7 +45,7 @@ nav#navbar {
     display: flex; align-items: center; justify-content: center;
     background: rgba(8,8,8,0.85);
     backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255,94,0,0.15);
+    border-bottom: 1px solid rgba(255,208,0,0.15);
     transition: background 0.3s;
 }
 nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
@@ -72,6 +74,41 @@ nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
 }
 .nav-avatar-link:hover { transform: translateY(-50%) scale(1.08); }
 .nav-avatar-link img { display: block; width: 48px; height: 48px; object-fit: cover; border-radius: 50%; }
+/* Signed in, the circle is a log out button, so strip the button chrome */
+button.nav-avatar-link { background: none; border: none; padding: 0; cursor: pointer; }
+
+/* ── LOG OUT CONFIRMATION ── */
+.logout-veil {
+    position: fixed; inset: 0; z-index: 3000;
+    background: rgba(0,0,0,0.78); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center; padding: 24px;
+}
+.logout-veil.open { display: flex; animation: logoutIn 0.18s ease; }
+@keyframes logoutIn { from { opacity: 0; } to { opacity: 1; } }
+
+.logout-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    border-radius: 8px; padding: 38px 36px 30px;
+    max-width: 400px; width: 100%; text-align: center;
+    animation: logoutRise 0.22s ease;
+}
+@keyframes logoutRise { from { transform: translateY(12px); } to { transform: none; } }
+.logout-box h2 {
+    font-family: 'IBM Plex Serif', serif; font-size: 26px; font-weight: 700;
+    margin-bottom: 10px;
+}
+.logout-box p { font-size: 15px; color: var(--grey-light); line-height: 1.6; margin-bottom: 28px; }
+.logout-actions { display: flex; gap: 12px; }
+.logout-actions button {
+    flex: 1; padding: 13px 18px; border-radius: 4px; cursor: pointer;
+    font-family: 'IBM Plex Serif', serif; font-size: 14px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; transition: all 0.2s;
+}
+.logout-stay { background: transparent; color: var(--grey-light); border: 1px solid var(--border); }
+.logout-stay:hover { border-color: var(--grey-light); color: var(--white); }
+.logout-go { background: var(--gold); color: var(--black); border: none; }
+.logout-go:hover { background: var(--orange-dim); }
 
 /* ── PAGE TOP PADDING ── */
 .page-top {
@@ -90,7 +127,7 @@ nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
     content: attr(data-title);
     position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
     font-family: 'IBM Plex Serif', serif;
-    font-size: 180px; color: rgba(255,94,0,0.04);
+    font-size: 180px; color: rgba(255,208,0,0.04);
     letter-spacing: 4px; pointer-events: none; white-space: nowrap;
 }
 .page-hero .label {
@@ -136,7 +173,7 @@ nav#navbar.scrolled { background: rgba(8,8,8,0.98); }
 /* ── BUTTONS ── */
 .btn-primary {
     display: inline-block;
-    background: var(--orange); color: var(--white);
+    background: var(--orange); color: var(--black);
     padding: 14px 36px;
     font-family: 'IBM Plex Serif', serif;
     font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;

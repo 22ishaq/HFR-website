@@ -1,32 +1,118 @@
 {% extends 'recruitment/base.html' %}
-{% block title %}Create Account{% endblock %}
+{% block title %}Account Creation{% endblock %}
 {% block shell_class %}narrow{% endblock %}
 
-{% block content %}
-<div class="rec-kicker">Recruitment is open</div>
-<h1 class="rec-title">Create Your <em>Account</em></h1>
-<p class="rec-sub">Your account tracks your application from submission to interview to decision. Everything happens right here on the site.</p>
-{% if season.close_date %}<p class="rec-sub">Applications close {{ season.close_date|date:"j F Y, g:i A" }}.</p>{% endif %}
+{% block extra_style %}
+        .create-title {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(32px, 4.4vw, 46px);
+            font-weight: 700; text-align: center; margin-bottom: 42px;
+        }
 
-<div class="rec-card">
-    {% if form.non_field_errors %}
-    <div class="form-errors">{{ form.non_field_errors }}</div>
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="ff">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-            {% if field.help_text %}<span class="help">{{ field.help_text|safe }}</span>{% endif %}
-            {% if field.errors %}<span class="errors">{{ field.errors|striptags }}</span>{% endif %}
-        </div>
-        {% endfor %}
-        <button type="submit" class="btn-primary" style="width:100%;">Create Account →</button>
-    </form>
-    <p style="margin-top:24px;font-size:14px;color:var(--grey);text-align:center;">
-        Already have an account?
-        <a href="{% url 'login' %}" style="color:var(--orange);">Log in here</a>.
-    </p>
+        /* White rounded fields with italic placeholders, as drawn */
+        .create-form .ff { margin-bottom: 18px; }
+        .create-form input {
+            background: #ffffff; border: 2px solid #ffffff; color: #111;
+            padding: 15px 18px; font-family: 'IBM Plex Serif', serif; font-size: 17px;
+            font-style: italic; text-align: center; border-radius: 6px; width: 100%;
+            outline: none; transition: border-color 0.2s;
+        }
+        .create-form input::placeholder { color: #555; font-style: italic; opacity: 1; }
+        .create-form input:focus { border-color: var(--orange); }
+        .create-form input.has-error { border-color: #e04a4a; }
+
+        /* Dark button that lights up yellow to orange on hover */
+        .create-btn {
+            width: 100%; margin-top: 12px; padding: 17px 20px; border: none; cursor: pointer;
+            background: #3a3a3a; color: var(--white);
+            font-family: 'IBM Plex Serif', serif; font-size: 17px; font-style: italic;
+            letter-spacing: 2px; text-transform: uppercase; border-radius: 6px;
+            transition: background 0.25s, color 0.25s;
+        }
+        .create-btn:hover, .create-btn:focus-visible {
+            background: linear-gradient(90deg, var(--gold), var(--orange));
+            color: #111;
+        }
+
+        .field-error {
+            display: block; font-size: 13.5px; color: #ff8a8a;
+            margin-top: 8px; text-align: center;
+        }
+
+        /* Welcome overlay shown once the account is made */
+        .welcome-veil {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(0,0,0,0.82); backdrop-filter: blur(3px);
+            display: flex; align-items: center; justify-content: center; padding: 24px;
+            animation: veilIn 0.3s ease;
+        }
+        @keyframes veilIn { from { opacity: 0; } to { opacity: 1; } }
+        .welcome-box {
+            background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+            padding: 50px 44px; max-width: 520px; text-align: center;
+        }
+        .welcome-box h2 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(26px, 3.4vw, 36px);
+            font-weight: 700; margin-bottom: 16px;
+        }
+        .welcome-box h2 em { color: var(--gold); font-style: normal; }
+        .welcome-box p { font-size: 16px; color: var(--grey-light); line-height: 1.7; }
+{% endblock %}
+
+{% block content %}
+<h1 class="create-title">Account Creation</h1>
+
+<form method="post" class="create-form" novalidate>
+    {% csrf_token %}
+
+    <div class="ff">
+        {{ form.name }}
+        {% if form.name.errors %}<span class="field-error">{{ form.name.errors|striptags }}</span>{% endif %}
+    </div>
+
+    <div class="ff">
+        {{ form.email }}
+        {% if form.email.errors %}<span class="field-error">{{ form.email.errors|striptags }}</span>{% endif %}
+    </div>
+
+    <div class="ff">
+        {{ form.password }}
+        {% if form.password.errors %}<span class="field-error">{{ form.password.errors|striptags }}</span>{% endif %}
+    </div>
+
+    <div class="ff">
+        {{ form.password_confirm }}
+        {% if form.password_confirm.errors %}<span class="field-error">{{ form.password_confirm.errors|striptags }}</span>{% endif %}
+    </div>
+
+    <button type="submit" class="create-btn">Create Account</button>
+</form>
+
+{% if created %}
+<div class="welcome-veil" id="welcome-veil" role="status">
+    <div class="welcome-box">
+        <h2>Welcome <em>{{ created_name }}</em></h2>
+        <p>You are logged in. Time for you to start your application.</p>
+    </div>
 </div>
+{% endif %}
+{% endblock %}
+
+{% block extra_script %}
+<script>
+// Outline whichever fields failed so the red matches the message
+document.querySelectorAll('.field-error').forEach(err => {
+    const input = err.parentElement.querySelector('input');
+    if (input) input.classList.add('has-error');
+});
+
+{% if created %}
+// Invisible timer. No countdown shown, it just moves them on.
+(function () {
+    const go = () => { window.location.href = "{% url 'applicant_dashboard' %}"; };
+    setTimeout(go, 4000);
+    // Clicking gets there sooner, and covers anyone with scripting oddities
+    document.getElementById('welcome-veil').addEventListener('click', go);
+})();
+{% endif %}
+</script>
 {% endblock %}

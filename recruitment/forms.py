@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
 
 from .models import Application, Profile, Team
 
@@ -15,28 +15,83 @@ COMMON_DEGREES = [
 ]
 
 
-class SignUpForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+# You have to be at the university to apply, so the GUID address is the proof.
+# Postgrads and staff often use the second domain rather than the first.
+GLASGOW_EMAIL_DOMAINS = ('student.gla.ac.uk', 'glasgow.ac.uk')
+
+
+class SignUpForm(forms.ModelForm):
+    """Account creation. Four fields, exactly as the wireframe draws them."""
+
+    name = forms.CharField(
+        max_length=100, label='Name',
+        widget=forms.TextInput(attrs={'placeholder': 'Name', 'autocomplete': 'name'}),
+    )
+    email = forms.EmailField(
+        label='GUID Email Address',
+        widget=forms.EmailInput(attrs={
+            'placeholder': 'GUID Email Address', 'autocomplete': 'email',
+        }),
+    )
+    password = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Password', 'autocomplete': 'new-password',
+        }),
+    )
+    password_confirm = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Password', 'autocomplete': 'new-password',
+        }),
+    )
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('name', 'email', 'password', 'password_confirm')
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].help_text = 'A username or nickname. You will log in with this.'
-        placeholders = {
-            'username': 'e.g. jsmith',
-            'email': 'j.smith@student.gla.ac.uk',
-            'password1': 'Choose a password',
-            'password2': 'Repeat your password',
-        }
-        for name, field in self.fields.items():
-            field.widget.attrs['placeholder'] = placeholders.get(name, '')
+    def clean_name(self):
+        name = ' '.join(self.cleaned_data['name'].split())
+        if len(name) < 2:
+            raise forms.ValidationError('Enter your full name.')
+        return name
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+        if email.rpartition('@')[2] not in GLASGOW_EMAIL_DOMAINS:
+            allowed = ' or '.join('@' + d for d in GLASGOW_EMAIL_DOMAINS)
+            raise forms.ValidationError(
+                f'That is not a University of Glasgow address. Use your GUID email, '
+                f'ending in {allowed}.'
+            )
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError(
+                'An account already exists for that email. Try logging in instead.'
+            )
+        return email
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        validate_password(password)
+        return password
+
+    def clean(self):
+        cleaned = super().clean()
+        password, confirm = cleaned.get('password'), cleaned.get('password_confirm')
+        if password and confirm and password != confirm:
+            self.add_error('password_confirm', 'The two passwords do not match.')
+        return cleaned
 
     def save(self, commit=True):
-        user = super().save(commit=commit)
+        user = super().save(commit=False)
+        # The GUID is unique, so its local part becomes the username
+        user.username = self.cleaned_data['email'].split('@')[0]
+        user.email = self.cleaned_data['email']
+        first, _, last = self.cleaned_data['name'].partition(' ')
+        user.first_name, user.last_name = first, last
+        user.set_password(self.cleaned_data['password'])
         if commit:
+            user.save()
             Profile.objects.get_or_create(user=user)
         return user
 
