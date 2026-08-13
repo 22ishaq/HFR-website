@@ -30,16 +30,24 @@ def signup(request):
     if not season.is_open:
         return render(request, 'recruitment/signup_closed.html', {'season': season})
 
+    created_name = None
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, 'Account created. Welcome to HFR recruitment!')
-            return redirect('applicant_dashboard')
+            # The welcome overlay shows over this page, then an invisible timer
+            # carries them to their dashboard.
+            created_name = user.first_name or user.username
     else:
         form = SignUpForm()
-    return render(request, 'recruitment/signup.html', {'form': form, 'season': season})
+
+    return render(request, 'recruitment/signup.html', {
+        'form': form,
+        'season': season,
+        'created': created_name is not None,
+        'created_name': created_name,
+    })
 
 
 @login_required
@@ -63,28 +71,14 @@ def applicant_dashboard(request):
         return redirect('onboarding')
 
     application = Application.objects.filter(applicant=request.user).first()
-    redeem_form = RedeemCodeForm() if application and application.status == Application.STATUS_ACCEPTED else None
-
-    stages = []
-    if application:
-        reached = {
-            Application.STATUS_SUBMITTED: 1,
-            Application.STATUS_INTERVIEW: 2,
-            Application.STATUS_ACCEPTED: 3,
-            Application.STATUS_REJECTED: 3,
-        }[application.status]
-        for i, label in enumerate(['Application', 'Interview', 'Decision'], start=1):
-            stages.append({
-                'label': label,
-                'done': i < reached,
-                'active': i == reached,
-            })
+    accepted = application and application.status == Application.STATUS_ACCEPTED
 
     return render(request, 'recruitment/dashboard.html', {
         'profile': profile,
         'application': application,
-        'stages': stages,
-        'redeem_form': redeem_form,
+        'redeem_form': RedeemCodeForm() if accepted else None,
+        # Join HFR on the accepted state opens the code entry screen
+        'joining': accepted and request.GET.get('join') == '1',
     })
 
 

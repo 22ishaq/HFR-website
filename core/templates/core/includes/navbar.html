@@ -6,7 +6,58 @@
     <a href="{% url 'home' %}" class="nav-home-logo" aria-label="Hydrogen Fuel Racing home">
         <img src="{% static 'core/hfr.jpg' %}" alt="HFR">
     </a>
-    <a href="{% url 'register' %}" class="nav-avatar-link" aria-label="Register">
-        <img src="{% static 'core/avatar.jpg' %}" alt="Register">
+    {# The circle from the flow spec: log in when signed out, log out when signed in #}
+    {% if user.is_authenticated %}
+    <button type="button" class="nav-avatar-link" id="logout-open" aria-label="Log out"
+            aria-haspopup="dialog">
+        <img src="{% static 'core/avatar.jpg' %}" alt="">
+    </button>
+    {% else %}
+    <a href="{% url 'login' %}" class="nav-avatar-link" aria-label="Log in">
+        <img src="{% static 'core/avatar.jpg' %}" alt="">
     </a>
+    {% endif %}
 </nav>
+
+{% if user.is_authenticated %}
+<div class="logout-veil" id="logout-veil" role="dialog" aria-modal="true" aria-labelledby="logout-heading">
+    <div class="logout-box">
+        <h2 id="logout-heading">Log out?</h2>
+        <p>
+            {% if user.first_name %}See you soon, {{ user.first_name }}.{% endif %}
+            You will need to log back in to reach your account.
+        </p>
+        <form method="post" action="{% url 'logout' %}" class="logout-actions">
+            {% csrf_token %}
+            <button type="button" class="logout-stay" id="logout-cancel">Stay</button>
+            <button type="submit" class="logout-go">Log Out</button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function () {
+    const veil = document.getElementById('logout-veil');
+    const open = document.getElementById('logout-open');
+    const stay = document.getElementById('logout-cancel');
+    if (!veil || !open) return;
+
+    function show() {
+        veil.classList.add('open');
+        stay.focus();
+    }
+    function hide() {
+        veil.classList.remove('open');
+        open.focus();
+    }
+
+    open.addEventListener('click', show);
+    stay.addEventListener('click', hide);
+    // Clicking the dimmed area behind the box closes it too
+    veil.addEventListener('click', e => { if (e.target === veil) hide(); });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && veil.classList.contains('open')) hide();
+    });
+})();
+</script>
+{% endif %}

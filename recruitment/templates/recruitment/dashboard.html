@@ -2,118 +2,192 @@
 {% block title %}Applicant Dashboard{% endblock %}
 
 {% block extra_style %}
-        .tracker { display: flex; align-items: center; margin: 40px 0 50px; }
-        .tracker-step { flex: 1; text-align: center; position: relative; }
-        .tracker-dot {
-            width: 22px; height: 22px; border-radius: 50%; margin: 0 auto 12px;
-            background: var(--card2); border: 2px solid var(--border);
+        .dash-title {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(26px, 3.4vw, 38px);
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            text-align: center; margin-bottom: 10px;
+        }
+        .dash-sub { text-align: center; font-size: 15px; color: var(--grey-light); margin-bottom: 34px; }
+
+        .dash-panel {
+            background: #2a2a2a; border-radius: 6px; padding: 46px 40px;
+            min-height: 240px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+        }
+        .dash-empty-text { font-size: 17px; color: var(--white); margin-bottom: 26px; }
+
+        /* Yellow call to action */
+        .btn-join {
+            display: inline-block; background: var(--gold); color: var(--black);
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            padding: 14px 32px; border: none; border-radius: 4px; cursor: pointer;
+            text-decoration: none; transition: background 0.2s;
+        }
+        .btn-join:hover { background: var(--orange-dim); }
+
+        /* ── Progress bar: five dots joined by a line ── */
+        .progress {
+            display: flex; align-items: flex-start;
+            background: #2a2a2a; border-radius: 6px;
+            padding: 44px 34px 34px; margin-bottom: 22px;
+        }
+        .prog-step { flex: 1; text-align: center; position: relative; }
+        .prog-dot {
+            width: 26px; height: 26px; border-radius: 50%; margin: 0 auto 14px;
+            background: #1b1b1b; border: 2px solid #4a4a4a;
             display: flex; align-items: center; justify-content: center;
-            font-size: 11px; color: var(--white); position: relative; z-index: 2;
+            font-size: 12px; font-weight: 700; color: var(--grey);
+            position: relative; z-index: 2; transition: all 0.25s;
         }
-        .tracker-step.done .tracker-dot { background: var(--orange); border-color: var(--orange); }
-        .tracker-step.active .tracker-dot {
-            border-color: var(--orange); background: var(--card);
-            box-shadow: 0 0 0 5px rgba(255,221,85,0.15);
+        .prog-step.done .prog-dot {
+            background: var(--gold); border-color: var(--gold); color: var(--black);
         }
-        .tracker-step .tracker-label {
-            font-family: 'IBM Plex Serif', serif; font-size: 12px; font-weight: 700;
-            letter-spacing: 2px; text-transform: uppercase; color: var(--grey);
+        .prog-step.active .prog-dot {
+            border-color: var(--gold); color: var(--gold);
+            box-shadow: 0 0 0 5px rgba(255,208,0,0.16);
         }
-        .tracker-step.done .tracker-label, .tracker-step.active .tracker-label { color: var(--white); }
-        .tracker-line { flex: 1; height: 2px; background: var(--border); margin: 0 -30px; transform: translateY(-16px); }
-        .tracker-line.filled { background: var(--orange); }
+        .prog-step.rejected .prog-dot {
+            background: #d95c5c; border-color: #d95c5c; color: #2a0a0a;
+            box-shadow: none;
+        }
+        .prog-label {
+            font-size: 12.5px; line-height: 1.4; color: var(--grey);
+            padding: 0 6px; transition: color 0.25s;
+        }
+        .prog-step.done .prog-label, .prog-step.active .prog-label { color: var(--white); }
+        .prog-step.rejected .prog-label { color: #ff9b9b; }
+        /* The connecting line sits behind the dots */
+        .prog-line { flex: 0 0 auto; height: 2px; background: #4a4a4a; margin-top: 12px; min-width: 20px; flex-grow: 1; }
+        .prog-line.filled { background: var(--gold); }
 
-        .status-banner { padding: 22px 26px; border-radius: 4px; margin-bottom: 34px; font-size: 15px; line-height: 1.7; }
-        .status-banner strong { display: block; font-family: 'IBM Plex Serif', serif; font-size: 17px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
-        .status-banner.pending  { background: rgba(255,196,0,0.06); border: 1px solid rgba(255,196,0,0.3); color: var(--grey-light); }
-        .status-banner.pending strong { color: var(--gold); }
-        .status-banner.good     { background: rgba(80,200,120,0.07); border: 1px solid rgba(80,200,120,0.35); color: var(--grey-light); }
-        .status-banner.good strong { color: #7dd89b; }
-        .status-banner.bad      { background: rgba(255,60,60,0.06); border: 1px solid rgba(255,60,60,0.3); color: var(--grey-light); }
-        .status-banner.bad strong { color: #ff8a8a; }
-
-        .picks-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
-        .pick-tag {
-            font-family: 'IBM Plex Serif', serif; font-size: 12px; font-weight: 700;
-            letter-spacing: 1.5px; text-transform: uppercase; padding: 8px 14px;
-            border: 1px solid var(--border); border-radius: 3px; color: var(--grey-light);
+        @media (max-width: 680px) {
+            .progress { flex-direction: column; align-items: stretch; padding: 30px 26px; gap: 2px; }
+            .prog-line { display: none; }
+            .prog-step { display: flex; align-items: center; gap: 14px; text-align: left; padding: 7px 0; }
+            .prog-dot { margin: 0; flex-shrink: 0; }
+            .prog-label { padding: 0; }
         }
-        .pick-tag.current { border-color: var(--orange); color: var(--orange); }
-        .pick-tag span { display: block; font-size: 10px; color: var(--grey); letter-spacing: 2px; }
+
+        /* ── What they submitted ── */
+        .app-details { background: #2a2a2a; border-radius: 6px; overflow: hidden; }
+        .app-details > summary {
+            list-style: none; cursor: pointer; padding: 18px 26px;
+            display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; letter-spacing: 1px;
+            text-transform: uppercase; color: var(--white);
+        }
+        .app-details > summary::-webkit-details-marker { display: none; }
+        .app-details > summary:hover { color: var(--gold); }
+        .summary-date { font-size: 13px; color: var(--grey); white-space: nowrap; }
+        .details-body { padding: 4px 26px 26px; }
+        .details-body h5 {
+            font-family: 'IBM Plex Serif', serif; font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--grey); margin: 18px 0 5px;
+        }
+        .details-body h5:first-child { margin-top: 0; }
+        .details-body p { font-size: 14.5px; color: var(--grey-light); line-height: 1.7; white-space: pre-line; }
+        .picks { display: flex; gap: 10px; flex-wrap: wrap; }
+        .pick {
+            font-size: 13px; padding: 7px 14px; border-radius: 20px;
+            border: 1px solid var(--border); color: var(--grey-light);
+        }
+        .pick.current { border-color: var(--gold); color: var(--gold); }
+        .pick b { color: var(--grey); font-weight: 400; }
+
+        .join-row { text-align: center; margin-top: 26px; }
+        .join-note { font-size: 14px; color: var(--grey-light); line-height: 1.7; margin-bottom: 20px; }
+
+        /* ── Code entry ── */
+        .code-card { background: #2a2a2a; border-radius: 6px; padding: 46px 40px; text-align: center; }
+        .code-card p { font-size: 16px; color: var(--white); line-height: 1.7; margin-bottom: 28px; }
+        .code-card input {
+            background: #ffffff; border: none; color: #111; text-align: center;
+            font-family: 'IBM Plex Serif', serif; font-size: 16px; letter-spacing: 3px;
+            text-transform: uppercase; padding: 15px 18px; border-radius: 4px;
+            width: 100%; max-width: 320px; outline: none; margin-bottom: 22px;
+        }
 {% endblock %}
 
 {% block content %}
-<div class="rec-kicker">Applicant Dashboard</div>
-<h1 class="rec-title">Hey, <em>{{ user.username }}</em></h1>
+<h1 class="dash-title">Applicant Dashboard</h1>
 
 {% if not application %}
-    <p class="rec-sub">You haven't started your application yet. It takes about ten minutes. You'll tell us about yourself, draft your top three team picks, and upload your CV.</p>
-    <div class="rec-card" style="text-align:center;padding:60px 40px;">
-        <div style="font-family:'IBM Plex Serif',sans-serif;font-size:40px;letter-spacing:2px;margin-bottom:12px;">Ready when you are</div>
-        <p style="color:var(--grey-light);font-size:15px;margin-bottom:30px;">One application per person, per season. You can't edit it after submitting, so take your time.</p>
-        <a href="{% url 'apply' %}" class="btn-primary">Start My Application →</a>
+    <p class="dash-sub">You will receive notifications to your application status</p>
+    <div class="dash-panel">
+        <div class="dash-empty-text">Looks quite empty. Start an application!</div>
+        <a href="{% url 'apply' %}" class="btn-join">Apply Now</a>
     </div>
-{% else %}
-    <p class="rec-sub">Here's where your application stands. We'll update this page at every stage, so there's no need to chase anyone.</p>
 
-    <div class="tracker">
-        {% for stage in stages %}
-            {% if not forloop.first %}<div class="tracker-line {% if stage.done or stage.active %}filled{% endif %}"></div>{% endif %}
-            <div class="tracker-step {% if stage.done %}done{% elif stage.active %}active{% endif %}">
-                <div class="tracker-dot">{% if stage.done %}✓{% endif %}</div>
-                <div class="tracker-label">{{ stage.label }}</div>
+{% elif joining %}
+    <div class="code-card">
+        <p>
+            Congratulations for completing the recruitment process!<br>
+            Please verify with your team lead of SRC membership and they will provide the
+            unique access code to gain full access to the site
+        </p>
+        <form method="post" action="{% url 'redeem_code' %}">
+            {% csrf_token %}
+            {{ redeem_form.code }}
+            <div><button type="submit" class="btn-join">Join HFR</button></div>
+        </form>
+    </div>
+
+{% else %}
+    <p class="dash-sub">You will receive notifications to your application status</p>
+
+    <div class="progress">
+        {% for stage in application.stages %}
+            {% if not forloop.first %}
+            <div class="prog-line {% if stage.done or stage.active %}filled{% endif %}"></div>
+            {% endif %}
+            <div class="prog-step {% if stage.done %}done{% elif stage.active %}active{% endif %}{% if stage.rejected %} rejected{% endif %}">
+                <div class="prog-dot">{% if stage.done and not stage.rejected %}✓{% elif stage.rejected %}✕{% else %}{{ stage.number }}{% endif %}</div>
+                <div class="prog-label">{{ stage.label }}</div>
             </div>
         {% endfor %}
     </div>
 
-    {% if application.status == 'submitted' %}
-    <div class="status-banner pending">
-        <strong>Application received</strong>
-        Your application is on the {{ application.current_team }} draft board waiting for review.
-        Nearly everyone gets an interview, so keep an eye on this page and your email.
-    </div>
-    {% elif application.status == 'interview' %}
-    <div class="status-banner pending">
-        <strong>Interview stage</strong>
-        {{ application.current_team }} wants to talk to you! Their team lead will be in touch
-        to arrange a time. It's informal, so come as you are.
-    </div>
-    {% elif application.status == 'accepted' %}
-    <div class="status-banner good">
-        <strong>Accepted! Welcome to {{ application.current_team }} 🎉</strong>
-        Two steps left: get your <b>SRC membership</b>, then confirm it with your team lead.
-        They'll give you a promotion code. Enter it below to unlock your HFR member account.
-    </div>
-    <div class="rec-card">
-        <div style="font-family:'IBM Plex Serif',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:18px;">Enter Your <span style="color:var(--orange);">Promotion Code</span></div>
-        <form method="post" action="{% url 'redeem_code' %}">
-            {% csrf_token %}
-            <div class="ff">
-                <label for="id_code">Code from your team lead</label>
-                {{ redeem_form.code }}
-            </div>
-            <button type="submit" class="btn-primary">Promote My Account →</button>
-            <p style="margin-top:14px;font-size:13px;color:var(--grey);">You'll be logged out after this. Log back in with the same details to start onboarding.</p>
-        </form>
+    {% if application.status == 'accepted' %}
+    <div class="dash-panel" style="min-height:0;padding:34px;">
+        <p class="join-note">
+            You are in. Buy your SRC membership, confirm it with your team lead,
+            and they will give you the code that unlocks the rest of the site.
+        </p>
+        <a href="{% url 'applicant_dashboard' %}?join=1" class="btn-join">Join HFR</a>
     </div>
     {% elif application.status == 'rejected' %}
-    <div class="status-banner bad">
-        <strong>Not this time</strong>
-        We couldn't find you a spot this season; competition was tough. Thank you for applying,
-        and we'd genuinely love to see you again next recruitment window.
+    <div class="dash-panel" style="min-height:0;padding:34px;">
+        <p class="join-note" style="margin-bottom:0;">
+            Not this season, and we are sorry. Your team lead will be in touch personally.
+            We would genuinely encourage you to apply again next year.
+        </p>
     </div>
     {% endif %}
 
-    <div class="rec-card" style="margin-top:30px;">
-        <div style="font-family:'IBM Plex Serif',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--grey);margin-bottom:14px;">Your Draft Picks</div>
-        <div class="picks-row">
-            <div class="pick-tag {% if application.current_choice == 1 and not application.is_final %}current{% endif %}"><span>First pick</span>{{ application.first_pick }}</div>
-            <div class="pick-tag {% if application.current_choice == 2 and not application.is_final %}current{% endif %}"><span>Alternative</span>{{ application.alternative }}</div>
-            <div class="pick-tag {% if application.current_choice == 3 and not application.is_final %}current{% endif %}"><span>Wildcard</span>{{ application.wildcard }}</div>
+    <details class="app-details" style="margin-top:22px;">
+        <summary>
+            <span>Your application</span>
+            <span class="summary-date">Sent {{ application.submitted_at|date:"d/m/Y" }}</span>
+        </summary>
+        <div class="details-body">
+            <h5>Draft picks</h5>
+            <div class="picks">
+                <span class="pick {% if application.current_choice == 1 and not application.is_final %}current{% endif %}"><b>1</b> {{ application.first_pick }}</span>
+                <span class="pick {% if application.current_choice == 2 and not application.is_final %}current{% endif %}"><b>2</b> {{ application.alternative }}</span>
+                <span class="pick {% if application.current_choice == 3 and not application.is_final %}current{% endif %}"><b>3</b> {{ application.wildcard }}</span>
+            </div>
+            <h5>Year and degree</h5>
+            <p>{{ application.get_year_of_study_display }}, {{ application.major }}</p>
+            <h5>Why this society?</h5>
+            <p>{{ application.why_society }}</p>
+            <h5>Why this division?</h5>
+            <p>{{ application.why_division }}</p>
+            <h5>What makes you you?</h5>
+            <p>{{ application.what_makes_you }}</p>
+            <h5>What do you want to learn?</h5>
+            <p>{{ application.what_to_learn }}</p>
         </div>
-        <p style="margin-top:18px;font-size:13px;color:var(--grey);">
-            Submitted {{ application.submitted_at|date:"j F Y" }} · CV: {{ application.cv.name|cut:"cvs/" }}
-        </p>
-    </div>
+    </details>
 {% endif %}
 {% endblock %}
