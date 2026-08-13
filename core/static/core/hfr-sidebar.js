@@ -14,7 +14,7 @@
     discover: { label: 'Discover', cards: [
       { title: 'OUR MISSION', href: '/about/#mission' },
       { title: 'EVENTS',      href: '/events/' },
-      { title: 'HISTORY',     href: '/about/#history' }
+      { title: 'HISTORY',     href: '/history/' }
     ]},
     join: { label: 'Join Us', cards: [
       { title: 'JOINING THE TEAM', href: '/register/#why' },
@@ -39,7 +39,6 @@
   panel.className = 'hfr-panel';
   panel.setAttribute('aria-hidden', 'true');
   panel.innerHTML = `
-    <button class="hfr-panel-close" type="button" aria-label="Close">&times;</button>
     <div class="hfr-cards" id="hfr-cards"></div>
     <div class="hfr-wash" aria-hidden="true"><span class="hfr-wash-text"></span></div>
   `;
@@ -50,7 +49,6 @@
 
   const navLinks = rail.querySelectorAll('.hfr-rail-nav a');
   const toggle   = document.getElementById('hfr-sidebar-toggle');
-  const closeBtn = panel.querySelector('.hfr-panel-close');
   const cardsBox = panel.querySelector('#hfr-cards');
   const wash     = panel.querySelector('.hfr-wash');
   const washText = panel.querySelector('.hfr-wash-text');
@@ -84,6 +82,7 @@
   }
 
   function selectSection(key) {
+    panel.dataset.section = key;
     navLinks.forEach(a => a.classList.toggle('active', a.dataset.key === key));
     openPanel();
     washText.textContent = sections[key].label;
@@ -100,12 +99,23 @@
     selectSection(a.dataset.key);
   }));
 
+  // Always navigate card links, including links back to the current page.
+  // A brief delay lets the close animation complete before the new page loads.
+  panel.addEventListener('click', e => {
+    const card = e.target.closest('.hfr-card');
+    if (!card) return;
+
+    e.preventDefault();
+    closePanel();
+    setRailOpen(false);
+    window.setTimeout(() => window.location.assign(card.href), 220);
+  });
+
   toggle.addEventListener('click', () => {
     const shouldOpen = !rail.classList.contains('open');
     if (!shouldOpen) closePanel();
     setRailOpen(shouldOpen);
   });
-  closeBtn.addEventListener('click', closePanel);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closePanel();
