@@ -105,3 +105,33 @@ body.hfr-panel-open{ overflow: hidden; }
   .hfr-card{ min-height: 130px; }
   .hfr-card-title{ font-size: 28px; }
 }
+/* Account overlay: same rail, mirrored to the right */
+.hfr-rail--right{
+  transform: translateX(100%);
+  padding: calc(var(--nav-h) + 150px) 90px 40px 0;
+  align-items: flex-end;
+}
+.hfr-rail--right.open{ transform: translateX(0); }
+.hfr-rail--right .hfr-rail-nav{ align-items: flex-end; }
+.hfr-rail--right .hfr-rail-nav a{ text-align: right; }
+
+.hfr-logout{ margin-top: auto; }
+.hfr-logout button{
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--hfr-serif); font-size: 16px; color: #b03030;
+  transition: color .2s ease;
+}
+.hfr-logout button:hover{ color: #7d1f1f; text-decoration: underline; }
+
+.hfr-panel--left{
+  left: 0;
+  right: var(--hfr-rail-w);
+  border-left: 0;
+  border-right: 1px solid var(--hfr-line);
+  padding: calc(var(--nav-h) + 26px) 104px 26px 64px;
+}
+
+@media (max-width: 760px){
+  .hfr-rail--right{ padding: calc(var(--nav-h) + 150px) 48px 40px 0; }
+  .hfr-panel--left{ right: 0; border-right: 0; padding: calc(var(--nav-h) + 26px) 20px 26px; }
+}
