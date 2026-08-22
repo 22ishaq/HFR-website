@@ -1,0 +1,142 @@
+{% extends 'recruitment/base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_style %}
+        .dash-head { margin-bottom: 40px; }
+        .dash-head .kicker {
+            font-size: 12px; letter-spacing: 5px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 12px;
+        }
+        .dash-head h1 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(34px, 5vw, 58px);
+            font-weight: 700; line-height: 1.05; margin-bottom: 14px;
+        }
+        .dash-head h1 em { color: var(--gold); font-style: normal; }
+        .dash-head p { font-size: 16px; color: var(--grey-light); line-height: 1.7; max-width: 620px; }
+
+        .panels { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; align-items: start; }
+        @media (max-width: 860px) { .panels { grid-template-columns: 1fr; } }
+
+        .panel {
+            background: #0d4a52; border-radius: 10px; padding: 32px 30px; color: var(--white);
+        }
+        .panel.dark { background: var(--card); border: 1px solid var(--border); }
+        .panel h3 {
+            font-family: 'IBM Plex Serif', serif; font-size: 13px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px;
+            color: rgba(255,255,255,0.65);
+        }
+        .panel.dark h3 { color: var(--grey); }
+        .big {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(24px, 3vw, 34px);
+            font-weight: 600; line-height: 1.2; margin-bottom: 8px;
+        }
+        .panel p { font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,0.78); }
+        .panel.dark p { color: var(--grey-light); }
+
+        .people { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .people li { display: flex; align-items: center; gap: 12px; font-size: 15px; }
+        .people .who { color: var(--white); }
+        .people .role { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+        .avatar {
+            width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+            background: var(--card2); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700; color: var(--gold);
+        }
+        .empty { font-size: 14.5px; color: var(--grey); line-height: 1.7; }
+
+        .facts { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+        .fact { display: flex; justify-content: space-between; gap: 16px; font-size: 14.5px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .fact:last-child { border-bottom: none; padding-bottom: 0; }
+        .fact span:first-child { color: var(--grey); }
+        .fact span:last-child { color: var(--white); text-align: right; }
+
+        .lead-note {
+            margin-top: 20px; padding: 18px 22px; border-radius: 8px;
+            background: rgba(255,208,0,0.06); border-left: 3px solid var(--gold);
+            font-size: 14.5px; color: var(--grey-light); line-height: 1.7;
+        }
+        .lead-note a { color: var(--gold); }
+{% endblock %}
+
+{% block content %}
+<div class="dash-head">
+    <div class="kicker">Your Dashboard</div>
+    {% if team %}
+        <h1>Welcome to <em>{{ team.name }}</em></h1>
+        <p>{{ team.get_division_display }} division. {{ team.tagline }}</p>
+    {% else %}
+        <h1>Welcome to <em>HFR</em></h1>
+        <p>You are an HFR member. Once you are placed on a team, it will show up here.</p>
+    {% endif %}
+</div>
+
+<div class="panels">
+    <div>
+        <div class="panel">
+            <h3>Your team</h3>
+            {% if team %}
+                <div class="big">{{ team.name }}</div>
+                <p>{{ team.get_division_display }} division</p>
+                {% if leads %}
+                <ul class="people" style="margin-top:22px;">
+                    {% for lead in leads %}
+                    <li>
+                        <span class="avatar">{{ lead.first_name|first|default:lead.username|first|upper }}</span>
+                        <span>
+                            <span class="who">{{ lead.get_full_name|default:lead.username }}</span><br>
+                            <span class="role">Team lead</span>
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p style="margin-top:18px;">No team lead is listed yet.</p>
+                {% endif %}
+            {% else %}
+                <p>You have not been placed on a team yet.</p>
+            {% endif %}
+        </div>
+
+        {% if is_lead %}
+        <div class="lead-note">
+            You lead {% for t in led_teams %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}.
+            Review applicants on your <a href="{% url 'lead_dashboard' %}">recruitment dashboard</a>.
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="panel dark">
+        <h3>Your details</h3>
+        <div class="facts">
+            <div class="fact"><span>Display name</span><span>{{ profile.display_name|default:"Not set" }}</span></div>
+            <div class="fact"><span>Name</span><span>{{ user.get_full_name|default:user.username }}</span></div>
+            <div class="fact"><span>Email</span><span>{{ user.email }}</span></div>
+            <div class="fact"><span>Contact by</span><span>{{ profile.get_contact_method_display|default:"Not set" }}</span></div>
+            <div class="fact"><span>Best time</span><span>{{ profile.get_contact_time_display|default:"Not set" }}</span></div>
+            {% if profile.onboarded_at %}
+            <div class="fact"><span>Member since</span><span>{{ profile.onboarded_at|date:"j F Y" }}</span></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if team %}
+<div class="panel dark" style="margin-top:20px;">
+    <h3>Others on {{ team.name }}</h3>
+    {% if teammates %}
+    <ul class="people">
+        {% for mate in teammates %}
+        <li>
+            <span class="avatar">{{ mate.first_name|first|default:mate.username|first|upper }}</span>
+            <span class="who">{{ mate.get_full_name|default:mate.username }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">Nobody else has joined this team yet. You are first.</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,11 +1,15 @@
+from functools import wraps
+
 from django.contrib import messages
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from .forms import (
-    COMMON_DEGREES, ApplicationForm, OnboardingForm, RedeemCodeForm, SignUpForm,
+    COMMON_DEGREES, ApplicationForm, EditProfileForm, OnboardingForm,
+    RedeemCodeForm, SignUpForm,
 )
 from .models import Application, Profile, PromotionCode, RecruitmentSettings, Team
 
@@ -176,17 +180,90 @@ def onboarding(request):
     return render(request, 'recruitment/onboarding.html', {'form': form})
 
 
-@login_required
+def member_only(view):
+    """Members only. Applicants get sent back to their own dashboard and
+    anyone mid onboarding is pushed to finish it."""
+    @wraps(view)
+    @login_required
+    def wrapper(request, *args, **kwargs):
+        profile = get_profile(request.user)
+        if profile.needs_onboarding:
+            return redirect('onboarding')
+        if not (profile.is_onboarded or is_team_lead(request.user)):
+            return redirect('applicant_dashboard')
+        return view(request, *args, **kwargs)
+    return wrapper
+
+
+@member_only
 def member_home(request):
-    profile = get_profile(request.user)
-    if profile.needs_onboarding:
-        return redirect('onboarding')
-    if not (profile.is_onboarded or is_team_lead(request.user)):
-        return redirect('applicant_dashboard')
-    return render(request, 'recruitment/member_home.html', {
-        'profile': profile,
+    """Account navigation now lives in the avatar overlay, so send members on."""
+    return redirect('member_dashboard')
+
+
+@member_only
+def member_dashboard(request):
+    """Where they landed and who runs it."""
+    application = Application.objects.filter(
+        applicant=request.user, status=Application.STATUS_ACCEPTED
+    ).select_related('first_pick', 'alternative', 'wildcard').first()
+
+    team = application.current_team if application else None
+
+    teammates = []
+    if team:
+        # Everyone else accepted onto the same sub team
+        for other in Application.objects.filter(
+            status=Application.STATUS_ACCEPTED
+        ).exclude(applicant=request.user).select_related(
+            'applicant', 'first_pick', 'alternative', 'wildcard'
+        ):
+            if other.current_team.pk == team.pk:
+                teammates.append(other.applicant)
+
+    return render(request, 'recruitment/member_dashboard.html', {
+        'profile': get_profile(request.user),
+        'team': team,
+        'leads': team.leads.all() if team else [],
+        'teammates': teammates,
+        'application': application,
         'led_teams': request.user.led_teams.all(),
         'is_lead': is_team_lead(request.user),
+    })
+
+
+@member_only
+def edit_profile(request):
+    profile = get_profile(request.user)
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
+        password_form = PasswordChangeForm(request.user, request.POST)
+
+        changing_password = any(
+            request.POST.get(f) for f in
+            ('old_password', 'new_password1', 'new_password2')
+        )
+        profile_ok = form.is_valid()
+        password_ok = password_form.is_valid() if changing_password else True
+
+        if profile_ok and password_ok:
+            form.save()
+            if changing_password:
+                user = password_form.save()
+                # Changing a password normally signs you out
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Profile and password updated.')
+            else:
+                messages.success(request, 'Profile updated.')
+            return redirect('edit_profile')
+    else:
+        form = EditProfileForm(instance=profile)
+        password_form = PasswordChangeForm(request.user)
+
+    return render(request, 'recruitment/edit_profile.html', {
+        'form': form,
+        'password_form': password_form,
+        'profile': profile,
     })
 
 

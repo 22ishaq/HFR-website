@@ -75,6 +75,16 @@ body.hfr-sidebar-open .nav-avatar-link { opacity: 0; pointer-events: none; }
 body.hfr-sidebar-open .nav-sidebar-toggle span { background: var(--black); }
 body.hfr-sidebar-open .nav-sidebar-toggle:hover span { background: var(--orange); }
 
+/* The account overlay mirrors this: the avatar stays as its close control. */
+body.hfr-account-open nav#navbar {
+    z-index: 1300;
+    background: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+}
+body.hfr-account-open .nav-home-logo,
+body.hfr-account-open .nav-sidebar-toggle { opacity: 0; pointer-events: none; }
+
 .nav-home-logo {
     position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
     display: inline-flex; width: 54px; height: 54px; align-items: center; justify-content: center;

@@ -21,6 +21,8 @@ urlpatterns = [
     # Onboarding + members
     path('onboarding/', views.onboarding, name='onboarding'),
     path('members/', views.member_home, name='member_home'),
+    path('members/dashboard/', views.member_dashboard, name='member_dashboard'),
+    path('members/profile/', views.edit_profile, name='edit_profile'),
 
     # Team leads
     path('recruitment/dashboard/', views.lead_dashboard, name='lead_dashboard'),
