@@ -3,9 +3,9 @@
 
   const sections = {
     divisions: { label: 'Divisions', cards: [
-      { title: 'LAND', href: '/divisions/#land' },
-      { title: 'SEA',  href: '/divisions/#sea' },
-      { title: 'AIR',  href: '/divisions/#air' }
+      { title: 'LAND', href: '/divisions/land/' },
+      { title: 'SEA',  href: '/divisions/sea/' },
+      { title: 'AIR',  href: '/divisions/air/' }
     ]},
     partners: { label: 'Partners', cards: [
       { title: '2026 PARTNERS', href: '/sponsors/' },

@@ -1,59 +1,92 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
-{% block title %}Join Us | UG Hydrogen Fuel Racing{% endblock %}
+{% block title %}Joining the Team | UG Hydrogen Fuel Racing{% endblock %}
 {% block extra_head %}
     <style>
         body { background: var(--black); }
+
         .join-hero {
-            min-height: 50vh; display: flex; align-items: center; justify-content: center;
+            min-height: 46vh; display: flex; align-items: center; justify-content: center;
             text-align: center; padding: 140px 30px 70px;
         }
         .join-hero h1 {
-            font-size: clamp(48px, 8vw, 104px); letter-spacing: 3px;
-            text-transform: uppercase; line-height: 1; font-weight: 600;
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(34px, 5.6vw, 72px);
+            letter-spacing: 4px; text-transform: uppercase; line-height: 1.05;
+            font-weight: 400; color: var(--gold);
         }
-        .join-hero h1 em { color: var(--orange); font-style: normal; }
 
-        .join-section { padding: 90px 60px; border-top: 1px solid rgba(255,255,255,0.06); }
-        .join-section.alt { background: var(--deep); }
-        .join-inner { max-width: 1160px; margin: 0 auto; }
-        .join-kicker {
-            font-size: 12px; font-weight: 600; letter-spacing: 5px;
-            text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+        /* Full-width photo bands. Drop an <img> inside .photo-band and it fills the slot. */
+        .photo-band {
+            position: relative; height: 52vh; min-height: 320px; overflow: hidden;
+            background:
+                radial-gradient(ellipse 100% 90% at 50% 110%, rgba(255,208,0,0.10), transparent 65%),
+                linear-gradient(160deg, #101010, #090909);
+            border-top: 1px solid rgba(255,255,255,0.07);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
         }
-        .join-h2 {
-            font-size: clamp(32px, 4.5vw, 54px); letter-spacing: 2px;
-            text-transform: uppercase; margin-bottom: 14px; font-weight: 600; line-height: 1.1;
+        .photo-band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .photo-band .tag {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            font-family: 'IBM Plex Serif', serif; font-size: 13px; font-weight: 700;
+            letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.25);
+            text-align: center; padding: 0 24px;
         }
-        .join-sub { font-size: 16px; font-weight: 300; color: var(--grey-light); line-height: 1.7; max-width: 660px; margin-bottom: 44px; }
+        .photo-band.split { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: none; border: 0; }
+        .photo-band.split > div {
+            position: relative; overflow: hidden;
+            background: linear-gradient(160deg, #111, #0a0a0a);
+            border-top: 1px solid rgba(255,255,255,0.07);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
 
-        /* Divisions */
-        .div-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-        .div-card { background: var(--card); border: 1px solid var(--border); padding: 34px 28px; display: flex; flex-direction: column; }
-        .div-card h3 { font-size: 32px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; color: var(--orange); font-weight: 600; }
+        /* Q&A sections, wireframe style: centred question, gold answers */
+        .qa { padding: 110px 30px; text-align: center; }
+        .qa.alt { background: var(--deep); }
+        .qa-inner { max-width: 720px; margin: 0 auto; }
+        .qa h2 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(20px, 2.6vw, 30px);
+            font-weight: 400; letter-spacing: 1px; color: var(--white); margin-bottom: 34px;
+        }
+        .qa .a {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(16px, 2vw, 20px);
+            line-height: 1.75; color: var(--gold);
+        }
+        .qa .a + .a { margin-top: 30px; }
+
+        /* Division cards (inside the opportunities answer) */
+        .div-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1100px; margin: 60px auto 0; text-align: left; }
+        .div-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 34px 28px; display: flex; flex-direction: column; }
+        .div-card h3 { font-family: 'IBM Plex Serif', serif; font-size: 30px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; color: var(--orange); font-weight: 600; }
         .div-card p { font-size: 14.5px; color: var(--grey-light); line-height: 1.7; margin-bottom: 12px; }
         .div-card .div-join-note { font-size: 13px; color: var(--grey); margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); }
+        .div-card a { color: var(--gold); }
 
-        /* Training */
-        .training-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; max-width: 860px; }
+        /* Stats inside "what is the team like" */
+        .team-stats { display: flex; justify-content: center; gap: clamp(30px, 7vw, 90px); margin-top: 54px; flex-wrap: wrap; }
+        .team-stat .n { font-family: 'IBM Plex Serif', serif; font-size: clamp(30px, 4vw, 48px); font-weight: 700; color: var(--white); margin-bottom: 6px; }
+        .team-stat .l { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--grey); }
+
+        /* Training list */
+        .training-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; max-width: 700px; margin: 50px auto 0; text-align: left; }
         .training-list li {
             list-style: none; font-size: 15px; color: var(--grey-light); line-height: 1.6;
             padding-left: 26px; position: relative;
         }
         .training-list li::before { content: '»'; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
 
-        /* Applications */
-        .apps-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: start; }
+        /* Who we look for */
+        .apps-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: start; max-width: 1100px; margin: 60px auto 0; text-align: left; }
         .apps-copy p { font-size: 16px; font-weight: 300; color: var(--grey-light); line-height: 1.8; margin-bottom: 16px; }
         .apps-copy p b { color: var(--white); font-weight: 600; }
         .q-list { display: flex; flex-direction: column; margin: 26px 0; }
         .q-list div {
-            font-size: 18px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-            padding: 16px 0; border-bottom: 1px solid var(--border); color: var(--white);
+            font-size: 17px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+            padding: 15px 0; border-bottom: 1px solid var(--border); color: var(--white);
         }
         .q-list div:first-child { border-top: 1px solid var(--border); }
         .q-list span { color: var(--orange); margin-right: 12px; }
-        .answer-box { background: var(--card); border: 1px solid var(--border); padding: 30px; }
+        .answer-box { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 30px; }
         .answer-box h4 { font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
         .answer-box .bad h4 { color: #ff8a8a; }
         .answer-box .good h4 { color: #7dd89b; }
@@ -61,7 +94,6 @@
         .answer-box .bad { padding-bottom: 22px; margin-bottom: 22px; border-bottom: 1px solid var(--border); }
 
         /* CTA */
-        .join-cta { text-align: center; padding: 100px 30px; border-top: 1px solid rgba(255,255,255,0.06); }
         .btn-primary, .btn-outline {
             display: inline-block; padding: 16px 38px; font-size: 14px; font-weight: 600;
             letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
@@ -73,93 +105,143 @@
         .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
 
         @media (max-width: 1024px) { .div-grid { grid-template-columns: 1fr; } .apps-layout { grid-template-columns: 1fr; gap: 40px; } }
-        @media (max-width: 720px) { .join-section { padding: 64px 24px; } .training-list { grid-template-columns: 1fr; } }
+        @media (max-width: 720px) {
+            .qa { padding: 80px 24px; }
+            .training-list { grid-template-columns: 1fr; }
+            .photo-band { height: 34vh; min-height: 220px; }
+            .photo-band.split { grid-template-columns: 1fr; height: auto; }
+            .photo-band.split > div { height: 180px; }
+        }
     </style>
 {% endblock %}
 
 {% block body %}
 
     <section class="join-hero">
-        <h1>Why Join the<br><em>HFR Team?</em></h1>
+        <h1>Joining the Team</h1>
     </section>
 
     <main>
-        <section class="join-section alt" id="why">
-            <div class="join-inner">
-                <div class="join-kicker">Our Three Divisions</div>
-                <h2 class="join-h2">From the Silesia Ring, Port Hercules and the Skies Above</h2>
-                <div class="div-grid">
-                    <div class="div-card">
-                        <h3>Land</h3>
-                        <p>This is the largest and oldest team in HFR. Joining this team puts you on the car we race at the Shell Eco-Marathon: chassis, powertrain, aero and telemetry.</p>
-                        <div class="div-join-note">No prior experience needed. Pick Land as a draft choice in your application.</div>
+        <div class="photo-band">
+            <img src="{% static 'core/photos/team-kelvingrove.jpg' %}" alt="The HFR team beneath the Spitfire at Kelvingrove Art Gallery and Museum">
+        </div>
+
+        <section class="qa" id="why">
+            <div class="qa-inner reveal">
+                <h2>What opportunities are provided in HFR?</h2>
+                <p class="a">You can choose to work on projects spanning our three divisions: LAND, SEA or AIR.</p>
+                <p class="a">Each division is composed of sub teams spanning the range of material taught in university, and more.</p>
+            </div>
+            <div class="div-grid reveal">
+                <div class="div-card">
+                    <h3>Land</h3>
+                    <p>The largest and oldest team in HFR. Joining this team puts you on the car we race at the Shell Eco-Marathon: chassis, powertrain, aero and telemetry.</p>
+                    <div class="div-join-note"><a href="{% url 'division_land' %}">Explore the Land Division</a></div>
+                </div>
+                <div class="div-card">
+                    <h3>Sea</h3>
+                    <p>The team behind Vital Spark, our hydrogen race craft built for the Monaco Energy Boat Challenge at Port Hercules.</p>
+                    <div class="div-join-note"><a href="{% url 'division_sea' %}">Explore the Sea Division</a></div>
+                </div>
+                <div class="div-card">
+                    <h3>Air</h3>
+                    <p>Design and build the next generation of aviation transport: our hydrogen-powered aero concept, alongside the UofG Aeronautics Society.</p>
+                    <div class="div-join-note"><a href="{% url 'division_air' %}">Explore the Air Division</a></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="photo-band split">
+            <div><div class="tag">Photo &middot; Workshop</div></div>
+            <div><div class="tag">Photo &middot; Monaco Harbour</div></div>
+            <div><div class="tag">Photo &middot; Team Social</div></div>
+        </div>
+
+        <section class="qa alt">
+            <div class="qa-inner reveal">
+                <h2>What is the team like?</h2>
+                <p class="a">Our engineering community recruits over 100 engineers from all backgrounds. We take pride in our society's diversity.</p>
+                <p class="a">Take part in fun socials, competitions, society trips and a span of member exclusive events!</p>
+            </div>
+            <div class="team-stats reveal">
+                <div class="team-stat"><div class="n">100+</div><div class="l">Engineers</div></div>
+                <div class="team-stat"><div class="n">3</div><div class="l">Divisions</div></div>
+                <div class="team-stat"><div class="n">All</div><div class="l">Backgrounds Welcome</div></div>
+            </div>
+        </section>
+
+        <section class="qa">
+            <div class="qa-inner reveal">
+                <h2>What about volunteering?</h2>
+                <p class="a">HFR has been working with STEM Ambassadors ever since its inception. We provide members with the opportunity to volunteer and give back to the next generation.</p>
+            </div>
+        </section>
+
+        <div class="photo-band">
+            <img src="{% static 'core/photos/team-quad.jpg' %}" alt="The HFR team in the University of Glasgow cloisters">
+        </div>
+
+        <section class="qa alt">
+            <div class="qa-inner reveal">
+                <h2>How could this help my career?</h2>
+                <p class="a">HFR members graduate with real engineering experience, a strong network, and projects you'll be proud to talk about in interviews.</p>
+            </div>
+            <ul class="training-list reveal">
+                <li>CAD &amp; design tools from zero</li>
+                <li>Manufacturing and workshop skills</li>
+                <li>Hydrogen fuel cell fundamentals</li>
+                <li>Electronics, data &amp; telemetry</li>
+                <li>Project &amp; sponsorship management</li>
+                <li>Media, brand and communications</li>
+            </ul>
+        </section>
+
+        <section class="qa">
+            <div class="qa-inner reveal">
+                <h2>Why join HFR?</h2>
+                <p class="a">We provide an experience unlike any other in UofG. We give members the opportunity to learn and gain experience in a fun and engaging way.</p>
+            </div>
+        </section>
+
+        <section class="qa alt" id="applications">
+            <div class="qa-inner reveal">
+                <h2>Who do we look for?</h2>
+                <p class="a">Most of our members joined with zero engineering projects behind them. We don't expect experience. We expect curiosity, reliability and enthusiasm.</p>
+            </div>
+            <div class="apps-layout reveal">
+                <div class="apps-copy">
+                    <p><b>Why this society?</b> You could build a Formula 1 car, a rocket, a satellite or prosthetics. We want to know why hydrogen racing.</p>
+                    <p>When you apply, you'll answer four questions:</p>
+                    <div class="q-list">
+                        <div><span>01</span>Why this society?</div>
+                        <div><span>02</span>Why this division?</div>
+                        <div><span>03</span>What makes you you?</div>
+                        <div><span>04</span>What do you want to learn?</div>
                     </div>
-                    <div class="div-card">
-                        <h3>Sea</h3>
-                        <p>The team behind the Vital Spark, our hydrogen race craft built for the Monaco Energy Boat Challenge at Port Hercules.</p>
-                        <div class="div-join-note">No prior experience needed. Pick Sea as a draft choice in your application.</div>
+                </div>
+                <div class="answer-box">
+                    <div class="bad">
+                        <h4>A bad answer looks like</h4>
+                        <p>"I want to join because it will look good on my CV."</p>
                     </div>
-                    <div class="div-card">
-                        <h3>Air</h3>
-                        <p>In this team you will get to design and build the next generation of aviation transport: our hydrogen-powered aero concept.</p>
-                        <div class="div-join-note">No prior experience needed. Pick Air as a draft choice in your application.</div>
+                    <div class="good">
+                        <h4>A good answer looks like</h4>
+                        <p>"I've never built anything before, but I've always wanted to know how a fuel cell actually works, and I'll show up every week to find out."</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="join-section" id="training">
-            <div class="join-inner">
-                <div class="join-kicker">We Invest In You</div>
-                <h2 class="join-h2">Training Provided</h2>
-                <p class="join-sub">You learn on the job, with training run by our own leads and our partners.</p>
-                <ul class="training-list">
-                    <li>CAD &amp; design tools from zero</li>
-                    <li>Manufacturing and workshop skills</li>
-                    <li>Hydrogen fuel cell fundamentals</li>
-                    <li>Electronics, data &amp; telemetry</li>
-                    <li>Project &amp; sponsorship management</li>
-                    <li>Media, brand and communications</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="join-section alt" id="applications">
-            <div class="join-inner">
-                <div class="join-kicker">Applications</div>
-                <h2 class="join-h2">Who We Look For?</h2>
-                <div class="apps-layout">
-                    <div class="apps-copy">
-                        <p>Most of our members joined with <b>zero engineering projects</b> behind them. We don't expect experience. We expect <b>curiosity, reliability and enthusiasm</b>.</p>
-                        <p><b>Why this society?</b> You could build a Formula 1 car, a rocket, a satellite or prosthetics. We want to know why hydrogen racing.</p>
-                        <p>When you apply, you'll answer four questions:</p>
-                        <div class="q-list">
-                            <div><span>01</span>Why this society?</div>
-                            <div><span>02</span>Why this division?</div>
-                            <div><span>03</span>What makes you you?</div>
-                            <div><span>04</span>What do you want to learn?</div>
-                        </div>
-                    </div>
-                    <div class="answer-box">
-                        <div class="bad">
-                            <h4>A bad answer looks like</h4>
-                            <p>"I want to join because it will look good on my CV."</p>
-                        </div>
-                        <div class="good">
-                            <h4>A good answer looks like</h4>
-                            <p>"I've never built anything before, but I've always wanted to know how a fuel cell actually works, and I'll show up every week to find out."</p>
-                        </div>
-                    </div>
+        <section class="qa" id="how">
+            <div class="qa-inner reveal">
+                <h2>How do I join HFR?</h2>
+                <p class="a">Start by creating an applicant account. From there you can start the application and create your CV!</p>
+                {% if season.close_date %}<p class="a">Applications close {{ season.close_date|date:"j F Y, g:i A" }}.</p>{% endif %}
+                <div style="margin-top:44px;">
+                    <a href="{% url 'signup' %}" class="btn-primary">Create Account</a>
+                    <a href="{% url 'login' %}" class="btn-outline" style="margin-left:12px;">Log In</a>
                 </div>
             </div>
-        </section>
-
-        <section class="join-cta">
-            <h2 class="join-h2">Ready?</h2>
-            <p class="join-sub" style="margin:0 auto 34px;">Create an account, submit your application, and track it from interview to decision, all on this site.</p>
-            {% if season.close_date %}<p class="join-sub" style="margin:-20px auto 34px;">Applications close {{ season.close_date|date:"j F Y, g:i A" }}.</p>{% endif %}
-            <a href="{% url 'signup' %}" class="btn-primary">Register Interest →</a>
-            <a href="{% url 'login' %}" class="btn-outline" style="margin-left:12px;">Log In</a>
         </section>
     </main>
 

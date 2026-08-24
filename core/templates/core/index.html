@@ -527,8 +527,8 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             
-            <h1>DRIVE THE CHANGE</h1><br>
-            <div class="hero-tag">ESTABLISHED. 2023</div>
+            <h1>DRIVE THE CHANGE</h1>
+            <div class="hero-tag">Est. 2023 &middot; University of Glasgow</div>
         </div>
         <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
     </section>
@@ -550,33 +550,36 @@
                 </div>
 
                 <div class="fleet-grid">
-                    <a href="{% url 'divisions' %}#sea" class="fleet-card reveal">
+                    <a href="{% url 'division_sea' %}" class="fleet-card reveal">
                         <div class="media-frame">
                             <!-- Replace with Vital Spark boat image/video. -->
-                            <div class="media-placeholder"></div>
+                            <div class="media-placeholder">Vital Spark</div>
                         </div>
                         <div class="fleet-content">
                             <div class="kicker">Sea</div>
+                            <h3>Monaco Energy Boat</h3>
                         </div>
                     </a>
 
-                    <a href="{% url 'divisions' %}#land" class="fleet-card reveal">
+                    <a href="{% url 'division_land' %}" class="fleet-card reveal">
                         <div class="media-frame">
                             <!-- Replace with Shell Eco car render/image. -->
-                            <div class="media-placeholder"></div>
+                            <div class="media-placeholder">Shell Eco 27</div>
                         </div>
                         <div class="fleet-content">
                             <div class="kicker">Land</div>
+                            <h3>Shell Eco-Marathon</h3>
                         </div>
                     </a>
 
-                    <a href="{% url 'divisions' %}#air" class="fleet-card reveal">
+                    <a href="{% url 'division_air' %}" class="fleet-card reveal">
                         <div class="media-frame">
                             <!-- Replace with concept render. -->
-                            <div class="media-placeholder"></div>
+                            <div class="media-placeholder">In Development</div>
                         </div>
                         <div class="fleet-content">
                             <div class="kicker">Air</div>
+                            <h3>Aero Concept</h3>
                         </div>
                     </a>
                 </div>
@@ -592,7 +595,7 @@
 
                 <div class="who-layout">
                     <div class="reveal">
-                        <div class="kicker">Highlighted Text</div>
+                        <div class="kicker">The Society</div>
                         <h2 class="display-title">Driving <em>the Change</em></h2>
                         <p class="body-copy">Hydrogen Fuel Racing is a student-led team at the University of Glasgow, building hydrogen-powered vehicles and creating hands-on opportunities across engineering, business, media and outreach.</p>
                         <p class="body-copy" style="margin-top:18px;">We are composed of divisions across land, sea and air, all working towards cleaner transport and practical experience for students.</p>
@@ -603,12 +606,7 @@
                     </div>
 
                     <div class="media-frame who-media reveal">
-                        <!-- Replace this with a team photo or a background video when you have one. -->
-                        <video autoplay muted loop playsinline>
-                            <source src="{% static 'core/48816bb4-61ee-45ad-8b6d-8a2f84e2cc5d.mov' %}" type="video/mp4">
-                        </video>
-                        <div class="media-placeholder">Media placeholder<br>Team photo / workshop video</div>
-                        <div class="media-caption"><span>Media:</span> Who We Are</div>
+                        <img src="{% static 'core/photos/team-kelvingrove-2.jpg' %}" alt="The HFR team at Kelvingrove Art Gallery and Museum">
                     </div>
                 </div>
             </div>
@@ -624,101 +622,55 @@
                 <div class="events-scroll reveal">
                     <a href="{% url 'events' %}" class="event-card">
                         <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 01</div>
-                            <div class="media-caption"><span>Event:</span> 01</div>
+                            <div class="media-placeholder">Lecture Series</div>
                         </div>
                         <div>
-                            <h3>Event 01</h3>
+                            <h3>HFR Technical Talks</h3>
                         </div>
                     </a>
 
                     <a href="{% url 'events' %}" class="event-card">
                         <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 02</div>
-                            <div class="media-caption"><span>Event:</span> 02</div>
+                            <div class="media-placeholder">Outreach</div>
                         </div>
                         <div>
-                            <h3>Event 02</h3>
+                            <h3>STEM Outreach</h3>
                         </div>
                     </a>
 
                     <a href="{% url 'events' %}" class="event-card">
                         <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 03</div>
-                            <div class="media-caption"><span>Event:</span> 03</div>
+                            <div class="media-placeholder">Conference</div>
                         </div>
                         <div>
-                            <h3>Event 03</h3>
+                            <h3>Hydrogen Innovation Forum</h3>
                         </div>
                     </a>
 
                     <a href="{% url 'events' %}" class="event-card">
                         <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 04</div>
-                            <div class="media-caption"><span>Event:</span> 04</div>
+                            <div class="media-placeholder">Industry Visit</div>
                         </div>
                         <div>
-                            <h3>Event 04</h3>
+                            <h3>Site Tours</h3>
                         </div>
                     </a>
 
                     <a href="{% url 'events' %}" class="event-card">
                         <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 05</div>
-                            <div class="media-caption"><span>Event:</span> 05</div>
+                            <div class="media-placeholder">Social</div>
                         </div>
                         <div>
-                            <h3>Event 05</h3>
+                            <h3>Team Socials</h3>
                         </div>
                     </a>
 
                     <a href="{% url 'events' %}" class="event-card">
                         <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 06</div>
-                            <div class="media-caption"><span>Event:</span> 06</div>
+                            <div class="media-placeholder">Workshop</div>
                         </div>
                         <div>
-                            <h3>Event 06</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 07</div>
-                            <div class="media-caption"><span>Event:</span> 07</div>
-                        </div>
-                        <div>
-                            <h3>Event 07</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 08</div>
-                            <div class="media-caption"><span>Event:</span> 08</div>
-                        </div>
-                        <div>
-                            <h3>Event 08</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 09</div>
-                            <div class="media-caption"><span>Event:</span> 09</div>
-                        </div>
-                        <div>
-                            <h3>Event 09</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Media placeholder<br>Event 10</div>
-                            <div class="media-caption"><span>Event:</span> 10</div>
-                        </div>
-                        <div>
-                            <h3>Event 10</h3>
+                            <h3>Engineering Workshops</h3>
                         </div>
                     </a>
                 </div>
@@ -732,8 +684,7 @@
                 <div class="join-layout">
                     <div class="media-frame join-media reveal">
                         <!-- Replace with recruitment/team image or promo video. -->
-                        <div class="media-placeholder">Media placeholder<br>Recruitment video / team photo</div>
-                        <div class="media-caption"><span>Media:</span> Join HFR</div>
+                        <div class="media-placeholder">Join HFR</div>
                     </div>
 
                     <div class="reveal">
