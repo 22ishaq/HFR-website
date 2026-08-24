@@ -6,8 +6,10 @@
         .shop-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
         .shop-item { background:var(--card); overflow:hidden; cursor:pointer; transition:background 0.3s; }
         .shop-item:hover { background:var(--card2); }
-        .shop-img { aspect-ratio:1; background:var(--card2); display:flex; align-items:center; justify-content:center; font-size:64px; transition:transform 0.4s; overflow:hidden; position:relative; }
-        .shop-item:hover .shop-img { background:#1e1e1e; }
+        .shop-img { aspect-ratio:1; background:radial-gradient(circle at 30% 25%, #1d1d1d 0%, #131313 65%); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+        .shop-item:hover .shop-img { background:radial-gradient(circle at 30% 25%, #242424 0%, #161616 65%); }
+        .shop-img .ghost { font-family: 'IBM Plex Serif', serif; font-size:clamp(28px, 3.2vw, 44px); font-weight:700; letter-spacing:6px; text-transform:uppercase; color:rgba(255,255,255,0.07); transition:color 0.3s, transform 0.4s; user-select:none; }
+        .shop-item:hover .ghost { color:rgba(255,208,0,0.16); transform:scale(1.05); }
         .shop-img-label { position:absolute; bottom:14px; right:14px; font-family: 'IBM Plex Serif', serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--grey); }
         .shop-info { padding:22px; border-top:1px solid var(--border); }
         .shop-info h4 { font-family: 'IBM Plex Serif', serif; font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
@@ -15,6 +17,7 @@
         .shop-info .soon { font-size:12px; color:var(--grey); letter-spacing:2px; text-transform:uppercase; font-family: 'IBM Plex Serif', serif; }
         .shop-info .add-btn { display:block; margin-top:14px; padding:10px 0; background:var(--orange); color:var(--black); font-family: 'IBM Plex Serif', serif; font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase; text-align:center; border:none; cursor:pointer; width:100%; border-radius:2px; transition:background 0.2s; }
         .shop-info .add-btn:hover { background:var(--orange-dim); }
+        a.add-btn { text-decoration:none; }
         .shop-info .add-btn.disabled { background:var(--card2); color:var(--grey); cursor:default; }
         .shop-note { max-width:1200px; margin:40px auto 0; padding:28px 36px; background:rgba(255,208,0,0.07); border:1px solid rgba(255,208,0,0.2); display:flex; align-items:center; gap:16px; }
         .shop-note p { font-size:14px; color:var(--grey-light); }
@@ -36,39 +39,39 @@
         <section class="section dark">
             <div class="shop-grid">
                 <div class="shop-item reveal">
-                    <div class="shop-img">👕<div class="shop-img-label">Apparel</div></div>
+                    <div class="shop-img"><span class="ghost">Hoodie</span><div class="shop-img-label">Apparel</div></div>
                     <div class="shop-info">
                         <h4>HFR Team Hoodie</h4>
                         <div class="price">£35.00</div>
-                        <button class="add-btn" onclick="addToCart(this,'HFR Team Hoodie','£35.00')">Add to Cart</button>
+                        <a class="add-btn" href="mailto:hfr@glasgow.ac.uk?subject=HFR%20Store%20Order:%20HFR%20Team%20Hoodie">Order &middot; £35.00</a>
                     </div>
                 </div>
                 <div class="shop-item reveal">
-                    <div class="shop-img">🧢<div class="shop-img-label">Headwear</div></div>
+                    <div class="shop-img"><span class="ghost">Cap</span><div class="shop-img-label">Headwear</div></div>
                     <div class="shop-info">
                         <h4>HFR Cap</h4>
                         <div class="price">£20.00</div>
-                        <button class="add-btn" onclick="addToCart(this,'HFR Cap','£20.00')">Add to Cart</button>
+                        <a class="add-btn" href="mailto:hfr@glasgow.ac.uk?subject=HFR%20Store%20Order:%20HFR%20Cap">Order &middot; £20.00</a>
                     </div>
                 </div>
                 <div class="shop-item reveal">
-                    <div class="shop-img">🎽<div class="shop-img-label">Apparel</div></div>
+                    <div class="shop-img"><span class="ghost">Tee</span><div class="shop-img-label">Apparel</div></div>
                     <div class="shop-info">
                         <h4>Race Team T-Shirt</h4>
                         <div class="price">£22.00</div>
-                        <button class="add-btn" onclick="addToCart(this,'Race Team T-Shirt','£22.00')">Add to Cart</button>
+                        <a class="add-btn" href="mailto:hfr@glasgow.ac.uk?subject=HFR%20Store%20Order:%20Race%20Team%20T-Shirt">Order &middot; £22.00</a>
                     </div>
                 </div>
                 <div class="shop-item reveal">
-                    <div class="shop-img">🎒<div class="shop-img-label">Accessories</div></div>
+                    <div class="shop-img"><span class="ghost">Pack</span><div class="shop-img-label">Accessories</div></div>
                     <div class="shop-info">
                         <h4>HFR Backpack</h4>
                         <div class="price">£45.00</div>
-                        <button class="add-btn" onclick="addToCart(this,'HFR Backpack','£45.00')">Add to Cart</button>
+                        <a class="add-btn" href="mailto:hfr@glasgow.ac.uk?subject=HFR%20Store%20Order:%20HFR%20Backpack">Order &middot; £45.00</a>
                     </div>
                 </div>
                 <div class="shop-item reveal">
-                    <div class="shop-img">🎟️<div class="shop-img-label">Tickets</div></div>
+                    <div class="shop-img"><span class="ghost">Monaco</span><div class="shop-img-label">Tickets</div></div>
                     <div class="shop-info">
                         <h4>Monaco Supporter Ticket</h4>
                         <div class="soon">Coming Soon</div>
@@ -76,23 +79,23 @@
                     </div>
                 </div>
                 <div class="shop-item reveal">
-                    <div class="shop-img">📓<div class="shop-img-label">Stationery</div></div>
+                    <div class="shop-img"><span class="ghost">Notes</span><div class="shop-img-label">Stationery</div></div>
                     <div class="shop-info">
                         <h4>HFR Notebook</h4>
                         <div class="price">£12.00</div>
-                        <button class="add-btn" onclick="addToCart(this,'HFR Notebook','£12.00')">Add to Cart</button>
+                        <a class="add-btn" href="mailto:hfr@glasgow.ac.uk?subject=HFR%20Store%20Order:%20HFR%20Notebook">Order &middot; £12.00</a>
                     </div>
                 </div>
                 <div class="shop-item reveal">
-                    <div class="shop-img">🔖<div class="shop-img-label">Accessories</div></div>
+                    <div class="shop-img"><span class="ghost">Stickers</span><div class="shop-img-label">Accessories</div></div>
                     <div class="shop-info">
                         <h4>Sticker Pack</h4>
                         <div class="price">£5.00</div>
-                        <button class="add-btn" onclick="addToCart(this,'Sticker Pack','£5.00')">Add to Cart</button>
+                        <a class="add-btn" href="mailto:hfr@glasgow.ac.uk?subject=HFR%20Store%20Order:%20Sticker%20Pack">Order &middot; £5.00</a>
                     </div>
                 </div>
                 <div class="shop-item reveal">
-                    <div class="shop-img">🏁<div class="shop-img-label">Events</div></div>
+                    <div class="shop-img"><span class="ghost">Dinner</span><div class="shop-img-label">Events</div></div>
                     <div class="shop-info">
                         <h4>HFR Annual Dinner Ticket</h4>
                         <div class="soon">Coming Soon</div>
@@ -101,22 +104,9 @@
                 </div>
             </div>
             <div class="shop-note reveal">
-                <span style="font-size:22px;">ℹ️</span>
-                <p><strong>Note:</strong> The HFR store is in early access. Orders are managed manually: after clicking "Add to Cart" you'll be redirected to our order form. Full e-commerce coming soon.</p>
+                <p><strong>Note:</strong> The HFR store is in early access and orders are managed manually. Clicking "Order" opens an email to the team with your item prefilled. Full e-commerce coming soon.</p>
             </div>
         </section>
     </div>
 
-    <!-- Cart toast -->
-    <div id="cart-toast" style="position:fixed;bottom:30px;right:30px;background:var(--orange);color:var(--black);padding:14px 24px;font-family: 'IBM Plex Serif', serif;font-size:15px;font-weight:700;letter-spacing:2px;border-radius:4px;z-index:9999;transform:translateY(100px);opacity:0;transition:all 0.4s;"></div>
-
-    <script>
-    function addToCart(btn, name, price) {
-        const toast = document.getElementById('cart-toast');
-        toast.textContent = `✓ ${name} added!`;
-        toast.style.transform = 'translateY(0)';
-        toast.style.opacity = '1';
-        setTimeout(() => { toast.style.transform = 'translateY(100px)'; toast.style.opacity = '0'; }, 2500);
-    }
-    </script>
 {% endblock %}
