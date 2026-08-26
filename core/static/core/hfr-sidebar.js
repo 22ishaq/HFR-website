@@ -3,9 +3,9 @@
 
   const sections = {
     divisions: { label: 'Divisions', cards: [
-      { title: 'LAND', href: '/divisions/#land' },
-      { title: 'SEA',  href: '/divisions/#sea' },
-      { title: 'AIR',  href: '/divisions/#air' }
+      { title: 'LAND', href: '/divisions/land/' },
+      { title: 'SEA',  href: '/divisions/sea/' },
+      { title: 'AIR',  href: '/divisions/air/' }
     ]},
     partners: { label: 'Partners', cards: [
       { title: '2026 PARTNERS', href: '/sponsors/' },
@@ -116,6 +116,96 @@
     if (!shouldOpen) closePanel();
     setRailOpen(shouldOpen);
   });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closePanel();
+      setRailOpen(false);
+    }
+  });
+})();
+(function () {
+  const rail   = document.getElementById('hfr-account-rail');
+  const toggle = document.getElementById('hfr-account-toggle');
+  const panel  = document.getElementById('hfr-account-panel');
+  if (!rail || !toggle || !panel) return;
+
+  const sections = {
+    profile: { label: 'Profile', cards: [
+      { title: 'DASHBOARD',    href: '/members/dashboard/' },
+      { title: 'EDIT PROFILE', href: '/members/profile/' }
+    ]},
+    store: { label: 'Store', cards: [
+      { title: 'STORE', href: '/shop/' }
+    ]}
+  };
+
+  const navLinks = rail.querySelectorAll('.hfr-rail-nav a');
+  const cardsBox = panel.querySelector('#hfr-account-cards');
+  const wash     = panel.querySelector('.hfr-wash');
+  const washText = panel.querySelector('.hfr-wash-text');
+  let washTimer  = null;
+
+  function setRailOpen(isOpen) {
+    rail.classList.toggle('open', isOpen);
+    rail.setAttribute('aria-hidden', String(!isOpen));
+    document.body.classList.toggle('hfr-account-open', isOpen);
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  function renderCards(key) {
+    cardsBox.innerHTML = sections[key].cards.map(c =>
+      `<a class="hfr-card" href="${c.href}">
+         <span class="hfr-card-title">${c.title}</span>
+       </a>`).join('');
+  }
+
+  function openPanel() {
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('hfr-panel-open');
+  }
+
+  function closePanel() {
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('hfr-panel-open');
+    navLinks.forEach(a => a.classList.remove('active'));
+  }
+
+  function selectSection(key) {
+    panel.dataset.section = key;
+    navLinks.forEach(a => a.classList.toggle('active', a.dataset.key === key));
+    openPanel();
+    washText.textContent = sections[key].label;
+    wash.classList.add('show');
+    clearTimeout(washTimer);
+    washTimer = setTimeout(() => {
+      renderCards(key);
+      wash.classList.remove('show');
+    }, 420);
+  }
+
+  navLinks.forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    selectSection(a.dataset.key);
+  }));
+
+  panel.addEventListener('click', e => {
+    // account panel: card click closes then navigates
+    const card = e.target.closest('.hfr-card');
+    if (!card) return;
+    e.preventDefault();
+    closePanel();
+    setRailOpen(false);
+    window.setTimeout(() => window.location.assign(card.href), 220);
+  });
+
+  toggle.addEventListener('click', () => {
+    const shouldOpen = !rail.classList.contains('open');
+    if (!shouldOpen) closePanel();
+    setRailOpen(shouldOpen);
+  });
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closePanel();

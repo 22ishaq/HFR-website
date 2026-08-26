@@ -1,0 +1,41 @@
+{% extends 'core/includes/division_base.html' %}
+
+{% block title %}Land Division | UG Hydrogen Fuel Racing{% endblock %}
+
+{% block accent %}#ffd000{% endblock %}
+{% block hero_glow %}rgba(255,160,0,0.16){% endblock %}
+{% block entry_glow %}rgba(255,190,60,0.18){% endblock %}
+{% block card_grad %}rgba(255,214,110,0.96), rgba(255,247,220,0.97){% endblock %}
+{% block card_shadow %}rgba(255,190,60,0.28){% endblock %}
+
+{% block ghost %}LAND{% endblock %}
+{% block hero_title %}Land <em>Division</em>{% endblock %}
+
+{% block statement %}
+    <p>Our Land Division consists of 60 active students with the aims to design, build, test and compete with a hydrogen powered endurance vehicle.</p>
+    <p>Our division focuses on <em>sustainable mobility</em> and <em>energy efficiency</em>.</p>
+{% endblock %}
+
+{% block stats %}
+    <div class="dv-stat reveal"><div class="n">60</div><div class="l">Active Students</div></div>
+    <div class="dv-stat reveal"><div class="n">H&#8322;</div><div class="l">Fuel Cell Power</div></div>
+    <div class="dv-stat reveal"><div class="n">2027</div><div class="l">Competition Entry</div></div>
+    <div class="dv-stat reveal"><div class="n">Zero</div><div class="l">CO&#8322; Emissions</div></div>
+{% endblock %}
+
+{% block entry_name %}HFR SEM 2027{% endblock %}
+{% block entry_sub %}Our hydrogen endurance vehicle for the Shell Eco-Marathon{% endblock %}
+
+{% block comp %}
+    <div class="dv-comp-mark">The Competition</div>
+    <h2>The Shell Eco-Marathon</h2>
+    <div class="loc">Location: Poland</div>
+    <p class="copy">Attracting hundreds of teams across Europe to compete with highly fuel efficient vehicles. The hydrogen class is one of the most technically challenging categories, requiring expertise in fuel cell integration, hydrogen storage, and energy management.</p>
+    <div class="btn-row">
+        <a class="dv-btn" href="https://www.shellecomarathon.com" target="_blank" rel="noopener">Learn More</a>
+        <a class="dv-btn" href="{% url 'competitions' %}">Our Competitions</a>
+    </div>
+{% endblock %}
+
+{% block join_title %}Build What <em>Drives Us</em>{% endblock %}
+{% block join_copy %}Chassis, fuel cells, aerodynamics, strategy. The Land Division has a seat for every discipline, and the 2027 build is underway.{% endblock %}

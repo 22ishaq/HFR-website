@@ -1,0 +1,171 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Aerial Hydrogen Plane Concept | UG Hydrogen Fuel Racing{% endblock %}
+
+{% block extra_head %}
+    <style>
+        /* Light page: override the site-wide dark chrome */
+        body { background: #f4f8f1; color: #101510; }
+        nav#navbar { background: transparent; border-bottom: 0; backdrop-filter: none; }
+        nav#navbar.scrolled { background: rgba(244,248,241,0.92); }
+        .nav-sidebar-toggle span { background: #101510; }
+        .nav-sidebar-toggle:hover span { background: #3c7a2e; }
+
+        .pa-hero {
+            min-height: 72vh; padding: calc(var(--nav-h) + 60px) 24px 40px;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            background: linear-gradient(to bottom, #bfe6a6 0%, #e7f3dd 55%, #f4f8f1 100%);
+        }
+        .pa-hero .year {
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; letter-spacing: 3px;
+            color: #33502c; margin-bottom: 26px;
+        }
+        .pa-hero h1 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(30px, 4.6vw, 58px);
+            font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: #101510;
+            margin-bottom: 60px; max-width: 1000px;
+        }
+        .pa-hero .hint { font-family: 'IBM Plex Serif', serif; font-size: 14px; color: #33502c; margin-bottom: 26px; }
+
+        /* Sky frame that expands as you scroll */
+        .pa-sky-wrap { display: flex; justify-content: center; background: #f4f8f1; }
+        .pa-sky {
+            width: min(46vw, 620px); height: 62vh; min-height: 380px;
+            position: relative; overflow: hidden; border-radius: 6px;
+            background: linear-gradient(to bottom, #7fc4ec 0%, #b9e0f4 55%, #dff0d8 100%);
+            transition: width .2s linear, border-radius .3s;
+            will-change: width;
+        }
+        .pa-sky.full { border-radius: 0; }
+        .pa-sky .sun {
+            position: absolute; top: 12%; right: 14%;
+            width: 120px; height: 120px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,252,220,0.95), rgba(255,252,220,0) 70%);
+        }
+        .pa-sky .cloud { position: absolute; background: rgba(255,255,255,0.75); border-radius: 100px; filter: blur(6px); }
+        .pa-sky .c1 { width: 220px; height: 42px; top: 22%; left: 8%; }
+        .pa-sky .c2 { width: 150px; height: 32px; top: 38%; right: 12%; }
+        .pa-sky .c3 { width: 280px; height: 50px; bottom: 26%; left: 22%; }
+        .pa-sky svg {
+            position: absolute; top: 42%; left: 50%; width: min(48%, 380px);
+            transform: translate(-50%, -50%);
+            animation: paFloat 6s ease-in-out infinite;
+        }
+        @keyframes paFloat {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-1.2deg); }
+            50% { transform: translate(-50%, -54%) rotate(1.2deg); }
+        }
+        .pa-sky .hill {
+            position: absolute; bottom: -30px; width: 70%; height: 90px; border-radius: 50%;
+            background: #a8cf8e;
+        }
+        .pa-sky .h1 { left: -12%; }
+        .pa-sky .h2 { right: -18%; bottom: -44px; height: 110px; background: #96c47c; }
+
+        /* FACTS */
+        .pa-facts {
+            max-width: 1100px; margin: 0 auto; padding: 90px 24px 30px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center;
+        }
+        .pa-fact .k {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(16px, 2vw, 24px);
+            letter-spacing: 2px; text-transform: uppercase; color: #101510; margin-bottom: 10px;
+        }
+        .pa-fact .v { font-family: 'IBM Plex Serif', serif; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; color: #4a5c46; }
+
+        /* COPY */
+        .pa-copy { max-width: 860px; margin: 0 auto; padding: 60px 24px 40px; text-align: center; }
+        .pa-copy p {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(17px, 2.1vw, 22px);
+            line-height: 1.7; color: #1c241a;
+        }
+        .pa-copy p + p { margin-top: 40px; color: #33502c; }
+
+        .pa-back { text-align: center; padding: 50px 24px 110px; }
+        .pa-back a {
+            display: inline-block; padding: 15px 36px; border: 1px solid #33502c; border-radius: 6px;
+            font-family: 'IBM Plex Serif', serif; font-size: 14px; letter-spacing: 2px;
+            text-transform: uppercase; color: #1c241a; text-decoration: none;
+            transition: background .25s, color .25s;
+        }
+        .pa-back a:hover { background: #33502c; color: #f4f8f1; }
+
+        @media (max-width: 800px) {
+            .pa-sky { width: 86vw; height: 46vh; min-height: 300px; }
+            .pa-facts { grid-template-columns: 1fr 1fr; gap: 40px 16px; }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="pa-hero">
+        <div class="year">2026</div>
+        <h1>Aerial Hydrogen Plane Concept</h1>
+        <div class="hint">Scroll to Explore</div>
+    </section>
+
+    <div class="pa-sky-wrap">
+        <div class="pa-sky" id="pa-sky">
+            <div class="sun"></div>
+            <div class="cloud c1"></div>
+            <div class="cloud c2"></div>
+            <div class="cloud c3"></div>
+            <div class="hill h1"></div>
+            <div class="hill h2"></div>
+            <svg viewBox="0 0 400 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Concept glider silhouette">
+                <path d="M60 78 Q140 60 200 62 Q262 64 344 84 L330 90 Q250 74 200 72 Q148 70 74 84 Z" fill="#f5f2e8"/>
+                <ellipse cx="196" cy="76" rx="52" ry="12" fill="#efe9da"/>
+                <path d="M244 74 L292 40 L300 44 L262 76 Z" fill="#f5f2e8"/>
+                <path d="M292 40 L322 52 L300 58 Z" fill="#e8e1cf"/>
+                <path d="M180 86 L172 112 M212 86 L220 112" stroke="#2b2b2b" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <section class="pa-facts reveal">
+        <div class="pa-fact"><div class="k">Project No.</div><div class="v">3</div></div>
+        <div class="pa-fact"><div class="k">Head Engineer</div><div class="v">Arman</div></div>
+        <div class="pa-fact"><div class="k">Powertrain</div><div class="v">TBD</div></div>
+        <div class="pa-fact"><div class="k">Year</div><div class="v">2026</div></div>
+    </section>
+
+    <section class="pa-copy reveal">
+        <p>This is the Air Division's first project and Hydrogen Fuel Racing's first concept-based design. We plan to build a remote controlled model with a mimicked payload in the coming years.</p>
+        <p>This concept is a study on how we can implement hydrogen fuel cells safely into the plane.</p>
+    </section>
+
+    <div class="pa-back">
+        <a href="{% url 'division_air' %}">Back to Air Division</a>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+    (function () {
+        // The sky frame widens as it approaches the viewport centre
+        const sky = document.getElementById('pa-sky');
+        if (!sky) return;
+        const minW = () => Math.min(window.innerWidth * (window.innerWidth > 800 ? 0.46 : 0.86), 620);
+
+        function update() {
+            const rect = sky.getBoundingClientRect();
+            const vh = window.innerHeight;
+            // 0 when the frame's top is at the bottom of the screen, 1 when it reaches the upper third
+            const t = Math.min(Math.max((vh - rect.top) / (vh * 0.85), 0), 1);
+            const w = minW() + (window.innerWidth - minW()) * t;
+            sky.style.width = w + 'px';
+            sky.classList.toggle('full', t > 0.96);
+        }
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(() => { update(); ticking = false; });
+            }
+        }, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+    })();
+    </script>
+{% endblock %}

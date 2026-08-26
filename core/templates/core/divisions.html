@@ -3,110 +3,116 @@
 {% block title %}Divisions | UG Hydrogen Fuel Racing{% endblock %}
 {% block extra_head %}
     <style>
-        .division-section { padding:100px 80px; }
-        .division-section.alt { background:var(--deep); }
-        .div-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
-        .div-inner.flipped { direction:rtl; }
-        .div-inner.flipped > * { direction:ltr; }
-        .div-visual { position:relative; height:480px; background:var(--card); overflow:hidden; }
-        .div-visual-bg { position:absolute; inset:0; }
-        .land-bg { background:linear-gradient(135deg,#1e0600 0%,#3d1a00 40%,#0f0f0f 100%); }
-        .sea-bg  { background:linear-gradient(135deg,#001020 0%,#002040 40%,#0f0f0f 100%); }
-        .div-visual-label { position:absolute; top:30px; left:30px; font-family: 'IBM Plex Serif', serif; font-size:120px; color:rgba(255,255,255,0.04); line-height:1; letter-spacing:4px; pointer-events:none; }
-        .div-visual-icon { position:absolute; bottom:30px; right:30px; font-size:80px; opacity:0.15; }
-        .div-badge-large { display:inline-block; font-family: 'IBM Plex Serif', serif; font-size:12px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:var(--orange); border:1px solid rgba(255,208,0,0.4); padding:6px 18px; border-radius:2px; margin-bottom:18px; }
-        .div-text h2 { font-family: 'IBM Plex Serif', serif; font-size:clamp(44px,5vw,72px); letter-spacing:3px; text-transform:uppercase; line-height:0.95; margin-bottom:20px; }
-        .div-text h2 em { color:var(--orange); font-style:normal; }
-        .div-text p { font-size:16px; font-weight:300; color:var(--grey-light); line-height:1.75; margin-bottom:16px; }
-        .div-specs { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:30px 0; }
-        .spec-box { background:var(--card2); padding:18px 20px; border-left:3px solid var(--orange); }
-        .spec-box .spec-label { font-family: 'IBM Plex Serif', serif; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--grey); margin-bottom:4px; }
-        .spec-box .spec-val { font-family: 'IBM Plex Serif', serif; font-size:20px; font-weight:700; color:var(--white); }
-        @media(max-width:900px){.div-inner{grid-template-columns:1fr;gap:40px;}.div-inner.flipped{direction:ltr;}.division-section{padding:70px 40px;}.div-visual{height:280px;}}
-        @media(max-width:600px){.division-section{padding:60px 24px;}}
+        .tri-wrap { min-height: 100vh; display: flex; flex-direction: column; }
+        .tri-head {
+            padding: calc(var(--nav-h) + 46px) 24px 40px; text-align: center;
+        }
+        .tri-head .label {
+            font-family: 'IBM Plex Serif', serif; font-size: 12px; font-weight: 700;
+            letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+        }
+        .tri-head h1 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(38px, 6vw, 84px);
+            letter-spacing: 4px; text-transform: uppercase; line-height: 0.95;
+        }
+        .tri-head h1 em { font-style: normal; color: var(--gold); }
+
+        .tri {
+            flex: 1; display: flex; min-height: 64vh;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .tri-panel {
+            position: relative; flex: 1; overflow: hidden; text-decoration: none;
+            display: flex; align-items: flex-end; padding: 46px 40px;
+            border-left: 1px solid rgba(255,255,255,0.08);
+            transition: flex .45s cubic-bezier(.4,0,.2,1);
+            isolation: isolate;
+        }
+        .tri-panel:first-child { border-left: 0; }
+        .tri-panel:hover { flex: 1.6; }
+        .tri-panel::before {
+            content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0.55;
+            transition: opacity .45s ease;
+        }
+        .tri-panel:hover::before { opacity: 1; }
+        .tri-panel.land::before { background: radial-gradient(ellipse 120% 90% at 50% 110%, rgba(255,170,0,0.22), transparent 70%), #0a0a0a; }
+        .tri-panel.sea::before  { background: radial-gradient(ellipse 120% 90% at 50% 110%, rgba(0,151,167,0.30), transparent 70%), #0a0a0a; }
+        .tri-panel.air::before  { background: radial-gradient(ellipse 120% 90% at 50% 110%, rgba(110,160,255,0.24), transparent 70%), #0a0a0a; }
+        .tri-ghost {
+            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+            font-family: 'IBM Plex Serif', serif; font-weight: 700;
+            font-size: clamp(60px, 9vw, 150px); letter-spacing: 6px;
+            color: rgba(255,255,255,0.04); pointer-events: none; white-space: nowrap;
+        }
+        .tri-content { position: relative; z-index: 2; }
+        .tri-content .kicker {
+            font-family: 'IBM Plex Serif', serif; font-size: 11px; font-weight: 700;
+            letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px;
+        }
+        .tri-panel.land .kicker { color: #ffd000; }
+        .tri-panel.sea .kicker  { color: #2fc1d3; }
+        .tri-panel.air .kicker  { color: #8fbaff; }
+        .tri-content h2 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(26px, 3vw, 44px);
+            font-weight: 400; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--white); margin-bottom: 10px; line-height: 1.05;
+        }
+        .tri-content p {
+            font-size: 14px; font-weight: 300; color: var(--grey-light); line-height: 1.6;
+            max-width: 330px; opacity: 0; transform: translateY(8px);
+            transition: opacity .35s ease .1s, transform .35s ease .1s;
+        }
+        .tri-panel:hover p { opacity: 1; transform: translateY(0); }
+        .tri-content .go {
+            display: inline-block; margin-top: 18px; font-family: 'IBM Plex Serif', serif;
+            font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--white); border-bottom: 1px solid currentColor; padding-bottom: 3px;
+        }
+
+        @media (max-width: 820px) {
+            .tri { flex-direction: column; }
+            .tri-panel { border-left: 0; border-top: 1px solid rgba(255,255,255,0.08); min-height: 240px; }
+            .tri-panel:hover { flex: 1.25; }
+            .tri-content p { opacity: 1; transform: none; }
+        }
     </style>
 {% endblock %}
 
 {% block body %}
-
-    <div class="page-top">
-        <div class="page-hero" data-title="DIVISIONS">
+    <div class="tri-wrap">
+        <div class="tri-head">
             <div class="label">Our Divisions</div>
-            <h1>Land. Sea. <em>Both.</em></h1>
-            <p>HFR operates two competitive divisions, each pushing hydrogen fuel cell technology to its limits in radically different environments.</p>
+            <h1>Land. Sea. <em>Air.</em></h1>
         </div>
 
-        <!-- LAND -->
-        <section id="land" class="division-section">
-            <div class="div-inner">
-                <div class="div-visual reveal">
-                    <div class="div-visual-bg land-bg"></div>
-                    <div class="div-visual-label">LAND</div>
-                    <div class="div-visual-icon">🏎️</div>
-                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-                        <div style="text-align:center;z-index:2;">
-                            <div style="font-family: 'IBM Plex Serif', serif;font-size:28px;color:var(--orange);letter-spacing:4px;">SHELL ECO-MARATHON</div>
-                            <div style="font-size:13px;color:var(--grey);letter-spacing:2px;margin-top:8px;">LAND DIVISION</div>
-                        </div>
-                    </div>
+        <div class="tri">
+            <a href="{% url 'division_land' %}" class="tri-panel land" id="land">
+                <div class="tri-ghost">LAND</div>
+                <div class="tri-content">
+                    <div class="kicker">Shell Eco-Marathon</div>
+                    <h2>Land Division</h2>
+                    <p>60 students building a hydrogen powered endurance vehicle for the Shell Eco-Marathon. Sustainable mobility, engineered.</p>
+                    <span class="go">Enter</span>
                 </div>
-                <div class="div-text reveal">
-                    <div class="div-badge-large">Land Division</div>
-                    <h2>Shell <em>Eco-Marathon</em></h2>
-                    <p>Our land team designs and builds an ultra-efficient hydrogen-powered vehicle to compete in Shell's world-famous Eco-Marathon, a global challenge to see which student team can travel the furthest distance on the least amount of energy.</p>
-                    <p>The vehicle combines lightweight chassis design, advanced hydrogen fuel cell systems, and aerodynamic optimisation to achieve extraordinary energy efficiency figures.</p>
-                    <div class="div-specs">
-                        <div class="spec-box"><div class="spec-label">Fuel Type</div><div class="spec-val">H₂ Fuel Cell</div></div>
-                        <div class="spec-box"><div class="spec-label">Emissions</div><div class="spec-val">Zero CO₂</div></div>
-                        <div class="spec-box"><div class="spec-label">Competition</div><div class="spec-val">Shell Eco-Marathon</div></div>
-                        <div class="spec-box"><div class="spec-label">Category</div><div class="spec-val">Urban Concept</div></div>
-                    </div>
-                    <a href="competitions.html" class="btn-primary">View Competitions</a>
+            </a>
+            <a href="{% url 'division_sea' %}" class="tri-panel sea" id="sea">
+                <div class="tri-ghost">SEA</div>
+                <div class="tri-content">
+                    <div class="kicker">Monaco Energy Boat</div>
+                    <h2>Sea Division</h2>
+                    <p>Vital Spark, our hydrogen race boat, carries HFR's first official competition entry to Monaco's harbour.</p>
+                    <span class="go">Enter</span>
                 </div>
-            </div>
-        </section>
-
-        <!-- SEA -->
-        <section id="sea" class="division-section alt">
-            <div class="div-inner flipped">
-                <div class="div-visual reveal">
-                    <div class="div-visual-bg sea-bg"></div>
-                    <div class="div-visual-label">SEA</div>
-                    <div class="div-visual-icon">⛵</div>
-                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-                        <div style="text-align:center;z-index:2;">
-                            <div style="font-family: 'IBM Plex Serif', serif;font-size:24px;color:var(--orange);letter-spacing:3px;">MONACO ENERGY BOAT</div>
-                            <div style="font-size:13px;color:var(--grey);letter-spacing:2px;margin-top:8px;">SEA DIVISION</div>
-                        </div>
-                    </div>
+            </a>
+            <a href="{% url 'division_air' %}" class="tri-panel air" id="air">
+                <div class="tri-ghost">AIR</div>
+                <div class="tri-content">
+                    <div class="kicker">Aero Concept</div>
+                    <h2>Air Division</h2>
+                    <p>21 students and the UofG Aeronautics Society designing HFR's first hydrogen powered concept plane.</p>
+                    <span class="go">Enter</span>
                 </div>
-                <div class="div-text reveal">
-                    <div class="div-badge-large">Sea Division</div>
-                    <h2>Monaco <em>Energy Boat</em></h2>
-                    <p>Our sea team builds a hydrogen fuel cell-powered boat to compete in the prestigious Monaco Energy Boat Challenge, racing on the sparkling waters of the Mediterranean in one of the world's most iconic locations.</p>
-                    <p>Teams are judged on speed, energy efficiency, technical innovation, and sustainability. This is engineering at its most spectacular.</p>
-                    <div class="div-specs">
-                        <div class="spec-box"><div class="spec-label">Fuel Type</div><div class="spec-val">H₂ Fuel Cell</div></div>
-                        <div class="spec-box"><div class="spec-label">Location</div><div class="spec-val">Monaco 🇲🇨</div></div>
-                        <div class="spec-box"><div class="spec-label">Competition</div><div class="spec-val">Energy Boat Challenge</div></div>
-                        <div class="spec-box"><div class="spec-label">Category</div><div class="spec-val">Hydrogen Class</div></div>
-                    </div>
-                    <a href="competitions.html" class="btn-primary">View Competitions</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- JOIN CTA -->
-        <section class="section black" style="text-align:center;">
-            <div style="max-width:660px;margin:0 auto;" class="reveal">
-                <div class="section-label">Get Involved</div>
-                <h2 class="section-title">Which Division <em>Calls You?</em></h2>
-
-                <p style="font-size:16px;font-weight:300;color:var(--grey-light);line-height:1.7;margin-bottom:36px;">Whether you're drawn to land or sea, there's a home for you at HFR. Engineers, designers, strategists and storytellers, all welcome.</p>
-                <a href="register.html" class="btn-primary">Apply Now</a>
-
-            </div>
-        </section>
+            </a>
+        </div>
     </div>
-
 {% endblock %}
