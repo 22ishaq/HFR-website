@@ -1,0 +1,166 @@
+{% extends 'recruitment/base.html' %}
+{% load static %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block extra_style %}
+        .ep-head { margin-bottom: 40px; }
+        .ep-head .kicker {
+            font-size: 12px; letter-spacing: 5px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 12px;
+        }
+        .ep-head h1 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(34px, 5vw, 58px);
+            font-weight: 700; line-height: 1.05; margin-bottom: 14px;
+        }
+        .ep-head h1 em { color: var(--gold); font-style: normal; }
+        .ep-head p { font-size: 16px; color: var(--grey-light); line-height: 1.7; max-width: 620px; }
+
+        .ep-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; align-items: start; }
+        @media (max-width: 860px) { .ep-grid { grid-template-columns: 1fr; } }
+        .ep-col { display: flex; flex-direction: column; gap: 20px; }
+
+        .ep-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 10px; padding: 32px 30px;
+        }
+        .ep-card h2 {
+            font-family: 'IBM Plex Serif', serif; font-size: 13px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--grey);
+            margin-bottom: 22px;
+        }
+        .ep-card.teal { background: #0d4a52; border-color: transparent; }
+        .ep-card.teal h2 { color: rgba(255,255,255,0.65); }
+        .ep-card .ff:last-of-type { margin-bottom: 0; }
+
+        /* Profile picture */
+        .current-avatar { text-align: center; margin-bottom: 24px; }
+        .current-avatar img {
+            width: 104px; height: 104px; border-radius: 50%; object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.25);
+        }
+        .avatar-hint { text-align: center; font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 10px; line-height: 1.6; }
+        .avatar-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .avatar-opt { cursor: pointer; }
+        .avatar-opt input { display: none; }
+        .avatar-opt img, .avatar-upload {
+            width: 70px; height: 70px; border-radius: 50%; border: 3px solid transparent;
+            transition: border-color 0.2s, transform 0.15s; display: block;
+        }
+        .avatar-opt:hover img { transform: scale(1.06); }
+        .avatar-opt input:checked + img { border-color: var(--gold); }
+        .avatar-upload {
+            background: rgba(255,255,255,0.08); border: 3px dashed rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.7); display: flex; align-items: center;
+            justify-content: center; font-size: 24px; transition: border-color 0.2s, color 0.2s;
+        }
+        .avatar-upload.has-file { border-style: solid; border-color: var(--gold); color: var(--gold); }
+
+        .field-error { display: block; font-size: 13px; color: #ff8a8a; margin-top: 6px; }
+        .pw-note { font-size: 13.5px; color: var(--grey); line-height: 1.6; margin-bottom: 20px; }
+
+        .ep-actions {
+            display: flex; gap: 12px; align-items: center;
+            margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border);
+        }
+{% endblock %}
+
+{% block content %}
+<div class="ep-head">
+    <div class="kicker">Your Account</div>
+    <h1>Edit <em>Profile</em></h1>
+    <p>Change how you appear to the rest of HFR.</p>
+</div>
+
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <div class="ep-grid">
+        <div class="ep-col">
+            <div class="ep-card">
+                <h2>About you</h2>
+                <div class="ff">
+                    <label for="{{ form.display_name.id_for_label }}">Display name</label>
+                    {{ form.display_name }}
+                    <span class="help">This is what other members see, and you can log in with it.</span>
+                    {% if form.display_name.errors %}<span class="field-error">{{ form.display_name.errors|striptags }}</span>{% endif %}
+                </div>
+                <div class="ff">
+                    <label for="{{ form.full_name.id_for_label }}">Name</label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}<span class="field-error">{{ form.full_name.errors|striptags }}</span>{% endif %}
+                </div>
+                <div class="ff">
+                    <label for="{{ form.email.id_for_label }}">GUID email address</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}<span class="field-error">{{ form.email.errors|striptags }}</span>{% endif %}
+                </div>
+            </div>
+
+            <div class="ep-card">
+                <h2>Change password</h2>
+                <p class="pw-note">Leave these blank unless you want a new password.</p>
+                {% for field in password_form %}
+                <div class="ff">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<span class="field-error">{{ field.errors|striptags }}</span>{% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="ep-col">
+            <div class="ep-card teal">
+                <h2>Profile picture</h2>
+                {% if profile.avatar %}
+                <div class="current-avatar">
+                    <img src="{{ profile.avatar.url }}" alt="Your current picture">
+                    <div class="avatar-hint">Your current picture. Upload a new one or pick a premade below.</div>
+                </div>
+                {% endif %}
+                <div class="avatar-row">
+                    <label class="avatar-opt" title="Upload your own">
+                        {{ form.avatar }}
+                        <span class="avatar-upload" id="upload-circle">+</span>
+                    </label>
+                    {% for radio in form.avatar_preset %}
+                    <label class="avatar-opt">
+                        {{ radio.tag }}
+                        <img src="{% static 'recruitment/avatars/' %}{{ radio.data.value }}.svg" alt="{{ radio.choice_label }}">
+                    </label>
+                    {% endfor %}
+                </div>
+                {% if form.avatar.errors %}<span class="field-error">{{ form.avatar.errors|striptags }}</span>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="ep-actions">
+        <button type="submit" class="btn-primary">Save Changes</button>
+        <a href="{% url 'member_dashboard' %}" class="btn-outline">Cancel</a>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+(function () {
+    // Uploading clears any preset, picking a preset clears the upload
+    const upload = document.getElementById('{{ form.avatar.id_for_label }}');
+    const circle = document.getElementById('upload-circle');
+    const presets = document.querySelectorAll('input[name="avatar_preset"]');
+
+    upload.addEventListener('change', () => {
+        const has = upload.files.length > 0;
+        circle.classList.toggle('has-file', has);
+        circle.textContent = has ? '✓' : '+';
+        if (has) presets.forEach(r => r.checked = false);
+    });
+    presets.forEach(r => r.addEventListener('change', () => {
+        upload.value = '';
+        circle.classList.remove('has-file');
+        circle.textContent = '+';
+    }));
+})();
+</script>
+{% endblock %}

@@ -283,8 +283,12 @@ class RecruitmentFlowTests(TestCase):
         self.assertEqual(user.profile.role, Profile.ROLE_MEMBER)
         self.assertIsNotNone(user.profile.onboarded_at)
 
+        # Account navigation rides in the avatar overlay on every member page
         resp = self.client.get(reverse('member_home'))
-        self.assertContains(resp, 'fully onboarded HFR member')
+        self.assertRedirects(resp, reverse('member_dashboard'))
+        resp = self.client.get(reverse('member_dashboard'))
+        self.assertContains(resp, 'hfr-account-rail')
+        self.assertContains(resp, 'Log Out')
 
     def test_onboarding_requires_avatar_and_whatsapp_phone(self):
         self.accepted_applicant_with_code()
@@ -321,6 +325,73 @@ class RecruitmentFlowTests(TestCase):
         self.client.logout()
         self.assertFalse(self.client.login(
             username='speedster', password='wrong-pw'))
+
+    # ── Member area ──
+
+    def make_member(self, team=None):
+        """An accepted, onboarded member, optionally placed on a team."""
+        self.signup()
+        self.submit_application()
+        app = Application.objects.get()
+        app.status = Application.STATUS_ACCEPTED
+        app.save()
+        profile = Profile.objects.get(user__username='fresher')
+        profile.role = Profile.ROLE_MEMBER
+        profile.display_name = 'Fresh'
+        profile.contact_method = 'email'
+        profile.contact_time = 'anytime'
+        profile.avatar_preset = 'h2-orange'
+        profile.save()
+        return app, profile
+
+    def test_member_home_redirects_to_dashboard(self):
+        self.make_member()
+        resp = self.client.get(reverse('member_home'))
+        self.assertRedirects(resp, reverse('member_dashboard'))
+
+    def test_member_dashboard_shows_their_team_and_lead(self):
+        app, _ = self.make_member()
+        resp = self.client.get(reverse('member_dashboard'))
+        self.assertContains(resp, app.current_team.name)
+        # The lead of that team is named on the page
+        self.assertContains(resp, 'leader')
+
+    def test_applicant_cannot_reach_member_pages(self):
+        self.signup()
+        for name in ('member_home', 'member_dashboard', 'edit_profile'):
+            resp = self.client.get(reverse(name))
+            self.assertRedirects(resp, reverse('applicant_dashboard'))
+
+    def test_edit_profile_saves_changes(self):
+        self.make_member()
+        resp = self.client.post(reverse('edit_profile'), {
+            'display_name': 'Speedster',
+            'full_name': 'Fresh Renamed',
+            'email': 'fresher@student.gla.ac.uk',
+            'avatar_preset': 'h2-gold',
+        })
+        self.assertRedirects(resp, reverse('edit_profile'))
+        profile = Profile.objects.get(user__username='fresher')
+        self.assertEqual(profile.display_name, 'Speedster')
+        self.assertEqual(profile.avatar_preset, 'h2-gold')
+        self.assertEqual(profile.user.last_name, 'Renamed')
+
+    def test_member_can_change_password(self):
+        self.make_member()
+        resp = self.client.post(reverse('edit_profile'), {
+            'display_name': 'Fresh',
+            'full_name': 'Fresh Fresher',
+            'email': 'fresher@student.gla.ac.uk',
+            'avatar_preset': 'h2-orange',
+            'old_password': 'sup3r-secret-pw',
+            'new_password1': 'a-brand-new-pw-42',
+            'new_password2': 'a-brand-new-pw-42',
+        })
+        self.assertRedirects(resp, reverse('edit_profile'))
+        # Still signed in afterwards, and the new password works
+        self.assertIn('_auth_user_id', self.client.session)
+        self.client.logout()
+        self.assertTrue(self.client.login(username='fresher', password='a-brand-new-pw-42'))
 
     def test_non_lead_cannot_open_lead_dashboard(self):
         self.signup()

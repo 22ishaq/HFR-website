@@ -10,17 +10,39 @@
         .tier-label.gold   { color:var(--gold); }
         .tier-label.silver { color:#aaaaaa; }
         .tier-label.bronze { color:#cd7f32; }
-        .sponsor-logos { display:flex; flex-wrap:wrap; gap:16px; }
-        .sp-box { background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family: 'IBM Plex Serif', serif; font-size:17px; font-weight:700; letter-spacing:2px; color:var(--grey); text-transform:uppercase; transition:border-color 0.3s,color 0.3s; cursor:pointer; }
-        .sp-box:hover { border-color:var(--orange); color:var(--white); }
-        .sp-box.lg { width:240px; height:100px; }
-        .sp-box.md { width:190px; height:86px; }
-        .sp-box.sm { width:150px; height:72px; }
+        .partner-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .partner-box {
+            background:var(--card); border:1px solid var(--border); border-radius:6px;
+            min-height:150px; display:flex; align-items:center; justify-content:center; text-align:center;
+            padding:24px 20px; font-family: 'IBM Plex Serif', serif; font-size:18px; font-weight:400;
+            letter-spacing:1px; color:var(--white); line-height:1.4;
+            transition:border-color 0.3s, transform 0.25s;
+        }
+        .partner-box:hover { border-color:var(--orange); transform:translateY(-3px); }
+        .partner-box.open { border-style:dashed; color:var(--grey); font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase; text-decoration:none; background:transparent; }
+        .partner-box.open:hover { color:var(--orange); }
+        @media(max-width:900px){ .partner-grid{grid-template-columns:repeat(2,1fr);} }
+        @media(max-width:500px){ .partner-grid{grid-template-columns:1fr;} }
+
+        /* TIERS */
+        .tier-table { max-width:900px; margin:0 auto; display:flex; flex-direction:column; }
+        .tier-row {
+            display:grid; grid-template-columns:170px 1fr; gap:30px; align-items:center;
+            padding:30px 10px; border-bottom:1px solid var(--border);
+        }
+        .tier-row:first-child { border-top:1px solid var(--border); }
+        .tier-name { font-family: 'IBM Plex Serif', serif; font-size:22px; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+        .tier-row.platinum .tier-name { color:#dfe6ec; }
+        .tier-row.gold .tier-name     { color:var(--gold); }
+        .tier-row.silver .tier-name   { color:#aaaaaa; }
+        .tier-row.bronze .tier-name   { color:#cd7f32; }
+        .tier-desc { font-size:14.5px; color:var(--grey-light); line-height:1.7; }
+        @media(max-width:600px){ .tier-row{grid-template-columns:1fr; gap:8px;} }
 
         /* WHY SPONSOR */
         .benefits-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
         .benefit-card { background:var(--card); padding:40px 32px; }
-        .benefit-card .icon { font-size:36px; margin-bottom:20px; }
+        .benefit-card .icon { font-family: 'IBM Plex Serif', serif; font-size:15px; font-weight:700; color:var(--gold); letter-spacing:1px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:rgba(255,208,0,0.1); border:1px solid rgba(255,208,0,0.3); border-radius:4px; margin-bottom:20px; }
         .benefit-card h3 { font-family: 'IBM Plex Serif', serif; font-size:22px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
         .benefit-card p { font-size:14px; color:var(--grey); line-height:1.65; }
 
@@ -43,32 +65,45 @@
             <p>Our sponsors make it possible to design, build, and race hydrogen-powered vehicles at an international level. We're proud to work with organisations who share our vision.</p>
         </div>
 
-        <!-- CURRENT SPONSORS -->
+        <!-- CURRENT PARTNERS -->
         <section class="section dark">
             <div class="sponsors-wrap reveal">
                 <div class="tier">
-                    <div class="tier-label gold">✦ Title Sponsors</div>
-                    <div class="sponsor-logos">
-                        <div class="sp-box lg">Your Logo</div>
-                        <div class="sp-box lg">Your Logo</div>
+                    <div class="tier-label gold">✦ Our Partners</div>
+                    <div class="partner-grid">
+                        <div class="partner-box">Schwer Fittings</div>
+                        <div class="partner-box">Hydrogen Scotland</div>
+                        <div class="partner-box">Shaffimed</div>
+                        <div class="partner-box">Glasgow Centre for Sustainability &amp; Energy</div>
+                        <div class="partner-box">Dassault Syst&egrave;mes</div>
+                        <a href="mailto:hfr@glasgow.ac.uk" class="partner-box open">Your Name Here</a>
                     </div>
                 </div>
-                <div class="tier">
-                    <div class="tier-label silver">✦ Gold Sponsors</div>
-                    <div class="sponsor-logos">
-                        <div class="sp-box md">Sponsor</div>
-                        <div class="sp-box md">Sponsor</div>
-                        <div class="sp-box md">Sponsor</div>
-                    </div>
+            </div>
+        </section>
+
+        <!-- PARTNERSHIP TIERS -->
+        <section class="section black">
+            <div class="section-header reveal" style="max-width:900px;margin:0 auto 50px;">
+                <div class="section-label">Partnership Levels</div>
+                <h2 class="section-title">Sponsorship <em>Tiers</em></h2>
+            </div>
+            <div class="tier-table reveal">
+                <div class="tier-row platinum">
+                    <div class="tier-name">Platinum</div>
+                    <div class="tier-desc">Our headline partnership. Primary branding across all three vehicles, kit, and media, with first access to team events, talent, and technical showcases.</div>
                 </div>
-                <div class="tier">
-                    <div class="tier-label bronze">✦ Silver Sponsors</div>
-                    <div class="sponsor-logos">
-                        <div class="sp-box sm">Partner</div>
-                        <div class="sp-box sm">Partner</div>
-                        <div class="sp-box sm">Partner</div>
-                        <div class="sp-box sm">Partner</div>
-                    </div>
+                <div class="tier-row gold">
+                    <div class="tier-name">Gold</div>
+                    <div class="tier-desc">Prominent branding on vehicles and team wear, featured placement across our channels, and invitations to HFR events through the season.</div>
+                </div>
+                <div class="tier-row silver">
+                    <div class="tier-name">Silver</div>
+                    <div class="tier-desc">Logo placement on team media and the website, social media features, and a direct line to the divisions your support powers.</div>
+                </div>
+                <div class="tier-row bronze">
+                    <div class="tier-name">Bronze</div>
+                    <div class="tier-desc">Website and newsletter recognition for the organisations helping HFR get started. Every partnership counts.</div>
                 </div>
             </div>
         </section>
@@ -81,32 +116,32 @@
             </div>
             <div class="benefits-grid">
                 <div class="benefit-card reveal">
-                    <div class="icon">🎓</div>
+                    <div class="icon">01</div>
                     <h3>Graduate Talent Pipeline</h3>
                     <p>Access a pool of exceptional engineering, business, and marketing graduates from one of the UK's top universities.</p>
                 </div>
                 <div class="benefit-card reveal">
-                    <div class="icon">🌍</div>
+                    <div class="icon">02</div>
                     <h3>International Brand Visibility</h3>
                     <p>Your brand featured on our vehicles, kit, and media at Shell Eco-Marathon and the Monaco Energy Boat Challenge.</p>
                 </div>
                 <div class="benefit-card reveal">
-                    <div class="icon">⚡</div>
+                    <div class="icon">03</div>
                     <h3>Sustainability Credentials</h3>
                     <p>Associate your brand with cutting-edge hydrogen technology and demonstrate your commitment to a zero-emission future.</p>
                 </div>
                 <div class="benefit-card reveal">
-                    <div class="icon">📣</div>
+                    <div class="icon">04</div>
                     <h3>Social Media Reach</h3>
                     <p>Featured across HFR's social channels, newsletters, and content, reaching students, academics, and industry professionals.</p>
                 </div>
                 <div class="benefit-card reveal">
-                    <div class="icon">🤝</div>
+                    <div class="icon">05</div>
                     <h3>Community & University Links</h3>
                     <p>Build lasting relationships with the University of Glasgow and the wider Scottish engineering and technology community.</p>
                 </div>
                 <div class="benefit-card reveal">
-                    <div class="icon">🏆</div>
+                    <div class="icon">06</div>
                     <h3>Be Part of History</h3>
                     <p>Support the first University of Glasgow team to compete at Monaco and be part of the hydrogen motorsport revolution.</p>
                 </div>

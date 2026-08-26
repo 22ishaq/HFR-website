@@ -1,0 +1,41 @@
+{% extends 'core/includes/division_base.html' %}
+
+{% block title %}Sea Division | UG Hydrogen Fuel Racing{% endblock %}
+
+{% block accent %}#2fc1d3{% endblock %}
+{% block hero_glow %}rgba(0,150,175,0.20){% endblock %}
+{% block entry_glow %}rgba(47,193,211,0.16){% endblock %}
+{% block card_grad %}rgba(120,215,228,0.95), rgba(224,248,251,0.97){% endblock %}
+{% block card_shadow %}rgba(47,193,211,0.28){% endblock %}
+
+{% block ghost %}SEA{% endblock %}
+{% block hero_title %}Sea <em>Division</em>{% endblock %}
+
+{% block statement %}
+    <p>Our Sea Division designs, builds and races Vital Spark, a hydrogen powered race boat, and carries HFR's first official competition entry.</p>
+    <p>Our division focuses on <em>speed</em> and <em>energy efficiency</em> on the water.</p>
+{% endblock %}
+
+{% block stats %}
+    <div class="dv-stat reveal"><div class="n">Vital Spark</div><div class="l">Our Vessel</div></div>
+    <div class="dv-stat reveal"><div class="n">H&#8322;</div><div class="l">Fuel Cell Power</div></div>
+    <div class="dv-stat reveal"><div class="n">13th</div><div class="l">MEBC Debut</div></div>
+    <div class="dv-stat reveal"><div class="n">Monaco</div><div class="l">Race Location</div></div>
+{% endblock %}
+
+{% block entry_name %}VITAL SPARK{% endblock %}
+{% block entry_sub %}Our hydrogen race boat, bound for Monaco{% endblock %}
+
+{% block comp %}
+    <div class="dv-comp-mark">The Competition</div>
+    <h2>Monaco Energy Boat Challenge</h2>
+    <div class="loc">Location: Monaco</div>
+    <p class="copy">The world's premier competition for zero-emission boats, hosted in Monaco's legendary harbour. Teams are judged on speed, energy efficiency, technical innovation and sustainability, with the hydrogen class at the sharp end of it all.</p>
+    <div class="btn-row">
+        <a class="dv-btn" href="https://energyboatchallenge.com" target="_blank" rel="noopener">Learn More</a>
+        <a class="dv-btn" href="{% url 'competitions' %}">Our Competitions</a>
+    </div>
+{% endblock %}
+
+{% block join_title %}Race the <em>Mediterranean</em>{% endblock %}
+{% block join_copy %}Hull design, propulsion, electronics, race strategy. Help take Vital Spark from the workshop to Monaco's harbour.{% endblock %}

@@ -161,6 +161,64 @@ class RedeemCodeForm(forms.Form):
         return self.cleaned_data['code'].strip().upper()
 
 
+class EditProfileForm(forms.ModelForm):
+    """What a member can change about themselves after onboarding."""
+
+    full_name = forms.CharField(
+        max_length=100, label='Name',
+        widget=forms.TextInput(attrs={'placeholder': 'Your name'}),
+    )
+    email = forms.EmailField(
+        label='GUID Email Address',
+        widget=forms.EmailInput(attrs={'placeholder': 'GUID email'}),
+    )
+
+    class Meta:
+        model = Profile
+        fields = ('display_name', 'avatar', 'avatar_preset')
+        widgets = {
+            'display_name': forms.TextInput(attrs={'autocomplete': 'off'}),
+            'avatar_preset': forms.RadioSelect,
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        user = self.instance.user
+        self.fields['full_name'].initial = user.get_full_name() or user.first_name
+        self.fields['email'].initial = user.email
+        self.fields['display_name'].required = True
+        self.fields['avatar_preset'].choices = [
+            c for c in self.fields['avatar_preset'].choices if c[0]
+        ]
+
+    def clean_display_name(self):
+        name = self.cleaned_data['display_name'].strip()
+        clash = Profile.objects.filter(display_name__iexact=name).exclude(pk=self.instance.pk)
+        if clash.exists():
+            raise forms.ValidationError('That display name is taken. Try another.')
+        return name
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+        if email.rpartition('@')[2] not in GLASGOW_EMAIL_DOMAINS:
+            allowed = ' or '.join('@' + d for d in GLASGOW_EMAIL_DOMAINS)
+            raise forms.ValidationError(f'Use your University of Glasgow email, ending in {allowed}.')
+        clash = User.objects.filter(email__iexact=email).exclude(pk=self.instance.user_id)
+        if clash.exists():
+            raise forms.ValidationError('Another account already uses that email.')
+        return email
+
+    def save(self, commit=True):
+        profile = super().save(commit=commit)
+        user = profile.user
+        first, _, last = self.cleaned_data['full_name'].strip().partition(' ')
+        user.first_name, user.last_name = first, last
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return profile
+
+
 class OnboardingForm(forms.ModelForm):
     """Wireframe 24. Every step is mandatory."""
 

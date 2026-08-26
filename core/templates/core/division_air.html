@@ -1,0 +1,43 @@
+{% extends 'core/includes/division_base.html' %}
+
+{% block title %}Air Division | UG Hydrogen Fuel Racing{% endblock %}
+
+{% block accent %}#8fbaff{% endblock %}
+{% block hero_glow %}rgba(110,160,255,0.16){% endblock %}
+{% block entry_glow %}rgba(143,186,255,0.16){% endblock %}
+{% block card_grad %}rgba(168,205,255,0.95), rgba(233,242,255,0.97){% endblock %}
+{% block card_shadow %}rgba(143,186,255,0.28){% endblock %}
+
+{% block ghost %}AIR{% endblock %}
+{% block hero_title %}Air <em>Division</em>{% endblock %}
+
+{% block statement %}
+    <p>Our Air Division consists of 21 active students that collaborate with the University of Glasgow Aeronautics Society to design a hydrogen powered concept plane.</p>
+    <p>Our division focuses on <em>innovation</em> and <em>collaboration</em>.</p>
+{% endblock %}
+
+{% block stats %}
+    <div class="dv-stat reveal"><div class="n">21</div><div class="l">Active Students</div></div>
+    <div class="dv-stat reveal"><div class="n">No. 3</div><div class="l">HFR Project</div></div>
+    <div class="dv-stat reveal"><div class="n">2026</div><div class="l">Concept Year</div></div>
+    <div class="dv-stat reveal"><div class="n">UGA</div><div class="l">Society Partner</div></div>
+{% endblock %}
+
+{% block entry_heading %}Our 2026 Concept{% endblock %}
+{% block entry_href %}{% url 'project_aero' %}{% endblock %}
+{% block entry_name %}AERIAL HYDROGEN PLANE{% endblock %}
+{% block entry_sub %}HFR's first concept-based design. See the study.{% endblock %}
+
+{% block comp %}
+    <div class="dv-comp-mark">Cross Society Collaboration</div>
+    <h2>University of Glasgow Aeronautics Society</h2>
+    <div class="loc">Our partners in flight</div>
+    <p class="copy">Our two societies collaborate in sharing our expertise in aviation and hydrogen. UGA brings the aeronautics, we bring the fuel cells, and together we're working out how hydrogen flight can actually be done.</p>
+    <div class="btn-row">
+        <a class="dv-btn" href="{% url 'project_aero' %}">See the Concept</a>
+        <a class="dv-btn" href="{% url 'register' %}">Collaborate With Us</a>
+    </div>
+{% endblock %}
+
+{% block join_title %}Shape What <em>HFR Flies</em>{% endblock %}
+{% block join_copy %}This is the division where the blank page is biggest. Join the youngest team at HFR and put your name on its first aircraft.{% endblock %}

@@ -6,8 +6,16 @@
     <a href="{% url 'home' %}" class="nav-home-logo" aria-label="Hydrogen Fuel Racing home">
         <img src="{% static 'core/hfr.jpg' %}" alt="HFR">
     </a>
-    {# The circle from the flow spec: log in when signed out, log out when signed in #}
-    {% if user.is_authenticated %}
+    {% comment %}
+      The circle: log in when signed out. Members get their account navigation,
+      where Log Out lives. Applicants have no such page, so it logs them out.
+    {% endcomment %}
+    {% if user.is_authenticated and user.profile.is_onboarded %}
+    <button type="button" class="nav-avatar-link" id="hfr-account-toggle" aria-label="Your account"
+        aria-controls="hfr-account-rail" aria-expanded="false">
+    <img src="{% static 'core/avatar.jpg' %}" alt="">
+    </button>
+    {% elif user.is_authenticated %}
     <button type="button" class="nav-avatar-link" id="logout-open" aria-label="Log out"
             aria-haspopup="dialog">
         <img src="{% static 'core/avatar.jpg' %}" alt="">
@@ -18,8 +26,25 @@
     </a>
     {% endif %}
 </nav>
+{% if user.is_authenticated and user.profile.is_onboarded %}
+<aside id="hfr-account-rail" class="hfr-rail hfr-rail--right" aria-hidden="true">
+    <nav class="hfr-rail-nav">
+        <a href="#" data-key="profile">Profile</a>
+        <a href="#" data-key="store">Store</a>
+    </nav>
+    <form method="post" action="{% url 'logout' %}" class="hfr-logout">
+        {% csrf_token %}
+        <button type="submit">Log Out</button>
+    </form>
+</aside>
+<div id="hfr-account-panel" class="hfr-panel hfr-panel--left" aria-hidden="true">
+    <div class="hfr-cards" id="hfr-account-cards"></div>
+    <div class="hfr-wash" aria-hidden="true"><span class="hfr-wash-text"></span></div>
+</div>
+{% endif %}
 
-{% if user.is_authenticated %}
+{# Only applicants log out from the circle, so only they need the dialog #}
+{% if user.is_authenticated and not user.profile.is_onboarded %}
 <div class="logout-veil" id="logout-veil" role="dialog" aria-modal="true" aria-labelledby="logout-heading">
     <div class="logout-box">
         <h2 id="logout-heading">Log out?</h2>
