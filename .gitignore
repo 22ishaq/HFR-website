@@ -19,3 +19,5 @@ media/
 .vscode/
 .DS_Store
 Thumbs.db
+# Local editor / assistant config
+.claude/
