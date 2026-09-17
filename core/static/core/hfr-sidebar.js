@@ -5,11 +5,12 @@
     divisions: { label: 'Divisions', cards: [
       { title: 'LAND', href: '/divisions/land/' },
       { title: 'SEA',  href: '/divisions/sea/' },
-      { title: 'AIR',  href: '/divisions/air/' }
+      { title: 'AIR',  href: '/divisions/air/' },
+      { title: 'OPERATIONS', href: '/divisions/operations/' }
     ]},
     partners: { label: 'Partners', cards: [
       { title: '2026 PARTNERS', href: '/sponsors/' },
-      { title: 'SUPPORT US',    href: '/sponsors/#support' }
+      { title: 'SUPPORT US',    href: '/support-us/' }
     ]},
     discover: { label: 'Discover', cards: [
       { title: 'OUR MISSION', href: '/about/#mission' },

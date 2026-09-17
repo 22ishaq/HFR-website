@@ -12,14 +12,22 @@
 {% block hero_title %}Air <em>Division</em>{% endblock %}
 
 {% block statement %}
-    <p>Our Air Division consists of 21 active students that collaborate with the University of Glasgow Aeronautics Society to design a hydrogen powered concept plane.</p>
+    <p>Our Air Division explores what hydrogen means for flight, collaborating with the University of Glasgow Aeronautics Society to design a hydrogen powered concept plane.</p>
     <p>Our division focuses on <em>innovation</em> and <em>collaboration</em>.</p>
 {% endblock %}
 
+{% block media %}
+    {% load static %}
+    <div class="dv-media reveal">
+        <img src="{% static 'core/photos/plane-concept.jpg' %}" alt="Render of the aerial hydrogen plane concept in flight">
+        <div class="credit">The Aerial Hydrogen Plane Concept &middot; 2026 study</div>
+    </div>
+{% endblock %}
+
 {% block stats %}
-    <div class="dv-stat reveal"><div class="n">21</div><div class="l">Active Students</div></div>
-    <div class="dv-stat reveal"><div class="n">No. 3</div><div class="l">HFR Project</div></div>
-    <div class="dv-stat reveal"><div class="n">2026</div><div class="l">Concept Year</div></div>
+    <div class="dv-stat reveal"><div class="n">H&#8322;</div><div class="l">Powered Flight</div></div>
+    <div class="dv-stat reveal"><div class="n">Concept</div><div class="l">Design Study</div></div>
+    <div class="dv-stat reveal"><div class="n">RC</div><div class="l">Model Planned</div></div>
     <div class="dv-stat reveal"><div class="n">UGA</div><div class="l">Society Partner</div></div>
 {% endblock %}
 

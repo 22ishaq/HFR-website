@@ -38,6 +38,7 @@
         .tri-panel.land::before { background: radial-gradient(ellipse 120% 90% at 50% 110%, rgba(255,170,0,0.22), transparent 70%), #0a0a0a; }
         .tri-panel.sea::before  { background: radial-gradient(ellipse 120% 90% at 50% 110%, rgba(0,151,167,0.30), transparent 70%), #0a0a0a; }
         .tri-panel.air::before  { background: radial-gradient(ellipse 120% 90% at 50% 110%, rgba(110,160,255,0.24), transparent 70%), #0a0a0a; }
+        .tri-panel.ops::before  { background: radial-gradient(ellipse 120% 90% at 50% 110%, rgba(88,196,126,0.22), transparent 70%), #0a0a0a; }
         .tri-ghost {
             position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
             font-family: 'IBM Plex Serif', serif; font-weight: 700;
@@ -52,6 +53,7 @@
         .tri-panel.land .kicker { color: #ffd000; }
         .tri-panel.sea .kicker  { color: #2fc1d3; }
         .tri-panel.air .kicker  { color: #8fbaff; }
+        .tri-panel.ops .kicker  { color: #58c47e; }
         .tri-content h2 {
             font-family: 'IBM Plex Serif', serif; font-size: clamp(26px, 3vw, 44px);
             font-weight: 400; letter-spacing: 2px; text-transform: uppercase;
@@ -82,7 +84,7 @@
     <div class="tri-wrap">
         <div class="tri-head">
             <div class="label">Our Divisions</div>
-            <h1>Land. Sea. <em>Air.</em></h1>
+            <h1>Land. Sea. Air. <em>Ops.</em></h1>
         </div>
 
         <div class="tri">
@@ -91,7 +93,7 @@
                 <div class="tri-content">
                     <div class="kicker">Shell Eco-Marathon</div>
                     <h2>Land Division</h2>
-                    <p>60 students building a hydrogen powered endurance vehicle for the Shell Eco-Marathon. Sustainable mobility, engineered.</p>
+                    <p>Building a hydrogen powered endurance vehicle for the Shell Eco-Marathon. Sustainable mobility, engineered.</p>
                     <span class="go">Enter</span>
                 </div>
             </a>
@@ -109,7 +111,16 @@
                 <div class="tri-content">
                     <div class="kicker">Aero Concept</div>
                     <h2>Air Division</h2>
-                    <p>21 students and the UofG Aeronautics Society designing HFR's first hydrogen powered concept plane.</p>
+                    <p>Designing HFR's first hydrogen powered concept plane alongside the UofG Aeronautics Society.</p>
+                    <span class="go">Enter</span>
+                </div>
+            </a>
+            <a href="{% url 'division_ops' %}" class="tri-panel ops" id="ops">
+                <div class="tri-ghost">OPS</div>
+                <div class="tri-content">
+                    <div class="kicker">The Backbone</div>
+                    <h2>Operations Division</h2>
+                    <p>Business, finance and creative direction. The team that keeps every other division funded, organised and seen.</p>
                     <span class="go">Enter</span>
                 </div>
             </a>

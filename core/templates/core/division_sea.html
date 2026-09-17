@@ -16,6 +16,14 @@
     <p>Our division focuses on <em>speed</em> and <em>energy efficiency</em> on the water.</p>
 {% endblock %}
 
+{% block media %}
+    {% load static %}
+    <div class="dv-media reveal">
+        <img src="{% static 'core/photos/boat-crane.jpg' %}" alt="Vital Spark being craned into Monaco harbour">
+        <div class="credit">Vital Spark enters the water &middot; 13th Monaco Energy Boat Challenge</div>
+    </div>
+{% endblock %}
+
 {% block stats %}
     <div class="dv-stat reveal"><div class="n">Vital Spark</div><div class="l">Our Vessel</div></div>
     <div class="dv-stat reveal"><div class="n">H&#8322;</div><div class="l">Fuel Cell Power</div></div>
@@ -23,8 +31,9 @@
     <div class="dv-stat reveal"><div class="n">Monaco</div><div class="l">Race Location</div></div>
 {% endblock %}
 
+{% block entry_href %}{% url 'project_boat' %}{% endblock %}
 {% block entry_name %}VITAL SPARK{% endblock %}
-{% block entry_sub %}Our hydrogen race boat, bound for Monaco{% endblock %}
+{% block entry_sub %}Our energy class race boat, bound for Monaco. See the project.{% endblock %}
 
 {% block comp %}
     <div class="dv-comp-mark">The Competition</div>

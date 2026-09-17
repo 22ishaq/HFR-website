@@ -318,75 +318,7 @@
             min-height: 430px;
         }
 
-        /* EVENTS */
-        #events-preview .wire-heading {
-            justify-content: center;
-        }
-
-        #events-preview .wire-heading h2 {
-            font-size: clamp(30px, 3.4vw, 50px);
-            font-weight: 400;
-            color: #ffd000;
-            text-align: center;
-            white-space: normal;
-        }
-
-        #events-preview .wire-heading .heading-line {
-            display: none;
-        }
-
-        .events-scroll {
-            display: flex;
-            gap: 24px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            padding: 4px 0 24px;
-            scroll-snap-type: x proximity;
-            scrollbar-color: #ffd000 var(--card);
-            scrollbar-width: thin;
-        }
-
-        .events-scroll::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .events-scroll::-webkit-scrollbar-track {
-            background: var(--card);
-            border-radius: 999px;
-        }
-
-        .events-scroll::-webkit-scrollbar-thumb {
-            background: #ffd000;
-            border-radius: 999px;
-        }
-
-        .event-card {
-            color: var(--white);
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            flex: 0 0 clamp(260px, 28vw, 380px);
-            scroll-snap-align: start;
-        }
-
-        .event-card .media-frame {
-            min-height: 300px;
-        }
-
-        .event-card h3 {
-            font-family: 'IBM Plex Serif', serif;
-            font-size: 21px;
-            letter-spacing: 1.8px;
-            text-transform: uppercase;
-            transition: color 0.25s;
-        }
-
-        .event-card:hover h3 {
-            color: var(--gold);
-            text-decoration: underline;
-            text-underline-offset: 6px;
-        }
+        
 
         .event-date {
             font-size: 13px;
@@ -414,8 +346,12 @@
 
         .fleet-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 34px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+
+        @media (max-width: 1100px) {
+            .fleet-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         .fleet-card {
@@ -545,15 +481,14 @@
         <section class="wire-section alt" id="fleet-preview">
             <div class="wire-inner">
                 <div class="wire-heading reveal">
-                    <h2>We Operate 3 Divisions</h2>
+                    <h2>We Operate Four Divisions</h2>
                     <div class="heading-line"></div>
                 </div>
 
                 <div class="fleet-grid">
                     <a href="{% url 'division_sea' %}" class="fleet-card reveal">
                         <div class="media-frame">
-                            <!-- Replace with Vital Spark boat image/video. -->
-                            <div class="media-placeholder">Vital Spark</div>
+                            <img src="{% static 'core/photos/vital-spark-pit.jpg' %}" alt="The team preparing the Vital Spark race boat in Monaco">
                         </div>
                         <div class="fleet-content">
                             <div class="kicker">Sea</div>
@@ -563,8 +498,7 @@
 
                     <a href="{% url 'division_land' %}" class="fleet-card reveal">
                         <div class="media-frame">
-                            <!-- Replace with Shell Eco car render/image. -->
-                            <div class="media-placeholder">Shell Eco 27</div>
+                            <img src="{% static 'core/photos/hev-render.jpg' %}" alt="Render of the Hydrogen Endurance Vehicle for the Shell Eco-Marathon">
                         </div>
                         <div class="fleet-content">
                             <div class="kicker">Land</div>
@@ -574,12 +508,21 @@
 
                     <a href="{% url 'division_air' %}" class="fleet-card reveal">
                         <div class="media-frame">
-                            <!-- Replace with concept render. -->
-                            <div class="media-placeholder">In Development</div>
+                            <img src="{% static 'core/photos/plane-concept.jpg' %}" alt="Render of the aerial hydrogen plane concept in flight">
                         </div>
                         <div class="fleet-content">
                             <div class="kicker">Air</div>
                             <h3>Aero Concept</h3>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'division_ops' %}" class="fleet-card reveal">
+                        <div class="media-frame">
+                            <img src="{% static 'core/photos/team-2026-main.jpg' %}" alt="The HFR team in front of the University of Glasgow">
+                        </div>
+                        <div class="fleet-content">
+                            <div class="kicker">Operations</div>
+                            <h3>The Backbone</h3>
                         </div>
                     </a>
                 </div>
@@ -612,70 +555,7 @@
             </div>
         </section>
 
-        <section class="wire-section" id="events-preview">
-            <div class="wire-inner">
-                <div class="wire-heading reveal">
-                    <h2>Attend &amp; Host Events</h2>
-                    <div class="heading-line"></div>
-                </div>
-
-                <div class="events-scroll reveal">
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Lecture Series</div>
-                        </div>
-                        <div>
-                            <h3>HFR Technical Talks</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Outreach</div>
-                        </div>
-                        <div>
-                            <h3>STEM Outreach</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Conference</div>
-                        </div>
-                        <div>
-                            <h3>Hydrogen Innovation Forum</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Industry Visit</div>
-                        </div>
-                        <div>
-                            <h3>Site Tours</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Social</div>
-                        </div>
-                        <div>
-                            <h3>Team Socials</h3>
-                        </div>
-                    </a>
-
-                    <a href="{% url 'events' %}" class="event-card">
-                        <div class="media-frame">
-                            <div class="media-placeholder">Workshop</div>
-                        </div>
-                        <div>
-                            <h3>Engineering Workshops</h3>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
+        
 
         
 
@@ -683,8 +563,7 @@
             <div class="wire-inner">
                 <div class="join-layout">
                     <div class="media-frame join-media reveal">
-                        <!-- Replace with recruitment/team image or promo video. -->
-                        <div class="media-placeholder">Join HFR</div>
+                        <img src="{% static 'core/photos/monaco-podium.jpg' %}" alt="The HFR team with the Saltire at the 13th Monaco Energy Boat Challenge">
                     </div>
 
                     <div class="reveal">
@@ -705,50 +584,6 @@
 
 {% block scripts %}
     <script>
-        (function () {
-            const eventsScroll = document.querySelector('.events-scroll');
-            if (!eventsScroll) return;
-
-            let paused = false;
-            let lastTime = null;
-            let resumeTimer = null;
-            const autoScrollSpeed = 0.012;
-
-            function pauseTemporarily() {
-                paused = true;
-                window.clearTimeout(resumeTimer);
-                resumeTimer = window.setTimeout(() => {
-                    paused = false;
-                }, 1200);
-            }
-
-            function animateEventsScroll(time) {
-                if (lastTime === null) lastTime = time;
-                const delta = time - lastTime;
-                lastTime = time;
-
-                if (!paused && eventsScroll.scrollWidth > eventsScroll.clientWidth) {
-                    const maxScroll = eventsScroll.scrollWidth - eventsScroll.clientWidth;
-                    eventsScroll.scrollLeft += delta * autoScrollSpeed;
-                    if (eventsScroll.scrollLeft >= maxScroll - 1) {
-                        eventsScroll.scrollLeft = 0;
-                    }
-                }
-
-                window.requestAnimationFrame(animateEventsScroll);
-            }
-
-            eventsScroll.addEventListener('pointerenter', () => { paused = true; });
-            eventsScroll.addEventListener('pointerleave', () => { paused = false; });
-            eventsScroll.addEventListener('focusin', () => { paused = true; });
-            eventsScroll.addEventListener('focusout', () => { paused = false; });
-            eventsScroll.addEventListener('wheel', pauseTemporarily, { passive: true });
-            eventsScroll.addEventListener('touchstart', pauseTemporarily, { passive: true });
-            eventsScroll.addEventListener('mousedown', pauseTemporarily);
-            eventsScroll.scrollLeft = 1;
-            window.requestAnimationFrame(animateEventsScroll);
-        })();
-
         (function () {
             const statements = Array.from(document.querySelectorAll('.intro-statement'));
             if (!statements.length) return;

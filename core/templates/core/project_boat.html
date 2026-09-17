@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Energy Class Boat | UG Hydrogen Fuel Racing{% endblock %}
+
+{% block extra_head %}
+    <style>
+        /* Light gradient page: override the site-wide dark chrome */
+        body {
+            background: linear-gradient(to bottom, #f6b48f 0%, #efe6d8 42%, #d8f3ea 100%) fixed, #eef6f2;
+            color: #14201c;
+        }
+        nav#navbar { background: transparent; border-bottom: 0; backdrop-filter: none; }
+        nav#navbar.scrolled { background: rgba(246,240,230,0.92); }
+        .nav-sidebar-toggle span { background: #14201c; }
+        .nav-sidebar-toggle:hover span { background: #c96f3b; }
+
+        .eb-hero {
+            min-height: 78vh; padding: calc(var(--nav-h) + 70px) 24px 40px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center;
+        }
+        .eb-hero .year {
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; letter-spacing: 3px;
+            color: #5c554a; margin-bottom: 26px;
+        }
+        .eb-hero h1 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(34px, 5.4vw, 66px);
+            font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: #14201c;
+            margin-bottom: 50px;
+        }
+        .eb-hero .hint {
+            font-family: 'IBM Plex Serif', serif; font-size: 14px; color: #5c554a;
+        }
+
+        .eb-photo { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        .eb-photo img {
+            display: block; width: 100%; max-height: 74vh; object-fit: cover;
+            border-radius: 10px; box-shadow: 0 30px 80px rgba(20,32,28,0.25);
+        }
+        .eb-photo .credit {
+            padding: 16px 0 0; text-align: center; font-size: 11px; letter-spacing: 3px;
+            text-transform: uppercase; color: #5c554a;
+        }
+
+        .eb-statement { padding: 140px 30px 120px; text-align: center; }
+        .eb-statement p {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(22px, 3vw, 34px);
+            font-weight: 400; line-height: 1.5; color: #14201c;
+            max-width: 860px; margin: 0 auto;
+        }
+        .eb-statement p + p { margin-top: 48px; }
+
+        .eb-secret {
+            text-align: center; padding: 0 30px 60px;
+            font-family: 'IBM Plex Serif', serif; font-style: italic;
+            font-size: 15px; color: #5c554a;
+        }
+
+        .eb-cta { text-align: center; padding: 0 30px 140px; }
+        .eb-cta a {
+            display: inline-block; margin: 0 8px 12px; padding: 15px 36px;
+            border: 1px solid #14201c; border-radius: 6px;
+            font-family: 'IBM Plex Serif', serif; font-size: 14px; letter-spacing: 2px;
+            text-transform: uppercase; color: #14201c; text-decoration: none;
+            transition: background .25s, color .25s;
+        }
+        .eb-cta a:hover { background: #14201c; color: #f4ede1; }
+
+        /* Footer sits on a light page here */
+        footer { border-top: 1px solid rgba(20,32,28,0.15); }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="eb-hero">
+        <div class="year">2026</div>
+        <h1>Energy Class Boat</h1>
+        <div class="hint">Scroll to explore</div>
+    </section>
+
+    <div class="eb-photo reveal">
+        <img src="{% static 'core/photos/vital-spark-pit.jpg' %}" alt="The team preparing Vital Spark at Port Hercules, Monaco">
+        <div class="credit">Vital Spark &middot; Port Hercules, Monaco</div>
+    </div>
+
+    <section class="eb-statement">
+        <p class="reveal">The future of the maritime industry will be electric propulsion. It will serve as the benchmark for efficiency.</p>
+        <p class="reveal">As engineers we must discover ways to push the limits of the market today.</p>
+    </section>
+
+    <div class="eb-secret reveal">We cannot reveal too much about this one yet. Watch this space.</div>
+
+    <section class="eb-cta reveal">
+        <a href="{% url 'division_sea' %}">Back to Sea Division</a>
+        <a href="{% url 'register' %}">Join the Crew</a>
+    </section>
+{% endblock %}
