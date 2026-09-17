@@ -1,8 +1,14 @@
 import secrets
 
 from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
+
+# CVs are personal data: kept outside MEDIA_ROOT with no public URL,
+# reachable only through the lead-checked download view.
+private_storage = FileSystemStorage(location=settings.PRIVATE_MEDIA_ROOT)
 
 
 class RecruitmentSettings(models.Model):
@@ -168,7 +174,10 @@ class Application(models.Model):
     current_choice = models.PositiveSmallIntegerField(default=1)
 
     # Step 3: application form (questions from wireframe p12)
-    cv = models.FileField(upload_to='cvs/%Y/')
+    cv = models.FileField(
+        upload_to='cvs/%Y/', storage=private_storage,
+        validators=[FileExtensionValidator(['pdf'], 'Your CV must be a PDF.')],
+    )
     why_society = models.TextField("Why this society?")
     why_division = models.TextField("Why this division?")
     what_makes_you = models.TextField("What makes you you?")

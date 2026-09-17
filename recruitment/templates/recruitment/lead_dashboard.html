@@ -76,7 +76,7 @@
             <summary>View application</summary>
             <div class="answer-block">
                 <h5>CV</h5>
-                <p><a href="{{ app.cv.url }}" target="_blank" style="color:var(--orange);">Download CV ↗</a></p>
+                <p><a href="{% url 'application_cv' app.id %}" target="_blank" style="color:var(--orange);">Download CV ↗</a></p>
             </div>
             <div class="answer-block">
                 <h5>Why this society?</h5>
