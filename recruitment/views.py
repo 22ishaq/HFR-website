@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
@@ -73,6 +74,9 @@ def applicant_dashboard(request):
     profile = get_profile(request.user)
     if profile.needs_onboarding:
         return redirect('onboarding')
+    # Onboarded members and leads have moved past applying
+    if profile.is_onboarded or is_team_lead(request.user):
+        return redirect('member_home')
 
     application = Application.objects.filter(applicant=request.user).first()
     accepted = application and application.status == Application.STATUS_ACCEPTED
@@ -294,6 +298,28 @@ def lead_dashboard(request):
         boards.append({'team': team, 'applications': apps})
 
     return render(request, 'recruitment/lead_dashboard.html', {'boards': boards})
+
+
+@login_required
+def application_cv(request, app_id):
+    """CVs are stored outside the public media tree, so this is the only
+    way to fetch one: team leads for the applicant's current pick only."""
+    if not is_team_lead(request.user):
+        return redirect('account_router')
+
+    application = get_object_or_404(
+        Application.objects.select_related('first_pick', 'alternative', 'wildcard'),
+        pk=app_id,
+    )
+    if not request.user.is_staff and application.current_team not in request.user.led_teams.all():
+        messages.error(request, "That application isn't on your draft board.")
+        return redirect('lead_dashboard')
+
+    name = application.applicant.get_full_name() or application.applicant.username
+    return FileResponse(
+        application.cv.open('rb'), as_attachment=True,
+        filename=f"{name.replace(' ', '_')}_CV.pdf",
+    )
 
 
 @login_required

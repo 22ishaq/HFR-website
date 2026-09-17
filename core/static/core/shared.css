@@ -84,6 +84,11 @@ body.hfr-account-open nav#navbar {
 }
 body.hfr-account-open .nav-home-logo,
 body.hfr-account-open .nav-sidebar-toggle { opacity: 0; pointer-events: none; }
+/* The avatar is the overlay's close control; ring it so it reads on white */
+body.hfr-account-open .nav-avatar-link {
+    box-shadow: 0 0 0 2px #101010, 0 4px 18px rgba(0,0,0,0.18);
+    background: #ffffff;
+}
 
 .nav-home-logo {
     position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);

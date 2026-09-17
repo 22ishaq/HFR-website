@@ -13,7 +13,13 @@
     {% if user.is_authenticated and user.profile.is_onboarded %}
     <button type="button" class="nav-avatar-link" id="hfr-account-toggle" aria-label="Your account"
         aria-controls="hfr-account-rail" aria-expanded="false">
+    {% if user.profile.avatar %}
+    <img src="{{ user.profile.avatar.url }}" alt="">
+    {% elif user.profile.avatar_preset %}
+    <img src="{% static 'recruitment/avatars/' %}{{ user.profile.avatar_preset }}.svg" alt="">
+    {% else %}
     <img src="{% static 'core/avatar.jpg' %}" alt="">
+    {% endif %}
     </button>
     {% elif user.is_authenticated %}
     <button type="button" class="nav-avatar-link" id="logout-open" aria-label="Log out"

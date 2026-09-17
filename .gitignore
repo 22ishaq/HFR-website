@@ -14,6 +14,10 @@ staticfiles/
 
 # Uploaded files (applicant CVs, profile pictures)
 media/
+private_media/
+
+# Local editor / assistant config
+.claude/
 
 # VS Code / OS
 .vscode/

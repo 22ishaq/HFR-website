@@ -1,0 +1,149 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Support Us | UG Hydrogen Fuel Racing{% endblock %}
+
+{% block extra_head %}
+    <style>
+        .su-hero {
+            min-height: 62vh; padding: calc(var(--nav-h) + 80px) 24px 60px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; background: #050505;
+        }
+        .su-hero .kicker {
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; letter-spacing: 4px;
+            color: var(--grey-light); margin-bottom: 20px;
+        }
+        .su-hero h1 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(44px, 8vw, 100px);
+            font-weight: 400; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 40px;
+        }
+        .su-hero p {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(17px, 2.2vw, 22px);
+            line-height: 1.75; color: var(--white); max-width: 860px;
+        }
+
+        .su-reveal { background: var(--deep, #0b0b0b); padding: 90px 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.07); }
+        .su-open-btn {
+            font-family: 'IBM Plex Serif', serif; font-size: 16px; letter-spacing: 1px;
+            padding: 16px 40px; border-radius: 10px; cursor: pointer;
+            color: var(--white); background: transparent;
+            border: 2px solid var(--gold);
+            transition: background .25s, color .25s, transform .25s;
+        }
+        .su-open-btn:hover { background: linear-gradient(90deg, var(--gold), var(--orange)); color: #101010; transform: translateY(-2px); }
+
+        .su-form-wrap { max-width: 1060px; margin: 60px auto 0; display: none; grid-template-columns: 1.1fr 1fr; gap: 26px; text-align: left; }
+        .su-form-wrap.open { display: grid; }
+
+        .su-card { background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 30px; }
+        .su-card + .su-card { margin-top: 26px; }
+        .su-col { display: flex; flex-direction: column; }
+        .su-quote { font-family: 'IBM Plex Serif', serif; font-size: 17px; line-height: 1.7; color: var(--white); }
+        .su-quote em { font-style: normal; color: var(--gold); }
+
+        .su-field { margin-bottom: 16px; }
+        .su-field label { display: block; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--grey); margin-bottom: 8px; }
+        .su-field input, .su-field textarea {
+            width: 100%; background: #0a0a0a; border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 8px; color: var(--white); padding: 13px 15px;
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; outline: none;
+            transition: border-color .2s;
+        }
+        .su-field input:focus, .su-field textarea:focus { border-color: var(--gold); }
+        .su-submit {
+            width: 100%; margin-top: 8px; padding: 15px 20px; border: none; border-radius: 8px; cursor: pointer;
+            background: linear-gradient(90deg, var(--gold), var(--orange)); color: #101010;
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; letter-spacing: 1px;
+            transition: filter .2s;
+        }
+        .su-submit:hover { filter: brightness(1.08); }
+        .su-note { margin-top: 14px; font-size: 12.5px; color: var(--grey); line-height: 1.6; }
+
+        @media (max-width: 860px) { .su-form-wrap { grid-template-columns: 1fr; } }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="su-hero">
+        <div class="kicker">Drive the Change</div>
+        <h1>Support Us</h1>
+        <p class="reveal">Consider supporting our students at the University of Glasgow. Your donation, large or small, goes directly towards the materials and components that help us develop cutting edge vehicles and the next generation of engineers.</p>
+    </section>
+
+    <section class="su-reveal">
+        <button type="button" class="su-open-btn" id="su-open" aria-expanded="false" aria-controls="su-form">Support Us &lt;3</button>
+
+        <div class="su-form-wrap" id="su-form">
+            <div class="su-col">
+                <form class="su-card" id="su-donate">
+                    <div class="su-field">
+                        <label for="su-name">Full name</label>
+                        <input type="text" id="su-name" autocomplete="name">
+                    </div>
+                    <div class="su-field">
+                        <label for="su-email">Email address</label>
+                        <input type="email" id="su-email" autocomplete="email">
+                    </div>
+                    <div class="su-field">
+                        <label for="su-amount">Donation amount (&pound;)</label>
+                        <input type="text" id="su-amount" inputmode="decimal">
+                    </div>
+                    <div class="su-field">
+                        <label for="su-message">Message to the team</label>
+                        <textarea id="su-message" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="su-submit">Continue</button>
+                    <p class="su-note">This opens an email to the society with your details filled in. Our finance team replies with payment instructions; nothing is charged on this page.</p>
+                </form>
+            </div>
+
+            <div class="su-col">
+                <div class="su-card">
+                    <p class="su-quote">&ldquo;Every little bit helps!&rdquo;<br><br>Help us pay for the tools and materials to build our projects.</p>
+                </div>
+                <div class="su-card">
+                    <p class="su-quote">By donating you are supporting students tackling climate change: one of the most <em>eco focused</em> engineering societies at the University of Glasgow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+    (function () {
+        const openBtn = document.getElementById('su-open');
+        const wrap = document.getElementById('su-form');
+        const form = document.getElementById('su-donate');
+        if (!openBtn || !wrap || !form) return;
+
+        openBtn.addEventListener('click', () => {
+            const isOpen = wrap.classList.toggle('open');
+            openBtn.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('su-name').value.trim();
+            const email = document.getElementById('su-email').value.trim();
+            const amount = document.getElementById('su-amount').value.trim();
+            const message = document.getElementById('su-message').value.trim();
+
+            const subject = 'HFR Donation Offer' + (name ? ' from ' + name : '');
+            const body = [
+                'Name: ' + name,
+                'Email: ' + email,
+                'Donation amount: £' + amount,
+                '',
+                'Message to the team:',
+                message,
+            ].join('\n');
+
+            window.location.href = 'mailto:hfr@glasgow.ac.uk?subject='
+                + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        });
+    })();
+    </script>
+{% endblock %}

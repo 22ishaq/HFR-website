@@ -1,0 +1,118 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Operations Division | UG Hydrogen Fuel Racing{% endblock %}
+
+{% block extra_head %}
+    <style>
+        .op-hero {
+            min-height: 66vh; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            background: radial-gradient(ellipse 90% 55% at 50% 115%, rgba(88,196,126,0.16), transparent 70%), #050505;
+        }
+        .op-hero-ghost {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-family: 'IBM Plex Serif', serif; font-weight: 700;
+            font-size: clamp(80px, 16vw, 300px); letter-spacing: 8px;
+            color: rgba(255,255,255,0.025); pointer-events: none; user-select: none; white-space: nowrap;
+        }
+        .op-hero-content { position: relative; z-index: 2; padding: 0 24px; }
+        .op-hero .kicker {
+            font-family: 'IBM Plex Serif', serif; font-size: 15px; letter-spacing: 4px;
+            color: var(--grey-light); margin-bottom: 18px;
+        }
+        .op-hero h1 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(44px, 8vw, 110px);
+            font-weight: 400; letter-spacing: 6px; text-transform: uppercase; line-height: 1;
+        }
+        .op-hero h1 em { font-style: normal; color: #58c47e; }
+
+        .op-statement {
+            min-height: 55vh; display: flex; align-items: center; justify-content: center;
+            background: var(--deep, #0b0b0b); padding: 110px 30px;
+        }
+        .op-statement p {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(24px, 3.4vw, 38px);
+            font-weight: 400; line-height: 1.45; color: var(--white);
+            max-width: 900px; text-align: center;
+        }
+        .op-statement em { font-style: normal; color: #58c47e; }
+
+        .op-teams { padding: 110px 30px 140px; background: #050505; }
+        .op-teams-inner { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
+        .op-team { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+        .op-team-head { padding: 30px 34px; }
+        .op-team.business .op-team-head { background: linear-gradient(135deg, #0f7f95, #0a5b6b); }
+        .op-team.finance .op-team-head { background: linear-gradient(135deg, #8e4585, #62305c); }
+        .op-team.creative .op-team-head { background: linear-gradient(135deg, #3f9d5f, #2d7245); }
+        .op-team-head h2 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(20px, 2.6vw, 28px);
+            font-weight: 400; letter-spacing: 2px; color: #ffffff;
+        }
+        .op-team-body { padding: 30px 34px; background: #0b0b0b; }
+        .op-team-body p { font-size: 15.5px; font-weight: 300; line-height: 1.75; color: var(--grey-light); }
+        .op-team-body .op-btn {
+            display: inline-block; margin-top: 24px; padding: 13px 30px;
+            border: 1px solid #58c47e; border-radius: 6px;
+            font-family: 'IBM Plex Serif', serif; font-size: 13px; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--white); text-decoration: none;
+            transition: background .25s, color .25s;
+        }
+        .op-team-body .op-btn:hover { background: #58c47e; color: #0a0a0a; }
+
+        .op-join { background: var(--deep, #0b0b0b); padding: 110px 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.07); }
+        .op-join h2 {
+            font-family: 'IBM Plex Serif', serif; font-size: clamp(30px, 4.4vw, 54px);
+            font-weight: 400; letter-spacing: 2px; margin-bottom: 18px;
+        }
+        .op-join h2 em { font-style: normal; color: #58c47e; }
+        .op-join p { font-size: 15.5px; font-weight: 300; color: var(--grey-light); max-width: 560px; margin: 0 auto 36px; line-height: 1.7; }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="op-hero">
+        <div class="op-hero-ghost">OPS</div>
+        <div class="op-hero-content">
+            <div class="kicker">Hydrogen Fuel Racing</div>
+            <h1>Operations <em>Division</em></h1>
+        </div>
+    </section>
+
+    <section class="op-statement">
+        <p class="reveal">Our Operations Division is the <em>backbone</em> of HFR. They deliver the essential maintenance, organisation and creative direction of the society.</p>
+    </section>
+
+    <section class="op-teams">
+        <div class="op-teams-inner">
+            <div class="op-team business reveal" id="business">
+                <div class="op-team-head"><h2>Business</h2></div>
+                <div class="op-team-body">
+                    <p>This team handles the operation of the society, from providing a range of events, lecture talks and worksite trips. They communicate with the University, the SRC and our range of diverse sponsors.</p>
+                </div>
+            </div>
+
+            <div class="op-team finance reveal" id="finance">
+                <div class="op-team-head"><h2>Finance &amp; Contracts</h2></div>
+                <div class="op-team-body">
+                    <p>This team handles the society's books and balances. They ensure we strategically fund our projects to give opportunity to as many University of Glasgow students as possible.</p>
+                </div>
+            </div>
+
+            <div class="op-team creative reveal" id="creative">
+                <div class="op-team-head"><h2>Creative Direction</h2></div>
+                <div class="op-team-body">
+                    <p>This team handles the creative direction and society identity. They are the creative minds that script, direct and film promotional videos. They create posters and aesthetic posts, and they build the identity of who HFR members are.</p>
+                    <a class="op-btn" href="https://www.instagram.com/hydrogenfuelracing/" target="_blank" rel="noopener">Check out our socials!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="op-join">
+        <div class="reveal">
+            <h2>Run What <em>Powers Us</em></h2>
+            <p>Not every seat at HFR is behind a CAD screen. If you can organise, negotiate, film or fund, the Operations Division is where the society actually happens.</p>
+            <a href="{% url 'register' %}" class="btn-primary">Apply Now</a>
+        </div>
+    </section>
+{% endblock %}

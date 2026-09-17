@@ -12,24 +12,33 @@
 {% block hero_title %}Land <em>Division</em>{% endblock %}
 
 {% block statement %}
-    <p>Our Land Division consists of 60 active students with the aims to design, build, test and compete with a hydrogen powered endurance vehicle.</p>
+    <p>Our Land Division designs, builds and tests a hydrogen powered endurance vehicle: a car built to travel as far as possible on a single tank of hydrogen.</p>
     <p>Our division focuses on <em>sustainable mobility</em> and <em>energy efficiency</em>.</p>
 {% endblock %}
 
+{% block media %}
+    {% load static %}
+    <div class="dv-media reveal">
+        <img src="{% static 'core/photos/hev-render.jpg' %}" alt="Render of the Hydrogen Endurance Vehicle">
+        <div class="credit">The Hydrogen Endurance Vehicle &middot; built for the Shell Eco-Marathon</div>
+    </div>
+{% endblock %}
+
 {% block stats %}
-    <div class="dv-stat reveal"><div class="n">60</div><div class="l">Active Students</div></div>
     <div class="dv-stat reveal"><div class="n">H&#8322;</div><div class="l">Fuel Cell Power</div></div>
-    <div class="dv-stat reveal"><div class="n">2027</div><div class="l">Competition Entry</div></div>
+    <div class="dv-stat reveal"><div class="n">1 Tank</div><div class="l">Maximum Distance</div></div>
+    <div class="dv-stat reveal"><div class="n">SEM</div><div class="l">Target Competition</div></div>
     <div class="dv-stat reveal"><div class="n">Zero</div><div class="l">CO&#8322; Emissions</div></div>
 {% endblock %}
 
-{% block entry_name %}HFR SEM 2027{% endblock %}
-{% block entry_sub %}Our hydrogen endurance vehicle for the Shell Eco-Marathon{% endblock %}
+{% block entry_href %}{% url 'project_hev' %}{% endblock %}
+{% block entry_name %}THE HEV{% endblock %}
+{% block entry_sub %}Our hydrogen endurance vehicle for the Shell Eco-Marathon. See the project.{% endblock %}
 
 {% block comp %}
     <div class="dv-comp-mark">The Competition</div>
     <h2>The Shell Eco-Marathon</h2>
-    <div class="loc">Location: Poland</div>
+    <div class="loc">Europe's efficiency proving ground</div>
     <p class="copy">Attracting hundreds of teams across Europe to compete with highly fuel efficient vehicles. The hydrogen class is one of the most technically challenging categories, requiring expertise in fuel cell integration, hydrogen storage, and energy management.</p>
     <div class="btn-row">
         <a class="dv-btn" href="https://www.shellecomarathon.com" target="_blank" rel="noopener">Learn More</a>
@@ -38,4 +47,4 @@
 {% endblock %}
 
 {% block join_title %}Build What <em>Drives Us</em>{% endblock %}
-{% block join_copy %}Chassis, fuel cells, aerodynamics, strategy. The Land Division has a seat for every discipline, and the 2027 build is underway.{% endblock %}
+{% block join_copy %}Chassis, fuel cells, aerodynamics, strategy. The Land Division has a seat for every discipline, and the build is underway.{% endblock %}
